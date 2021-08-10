@@ -11,3 +11,134 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+img {
+  border-radius: 50%;
+  width: 3rem;
+  padding-bottom: 5px;
+  /* height:; */
+}
+
+label {
+  float: left;
+  margin-right: 10px;
+  align-self: center;
+}
+
+input {
+  /* border: 0px !important;
+  background: transparent !important; */
+  /* width: 9.1rem !important; */
+}
+
+input {
+  /* border: 0px !important;
+  background: transparent !important; */
+  width: 19rem !important;
+}
+
+select {
+  width: 11rem !important;
+}
+
+/* .card-columns {
+  @include media-breakpoint-only(lg) {
+    column-count: 4;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 5;
+  }
+} */
+
+/* .form-group {
+  margin-bottom: 15px;
+  display: flex;
+} */
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  width: 25.9rem;
+}
+
+.kanban-board {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 1.5rem;
+  width: 140rem;
+  overflow: scroll;
+}
+
+.card-block {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 2px 3px 4px rgb(0 0 0 / 50%);
+  margin-top: 15px;
+  overflow: scroll;
+}
+
+.kanban-block {
+  width: 30rem;
+  background: #f3f4f4;
+  padding: 12px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-left: 5px;
+}
+
+/* display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+} */
+
+.form-row {
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px;
+  width: 25.9rem;
+}
+
+.edit-button {
+  position: fixed;
+  top: 30px;
+  left: 190px;
+}
+
+.task-list {
+  margin-top: 3rem;
+  margin-left: -4rem;
+}
+
+.task-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-item {
+  width: 15rem;
+  text-align: left;
+}
+
+/*
+Previous Styles
+.kanban-block {
+  width: 20rem;
+  background: #f3f4f4;
+  padding: 12px;
+}
+
+.kanban-board {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 1.5rem;
+  width: 100rem;
+  overflow: scroll;
+}
+*/

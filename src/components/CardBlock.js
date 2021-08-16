@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
+import { Img, useImage } from 'react-image';
 
-const CardBlock = ({ id }) => {
+const CardBlock = ({ item: { id, profile, data } }) => {
   const [isExpand, setExpand] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -9,12 +10,20 @@ const CardBlock = ({ id }) => {
     setIsEdit(false);
   };
 
+  function MyImageComponent({ imgURL }) {
+    const { src } = useImage({
+      srcList: imgURL,
+    });
+
+    return <img src={src} />;
+  }
+
   return (
-    <>
+    <div>
       <div className="header">
-        <button onClick={handleToggle}>
+        {/* <button onClick={handleToggle}>
           {isExpand ? 'Collapse' : 'Expand'}
-        </button>
+        </button> */}
         {isExpand ? (
           <button onClick={() => setIsEdit(!isEdit)}>
             {isEdit ? 'Cancel' : 'Edit'}
@@ -22,23 +31,26 @@ const CardBlock = ({ id }) => {
         ) : null}
       </div>
       <div className="block-body">
-        <div class="card" style={{ width: '18rem' }}>
+        <div className="card kanban-card">
           {!isExpand ? (
             <div className="card-header">
-              <img
-                class="card-img-top"
-                src="./favicon.ico"
-                alt="Card image cap"
-              />
-              <h4>Card Name</h4>
-              <div>Summary...</div>
+              <Suspense fallback={<div class="loader"></div>}>
+                {/* <Img
+                  class="card-img-top"
+                  src={profile.imgURL}
+                  alt="Card image cap"
+                /> */}
+                <MyImageComponent imgURL={profile.imgURL} />
+              </Suspense>
+              <h4>{profile.name}</h4>
+              <div>{`${data.shortMessage.by}: ${data.shortMessage.body}`}</div>
               <ul style={{ textAlign: 'left' }}>
-                <li>5 Threads</li>
-                <li>1 Pending Task</li>
+                <li>{data.threads} Threads</li>
+                <li>{data.pending} Pending Task</li>
               </ul>
             </div>
           ) : null}
-          {isExpand ? (
+          {/* {isExpand ? (
             <form>
               <div className="card-header">
                 <img
@@ -169,7 +181,7 @@ const CardBlock = ({ id }) => {
                 </a>
               </div>
             </form>
-          ) : null}
+          ) : null} */}
         </div>
       </div>
       {/* <div className="edit-button">
@@ -185,7 +197,7 @@ const CardBlock = ({ id }) => {
           Default checkbox
         </label>
       </div> */}
-    </>
+    </div>
   );
 };
 

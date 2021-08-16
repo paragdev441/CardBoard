@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import uuid from 'uuid/v4';
+import { GrAddCircle } from 'react-icons/gr';
+import { AiOutlineExpandAlt } from 'react-icons/ai';
+import { CgMenuGridO } from 'react-icons/cg';
+import { AiFillDelete } from 'react-icons/ai';
+
 import CardBlock from './CardBlock';
 import KanbanBlock from './KanbanBlock';
+import kanbanData from './kanbanData';
 
 const Kanban = () => {
-  const itemsFromBackend = [
-    { id: uuid(), content: 'First task' },
-    { id: uuid(), content: 'Second task' },
-    { id: uuid(), content: 'Third task' },
-    { id: uuid(), content: 'Fourth task' },
-    { id: uuid(), content: 'Second task' },
-    { id: uuid(), content: 'Third task' },
-    { id: uuid(), content: 'Fourth task' },
-  ];
-
   const columnsFromBackend = {
     [uuid()]: {
       name: 'Todo',
-      items: itemsFromBackend,
+      items: kanbanData,
     },
     [uuid()]: {
       name: 'Progress',
@@ -65,64 +61,104 @@ const Kanban = () => {
   };
 
   return (
-    <div className="kanban-board App">
-      <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-      >
-        {Object.entries(columns).map(([id, column]) => {
-          return (
-            <div style={{ marginLeft: '5rem' }} key={id}>
-              <h2>{column.name}</h2>
-              <Droppable droppableId={id} key={id}>
-                {(provided, snapshot) => {
-                  return (
-                    <div
-                      className="kanban-block"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{
-                        background: snapshot.isDraggingOver
-                          ? 'lightblue'
-                          : 'lightgrey',
-                      }}
-                    >
-                      {column.items.map((item, index) => {
-                        return (
-                          <Draggable
-                            key={item.id}
-                            draggableId={item.id}
-                            index={index}
+    <div>
+      <div className="Kanban-header">
+        <h1>#Kanban Name 1</h1>
+      </div>
+      <div className="kanban-board App">
+        <DragDropContext
+          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        >
+          {Object.entries(columns).map(([id, column]) => {
+            return (
+              <div
+                className="kanban-board-area"
+                style={{ marginLeft: '5rem' }}
+                key={id}
+              >
+                <div className="open-options">
+                  <div>
+                    <GrAddCircle />
+                  </div>
+                  <div>
+                    <AiFillDelete />
+                  </div>
+                </div>
+                <h2 className="board-title">{column.name}</h2>
+                <Droppable droppableId={id} key={id}>
+                  {(provided, snapshot) => {
+                    return (
+                      <div
+                        className="kanban-block"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{
+                          background: snapshot.isDraggingOver
+                            ? '#0c7fa5'
+                            : 'lightblue',
+                        }}
+                      >
+                        <>
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            style={{ width: '100%' }}
                           >
-                            {(provided, snapshot) => {
-                              return (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  style={{
-                                    backgroundColor: snapshot.isDragging
-                                      ? '#7bef7b'
-                                      : 'white',
-                                    ...provided.draggableProps.style,
-                                  }}
-                                  className="card-block"
-                                >
-                                  <CardBlock />
-                                </div>
-                              );
-                            }}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </div>
-                  );
-                }}
-              </Droppable>
-            </div>
-          );
-        })}
-      </DragDropContext>
+                            Add
+                          </button>
+                          {column.items.map((item, index) => {
+                            return (
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
+                                {(provided, snapshot) => {
+                                  return (
+                                    <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      // {...provided.dragHandleProps}
+                                      style={{
+                                        backgroundColor: snapshot.isDragging
+                                          ? '#10bd10'
+                                          : '#7bef7b',
+                                        color: snapshot.isDragging
+                                          ? '#053c05'
+                                          : '#096314',
+                                        ...provided.draggableProps.style,
+                                      }}
+                                      className="card-block"
+                                    >
+                                      <div className="open-card-options">
+                                        <span style={{ padding: '5px' }}>
+                                          <AiOutlineExpandAlt />
+                                        </span>
+                                        <span {...provided.dragHandleProps}>
+                                          <CgMenuGridO />
+                                        </span>
+                                        <span>
+                                          <AiFillDelete />
+                                        </span>
+                                      </div>
+                                      <CardBlock item={item} />
+                                    </div>
+                                  );
+                                }}
+                              </Draggable>
+                            );
+                          })}
+                        </>
+                        {provided.placeholder}
+                      </div>
+                    );
+                  }}
+                </Droppable>
+              </div>
+            );
+          })}
+        </DragDropContext>
+      </div>
     </div>
   );
 };

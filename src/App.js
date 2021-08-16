@@ -4,11 +4,7 @@ import './App.css';
 import Kanban from './components/Kanban';
 
 function App() {
-  return (
-    <div className="App">
-      <Kanban />
-    </div>
-  );
+  return <Kanban />;
 }
 
 export default App;

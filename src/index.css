@@ -63,8 +63,9 @@ select {
 
 .kanban-board {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   margin: 2rem 1.5rem;
+  /* margin: 2rem -15.5rem; */
   width: 140rem;
   overflow: scroll;
 }
@@ -81,6 +82,7 @@ select {
   width: 30rem;
   background: #f3f4f4;
   padding: 12px;
+  height: 100%;
 }
 
 .card-header {

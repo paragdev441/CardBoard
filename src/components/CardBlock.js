@@ -10,10 +10,10 @@ const CardBlock = ({
   const [isExpand, setExpand] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleToggle = () => {
-    setExpand(!isExpand);
-    setIsEdit(false);
-  };
+  // const handleToggle = () => {
+  //   setExpand(!isExpand);
+  //   setIsEdit(false);
+  // };
 
   function MyImageComponent({ imgURL }) {
     const { src } = useImage({

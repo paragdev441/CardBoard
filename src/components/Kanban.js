@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import uuid from 'uuid/v4';
 import { GrAddCircle } from 'react-icons/gr';
-import { AiOutlineExpandAlt } from 'react-icons/ai';
+// import { AiOutlineExpandAlt } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
 import { AiFillDelete } from 'react-icons/ai';
 
 import CardBlock from './CardBlock';
-import KanbanBlock from './KanbanBlock';
+// import KanbanBlock from './KanbanBlock';
 import { kanbanData, singleKanabanData } from './kanbanData';
 import CardBlockModal from './Modals/CardBlockModal';
 // import CardModal from './Modals/CardModal';
@@ -31,21 +31,6 @@ const Kanban = () => {
 
   const [columns, setColumns] = useState(columnsFromBackend);
   const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
-
-  useEffect(() => {
-    // const loColumns = localStorage.getItem('loColumns');
-    // if (loColumns !== null) {
-    //   setColumns(convert('parse', localStorage.getItem('loColumns')));
-    // } else {
-    //   localStorage.setItem(
-    //     'loColumns',
-    //     convert('stringify', columnsFromBackend)
-    //   );
-    //   setColumns(columnsFromBackend);
-    // }
-    // setColumns(columnsFromBackend);
-    return () => window.removeEventListener('change', handleChange);
-  }, [columns]);
 
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -252,7 +237,7 @@ const Kanban = () => {
                   {/* <CardBlockModal /> */}
                   <h2
                     className="board-title"
-                    contenteditable="true"
+                    // contenteditable="true"
                     onChange={({ target }) => editColumnTitle(target.value, id)}
                   >
                     <input
@@ -263,6 +248,16 @@ const Kanban = () => {
                         editColumnTitle(target.value, id)
                       }
                     />
+                    <div
+                      style={{
+                        textAlign: 'left',
+                        color: 'grey',
+                        fontSize: '17px',
+                        marginLeft: '5px',
+                      }}
+                    >
+                      {column.items.length} items
+                    </div>
                     {/* {column.name !== '' ? column.name : 'Enter Card Block name'} */}
                   </h2>
                   <button
@@ -321,14 +316,14 @@ const Kanban = () => {
                                         key={item.id}
                                       >
                                         <div className="open-card-options">
-                                          <span
+                                          {/* <span
                                             style={{ padding: '5px' }}
                                             className="smart-buttons"
                                             data-toggle="modal"
                                             data-target="#exampleModal"
                                           >
                                             <AiOutlineExpandAlt />
-                                          </span>
+                                          </span> */}
                                           <span {...provided.dragHandleProps}>
                                             <CgMenuGridO />
                                           </span>

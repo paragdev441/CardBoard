@@ -19,10 +19,10 @@ img {
   /* height:; */
 }
 
-label {
+.form-label {
   float: left;
   margin-right: 10px;
-  align-self: center;
+  align-self: flex-start;
 }
 
 input {
@@ -34,7 +34,7 @@ input {
 input {
   /* border: 0px !important;
   background: transparent !important; */
-  width: 19rem !important;
+  /* width: 100% !important; */
 }
 
 select {
@@ -58,14 +58,15 @@ select {
 .form-group {
   margin-bottom: 15px;
   display: flex;
-  width: 25.9rem;
+  width: 100%;
+  flex-direction: column !important;
 }
 
 .Kanban-header {
   background: black;
   color: white;
   padding: 2px 0px;
-  width: 142rem;
+  width: 216rem;
 }
 
 .kanban-board {
@@ -81,14 +82,18 @@ select {
   color: #1a730b;
   background: #0b93e6a3;
   /* padding: 12px 0px; */
+  /*Newly Added*/
+  height: 85rem;
 }
 
 .open-options {
   position: relative;
   z-index: 1;
-  left: 16rem;
+  left: 34rem;
   bottom: 1.5rem;
   color: black;
+  width: 0;
+  padding: 0;
 }
 
 .loader {
@@ -148,10 +153,18 @@ select {
 }
 
 .kanban-block {
+  /**Do not delete this**/
+  /* width: 30rem;
+  background: #f3f4f4;
+  padding: 12px;
+  height: 100%; */
+
   width: 30rem;
   background: #f3f4f4;
   padding: 12px;
-  height: 100%;
+  height: 80%;
+  margin: 2rem;
+  overflow: scroll;
 }
 
 .card-header {
@@ -195,6 +208,75 @@ select {
 .task-item {
   width: 15rem;
   text-align: left;
+}
+
+.smart-buttons {
+  cursor: pointer;
+}
+
+/* Overwriting classes */
+
+.form-multi-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-multi-group > .form-group {
+  width: 45%;
+}
+
+.form-group > img {
+  align-self: center;
+  width: 20%;
+}
+
+.dynamic-form-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.dynamic-form-body {
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
+  height: 13rem;
+  border: 2px solid darkgreen;
+  border-radius: 5px;
+  overflow: scroll;
+}
+
+.editable-left {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+}
+
+.editable-center {
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.editable-number {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  width: 35px;
+}
+
+.editable-left:focus,
+.editable-center:focus,
+.editable-number:focus {
+  outline: none;
+}
+
+.image-upload > input {
+  display: none;
+}
+
+.image-upload > label > img {
+  width: 100%;
 }
 
 /*

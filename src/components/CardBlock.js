@@ -1,7 +1,12 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Img, useImage } from 'react-image';
 
-const CardBlock = ({ item: { id, profile, data } }) => {
+const CardBlock = ({
+  uuid,
+  index,
+  item: { id, profile, data },
+  handleChange,
+}) => {
   const [isExpand, setExpand] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -42,11 +47,45 @@ const CardBlock = ({ item: { id, profile, data } }) => {
                 /> */}
                 <MyImageComponent imgURL={profile.imgURL} />
               </Suspense>
-              <h4>{profile.name}</h4>
-              <div>{`${data.shortMessage.by}: ${data.shortMessage.body}`}</div>
+              {/* <h4>{profile.name}</h4> */}
+              <h4>
+                <input
+                  className="editable-left"
+                  placeholder="Enter Card Name"
+                  value={profile.name}
+                  onChange={(e) => handleChange(e, 'name', uuid, index)}
+                />
+              </h4>
+              <div>
+                <input
+                  className="editable-left"
+                  placeholder="Enter Summary"
+                  value={data.shortMessage}
+                  onChange={(e) => handleChange(e, 'shortMessage', uuid, index)}
+                />
+              </div>
               <ul style={{ textAlign: 'left' }}>
-                <li>{data.threads} Threads</li>
-                <li>{data.pending} Pending Task</li>
+                {/* <li>{data.threads} Threads</li> */}
+                <li>
+                  <input
+                    type="number"
+                    min={0}
+                    className="editable-number"
+                    value={data.threads}
+                    onChange={(e) => handleChange(e, 'threads', uuid, index)}
+                  />{' '}
+                  Threads
+                </li>
+                <li>
+                  <input
+                    type="number"
+                    min={0}
+                    className="editable-number"
+                    value={data.pending}
+                    onChange={(e) => handleChange(e, 'pending', uuid, index)}
+                  />{' '}
+                  Pending Task
+                </li>
               </ul>
             </div>
           ) : null}

@@ -26,10 +26,7 @@ const kanbanData = [
       status: 'pending',
     },
     data: {
-      shortMessage: {
-        by: 'You',
-        body: '#body1',
-      },
+      shortMessage: 'You: #body1',
       threads: 5,
       pending: 1,
       converstations: [
@@ -82,10 +79,7 @@ const kanbanData = [
       status: 'pending',
     },
     data: {
-      shortMessage: {
-        by: 'Sam',
-        body: '#body2',
-      },
+      shortMessage: 'Sam: #body2',
       threads: 3,
       pending: 5,
       converstations: [
@@ -138,10 +132,7 @@ const kanbanData = [
       status: 'pending',
     },
     data: {
-      shortMessage: {
-        by: 'You',
-        body: '#body3',
-      },
+      shortMessage: 'You: #body3',
       threads: 1,
       pending: 2,
       converstations: [
@@ -171,4 +162,57 @@ const kanbanData = [
   },
 ];
 
-export default kanbanData;
+const singleKanabanData = {
+  profile: {
+    imgURL: 'https://source.unsplash.com/random/200x200?sig=1',
+    name: '',
+    companyName: '',
+    phone: '',
+    emial: '',
+    tags: [
+      {
+        name: 'Pending',
+        value: 'pending',
+      },
+      {
+        name: 'Progress',
+        value: 'progress',
+      },
+      {
+        name: 'Done',
+        value: 'done',
+      },
+    ],
+    status: '',
+  },
+  data: {
+    shortMessage: '',
+    threads: 0,
+    pending: 0,
+    converstations: [
+      {
+        message: '',
+      },
+      {
+        message: '',
+      },
+    ],
+    task: [
+      {
+        name: '',
+      },
+      {
+        name: '',
+      },
+      {
+        name: '',
+      },
+      {
+        name: '',
+      },
+    ],
+    activity: [],
+  },
+};
+
+export { kanbanData, singleKanabanData };

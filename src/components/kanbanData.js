@@ -8,7 +8,7 @@ const kanbanData = [
       name: 'Card Name 1',
       companyName: '',
       phone: '+919264199523',
-      emial: 'abc@gmail.com',
+      email: 'abc@gmail.com',
       tags: [
         {
           name: 'Pending',
@@ -37,7 +37,7 @@ const kanbanData = [
           message: '#msg1.2',
         },
       ],
-      task: [
+      tasks: [
         {
           name: '#task1',
         },
@@ -61,7 +61,7 @@ const kanbanData = [
       name: 'Card Name 2',
       companyName: '',
       phone: '+919084132277',
-      emial: 'def@gmail.com',
+      email: 'def@gmail.com',
       tags: [
         {
           name: 'Pending',
@@ -90,7 +90,7 @@ const kanbanData = [
           message: '#msg2.2',
         },
       ],
-      task: [
+      tasks: [
         {
           name: '#task1',
         },
@@ -114,7 +114,7 @@ const kanbanData = [
       name: 'Card Name 3',
       companyName: '',
       phone: '+919345127459',
-      emial: 'ghi@gmail.com',
+      email: 'ghi@gmail.com',
       tags: [
         {
           name: 'Pending',
@@ -143,7 +143,7 @@ const kanbanData = [
           message: '#msg3.2',
         },
       ],
-      task: [
+      tasks: [
         {
           name: '#task1',
         },
@@ -168,7 +168,7 @@ const singleKanabanData = {
     name: '',
     companyName: '',
     phone: '',
-    emial: '',
+    email: '',
     tags: [
       {
         name: 'Pending',
@@ -197,20 +197,7 @@ const singleKanabanData = {
         message: '',
       },
     ],
-    task: [
-      {
-        name: '',
-      },
-      {
-        name: '',
-      },
-      {
-        name: '',
-      },
-      {
-        name: '',
-      },
-    ],
+    tasks: [],
     activity: [],
   },
 };

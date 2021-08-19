@@ -279,6 +279,11 @@ select {
   width: 100%;
 }
 
+.empty-block {
+  text-align: center;
+  margin: 50px 0%;
+}
+
 /*
 Previous Styles
 .kanban-block {

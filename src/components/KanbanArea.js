@@ -1,8 +1,8 @@
 import React from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import BlockHeader from './BlockHeader';
-import BlockBody from './BlockBody';
+import BlockHeader from './Block/BlockHeader';
+import BlockBody from './Block/BlockBody';
 
 const KanbanArea = ({
   columns,

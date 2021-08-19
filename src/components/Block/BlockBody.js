@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-import CardBlock from './CardBlock';
-import CardHeader from './CardHeader';
-import CardModal from './Modals/CardModal';
+import CardBlock from '../Card/CardBlock';
+import CardHeader from '../Card/CardHeader';
+import CardModal from '../Modals/CardModal';
 
 const BlockBody = ({
   droppableprovided,

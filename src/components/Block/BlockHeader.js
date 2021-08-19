@@ -12,17 +12,24 @@ const BlockHeader = ({
   editColumnTitle,
   addCard,
 }) => {
+  console.log('callingArr', callingArr.length);
   return (
     <>
       <div className="open-options">
-        <div onClick={() => addCardBlock(BlockId, Blockindex)}>
-          <GrAddCircle />
-        </div>
+        {callingArr.length < 6 ? (
+          <div onClick={() => addCardBlock(BlockId, Blockindex)}>
+            <GrAddCircle />
+          </div>
+        ) : (
+          <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
+        )}
         {callingArr.length > 1 ? (
           <div onClick={() => deleteCardBlock(BlockId, Blockindex)}>
             <AiFillDelete />
           </div>
-        ) : null}
+        ) : (
+          <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
+        )}
       </div>
       <h2 className="board-title">
         <input
@@ -31,16 +38,7 @@ const BlockHeader = ({
           value={column.name}
           onChange={({ target }) => editColumnTitle(target.value, BlockId)}
         />
-        <div
-          style={{
-            textAlign: 'left',
-            color: 'grey',
-            fontSize: '17px',
-            marginLeft: '5px',
-          }}
-        >
-          {column.items.length} items
-        </div>
+        <div className="block-items-count">{column.items.length} items</div>
       </h2>
       <button
         type="button"
@@ -48,7 +46,7 @@ const BlockHeader = ({
         style={{ width: '100%', borderBottom: '3px solid green' }}
         onClick={() => addCard(BlockId)}
       >
-        Add
+        Add Card
       </button>
     </>
   );

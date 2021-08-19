@@ -284,6 +284,13 @@ select {
   margin: 50px 0%;
 }
 
+.block-items-count {
+  text-align: left;
+  color: grey;
+  font-size: 17px;
+  margin-left: 5px;
+}
+
 /*
 Previous Styles
 .kanban-block {

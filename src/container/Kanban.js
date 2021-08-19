@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import uuid from 'uuid/v4';
-import { kanbanData, singleKanabanData } from './kanbanData';
-import KanbanArea from './KanbanArea';
+
+import KanbanArea from '../components/KanbanArea';
+import { kanbanData, singleKanabanData } from './dataSource';
 
 const Kanban = () => {
   const columnsFromBackend = {

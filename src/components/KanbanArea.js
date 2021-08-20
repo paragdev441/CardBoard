@@ -4,6 +4,11 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import BlockHeader from './Block/BlockHeader';
 import BlockBody from './Block/BlockBody';
 
+/**
+ * Renders layout of Kanban Area containing multiple Kanban Boards
+ * @param {*} param0
+ * @returns ReactElement
+ */
 const KanbanArea = ({
   columns,
   setColumns,

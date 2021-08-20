@@ -5,6 +5,11 @@ import CardBlock from '../Card/CardBlock';
 import CardHeader from '../Card/CardHeader';
 import CardModal from '../Modals/CardModal';
 
+/**
+ * Renders layout of body of each Kanban block
+ * @param {*} param0
+ * @returns ReactElement
+ */
 const BlockBody = ({
   droppableprovided,
   droppableSnapshot,

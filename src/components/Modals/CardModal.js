@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GrAddCircle } from 'react-icons/gr';
 import SimpleReactValidator from 'simple-react-validator';
 
+/**
+ * Renders layout of Kanaban boards's cards' modal for advanced editing of cards
+ * @param {*} param0
+ * @returns ReactElement
+ */
 const CardModal = ({
   cardData,
   uuid,

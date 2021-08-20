@@ -63,26 +63,6 @@ const CardBlockModal = () => {
                   placeholder="Phone No."
                 />
               </div>
-              {/* <div className="form-multi-group">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Card Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Email"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Card Summary</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Email"
-                  />
-                </div>
-              </div> */}
               <div className="dynamic-form-block">
                 <div className="dynamic-form-label">
                   <label className="form-label">Tasks</label>

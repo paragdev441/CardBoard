@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { GrAddCircle } from 'react-icons/gr';
 import { AiFillDelete } from 'react-icons/ai';
 
+/**
+ * Renders layout of header of each Kanban block
+ * @param {*} param0
+ * @returns ReactElement
+ */
 const BlockHeader = ({
   BlockId,
   Blockindex,
@@ -12,7 +17,6 @@ const BlockHeader = ({
   editColumnTitle,
   addCard,
 }) => {
-  console.log('callingArr', callingArr.length);
   return (
     <>
       <div className="open-options">

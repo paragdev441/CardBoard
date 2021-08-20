@@ -5,7 +5,14 @@ import KanbanArea from '../components/KanbanArea';
 import { getLocalStorage } from '../Helpers';
 import { kanbanData, singleKanabanData } from './dataSource';
 
+/**
+ * Container for showing Kanban
+ * @returns  ReactElement
+ */
 const Kanban = () => {
+  /**
+   * Kanban column's data
+   */
   const columnsFromBackend = {
     [uuid()]: {
       name: 'Todo',
@@ -16,8 +23,6 @@ const Kanban = () => {
       items: [],
     },
   };
-
-  // console.log('condition', columnsFromBackend);
 
   const [columns, setColumns] = useState(
     localStorage.getItem('columns') !== null
@@ -30,6 +35,13 @@ const Kanban = () => {
       : getLocalStorage('set', 'kanbanTitle', '#Kanban Name 1')
   );
 
+  /**
+   * Called after dragging has been complete
+   * @param {object} result
+   * @param {object} columns
+   * @param {Method} setColumns
+   * @returns
+   */
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
     const { source, destination } = result;
@@ -70,11 +82,20 @@ const Kanban = () => {
     setColumns(modifiedColumns);
   };
 
+  /**
+   * Handling changed value of kanbanTitle at React State as well as localstorage
+   * @param {object} target
+   */
   const editKanabanTitle = ({ value }) => {
     getLocalStorage('set', 'kanbanTitle', value);
     setKanbanTitle(value);
   };
 
+  /**
+   * Handles adding new card block in kanaban area
+   * @param {string} id
+   * @param {number} index
+   */
   const addCardBlock = (id, index) => {
     let tempColumns = { ...columns };
     let modifiedCol = Object.entries(tempColumns);
@@ -88,6 +109,11 @@ const Kanban = () => {
     setColumns(modifiedCol);
   };
 
+  /**
+   * Handles editing title of each kanban block w.r.t block index
+   * @param {string} value
+   * @param {string} id
+   */
   const editColumnTitle = (value, id) => {
     console.log('value', value);
     let tempColumns = { ...columns };
@@ -97,6 +123,13 @@ const Kanban = () => {
     setColumns(tempColumns);
   };
 
+  /**
+   * Handles deleteing each kanban block based w.r.t block index
+   * (Object is converted to array for rendering.
+   * See the return function of Kanban Area)
+   * @param {string} id
+   * @param {number} index
+   */
   const deleteCardBlock = (id, index) => {
     let tempColumns = { ...columns };
     let modifiedCol = Object.entries(tempColumns);
@@ -110,6 +143,10 @@ const Kanban = () => {
     setColumns(modifiedCol);
   };
 
+  /**
+   * Adding Card w.r.t to Block id.
+   * @param {index} id
+   */
   const addCard = (id) => {
     let tempColumns = { ...columns };
     tempColumns[id] = {
@@ -141,13 +178,16 @@ const Kanban = () => {
     };
   };
 
+  /**
+   * Editing card w.r.t to column id & column's item's item's
+   * @param {object} e
+   * @param {string} type: Name of property of columns's itemss' items'(first item is array & second item is its element)
+   * @param {string} blockId: Id of kanaban block
+   * @param {index} index: index of columns's items'
+   * @returns
+   */
   const handleChange = (e, type, blockId, index) => {
     let tempColumns = { ...columns };
-    console.log(
-      `tempColumns[${blockId}]['items'][${index}]['profile'][${type}]`,
-      tempColumns[blockId]['items'][index]['profile'][type],
-      index
-    );
     switch (type) {
       case 'name':
         tempColumns[blockId]['items'][index] = getModifiedItem(
@@ -197,6 +237,11 @@ const Kanban = () => {
     setColumns(tempColumns);
   };
 
+  /**
+   * Deleting card w.r.t cardIndex
+   * @param {string} id
+   * @param {number} cardIndex
+   */
   const deleteCard = (id, cardIndex) => {
     let tempColumns = { ...columns };
     tempColumns[id]['items'] = tempColumns[id]['items'].filter(
@@ -207,6 +252,10 @@ const Kanban = () => {
     setColumns(tempColumns);
   };
 
+  /**
+   * Editing card using Modal w.r.t to data available in formData
+   * @param {object} formData
+   */
   const handleEditFormSubmit = (formData) => {
     const {
       uuid,
@@ -221,8 +270,6 @@ const Kanban = () => {
     getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
-
-  // console.log('columns', columns);
 
   return (
     <div>

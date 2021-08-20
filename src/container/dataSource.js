@@ -1,5 +1,8 @@
 import uuid from 'uuid/v4';
 
+/**
+ * Data of Kanban's Blocks' cards
+ */
 const kanbanData = [
   {
     id: uuid(),
@@ -162,6 +165,9 @@ const kanbanData = [
   },
 ];
 
+/**
+ * Data of a Kanban's Block's newly created card
+ */
 const singleKanabanData = {
   profile: {
     imgURL: 'https://source.unsplash.com/random/200x200?sig=1',

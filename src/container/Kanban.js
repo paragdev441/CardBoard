@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import uuid from 'uuid/v4';
 
 import KanbanArea from '../components/KanbanArea';
+import { getLocalStorage } from '../Helpers';
 import { kanbanData, singleKanabanData } from './dataSource';
 
 const Kanban = () => {
@@ -16,16 +17,23 @@ const Kanban = () => {
     },
   };
 
-  // const convert = (type, item) => {
-  //   return type === 'parse' ? JSON.parse(item) : JSON.stringify(item);
-  // };
+  // console.log('condition', columnsFromBackend);
 
-  const [columns, setColumns] = useState(columnsFromBackend);
-  const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
+  const [columns, setColumns] = useState(
+    localStorage.getItem('columns') !== null
+      ? getLocalStorage('get', 'columns')
+      : getLocalStorage('set', 'columns', columnsFromBackend)
+  );
+  const [kanbanTitle, setKanbanTitle] = useState(
+    localStorage.getItem('kanbanTitle') !== null
+      ? getLocalStorage('get', 'kanbanTitle')
+      : getLocalStorage('set', 'kanbanTitle', '#Kanban Name 1')
+  );
 
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
     const { source, destination } = result;
+    let modifiedColumns;
     if (source.droppableId !== destination.droppableId) {
       const sourceColumn = columns[source.droppableId];
       const destColumn = columns[destination.droppableId];
@@ -33,7 +41,7 @@ const Kanban = () => {
       const destItems = [...destColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
       destItems.splice(destination.index, 0, removed);
-      setColumns({
+      modifiedColumns = {
         ...columns,
         [source.droppableId]: {
           ...sourceColumn,
@@ -43,20 +51,28 @@ const Kanban = () => {
           ...destColumn,
           items: destItems,
         },
-      });
+      };
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
       const [removed] = copiedItems.splice(source.index, 1);
       copiedItems.splice(destination.index, 0, removed);
-      setColumns({
+      modifiedColumns = {
         ...columns,
         [source.droppableId]: {
           ...column,
           items: copiedItems,
         },
-      });
+      };
     }
+
+    getLocalStorage('set', 'columns', modifiedColumns);
+    setColumns(modifiedColumns);
+  };
+
+  const editKanabanTitle = ({ value }) => {
+    getLocalStorage('set', 'kanbanTitle', value);
+    setKanbanTitle(value);
   };
 
   const addCardBlock = (id, index) => {
@@ -68,6 +84,7 @@ const Kanban = () => {
       return accum;
     }, {});
 
+    getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
@@ -75,6 +92,8 @@ const Kanban = () => {
     console.log('value', value);
     let tempColumns = { ...columns };
     tempColumns = { ...tempColumns, [id]: { ...tempColumns[id], name: value } };
+
+    getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
@@ -87,6 +106,7 @@ const Kanban = () => {
       return accum;
     }, {});
 
+    getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
@@ -99,6 +119,8 @@ const Kanban = () => {
         ...tempColumns[id]['items'],
       ],
     };
+
+    getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
@@ -171,6 +193,7 @@ const Kanban = () => {
         return;
     }
 
+    getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
@@ -180,6 +203,7 @@ const Kanban = () => {
       (column, index) => cardIndex !== index
     );
 
+    getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
@@ -193,6 +217,8 @@ const Kanban = () => {
     tempColumns[uuid]['items'][itemIndex]['profile']['email'] = email;
     tempColumns[uuid]['items'][itemIndex]['profile']['phone'] = phone;
     tempColumns[uuid]['items'][itemIndex]['data']['tasks'] = [...tasks];
+
+    getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
@@ -206,7 +232,7 @@ const Kanban = () => {
             className="editable-left"
             placeholder="Enter Kanban Name"
             value={kanbanTitle}
-            onChange={({ target }) => setKanbanTitle(target.value)}
+            onChange={({ target }) => editKanabanTitle(target)}
           />
           {/* #Kanban Name 1 */}
         </h1>

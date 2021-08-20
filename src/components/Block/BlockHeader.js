@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { GrAddCircle } from 'react-icons/gr';
+import React from 'react';
+import { MdAddCircle } from 'react-icons/md';
 import { AiFillDelete } from 'react-icons/ai';
 
 /**
@@ -22,7 +22,7 @@ const BlockHeader = ({
       <div className="open-options">
         {callingArr.length < 6 ? (
           <div onClick={() => addCardBlock(BlockId, Blockindex)}>
-            <GrAddCircle />
+            <MdAddCircle />
           </div>
         ) : (
           <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
@@ -46,8 +46,7 @@ const BlockHeader = ({
       </h2>
       <button
         type="button"
-        class="btn btn-success"
-        style={{ width: '100%', borderBottom: '3px solid green' }}
+        className="btn btn-success add-card-button"
         onClick={() => addCard(BlockId)}
       >
         Add Card

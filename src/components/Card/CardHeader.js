@@ -1,6 +1,6 @@
 import React from 'react';
 import { CgMenuGridO } from 'react-icons/cg';
-import { AiOutlineExpandAlt } from 'react-icons/ai';
+import { CgArrowsExpandRight } from 'react-icons/cg';
 import { AiFillDelete } from 'react-icons/ai';
 
 /**
@@ -18,7 +18,7 @@ const CardHeader = ({ blockId, index, provided, setOpen, deleteCard }) => {
         data-backdrop="static"
         data-target={`#cardModal${index}${blockId}`}
       >
-        <AiOutlineExpandAlt />
+        <CgArrowsExpandRight />
       </span>
       <span {...provided.dragHandleProps}>
         <CgMenuGridO />

@@ -7,21 +7,21 @@ import { useImage } from 'react-image';
  * @returns ReactElement
  */
 const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
-  function MyImageComponent({ imgURL }) {
+  const Img = ({ imgURL }) => {
     const { src } = useImage({
       srcList: imgURL,
     });
 
     return <img src={src} alt="avatar" />;
-  }
+  };
 
   return (
     <div>
       <div className="block-body">
         <div className="card kanban-card">
           <div className="card-header">
-            <Suspense fallback={<div class="loader"></div>}>
-              <MyImageComponent imgURL={profile.imgURL} />
+            <Suspense fallback={<div className="loader"></div>}>
+              <Img imgURL={profile.imgURL} />
             </Suspense>
             <h4>
               <input

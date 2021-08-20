@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { GrAddCircle } from 'react-icons/gr';
+import { useImage } from 'react-image';
 import SimpleReactValidator from 'simple-react-validator';
 
 /**
@@ -23,14 +24,13 @@ const CardModal = ({
   const [, forceUpdate] = useState();
   const validator = useRef(new SimpleReactValidator());
 
-  useEffect(() => {
-    return () => {
-      setOpen(false);
-      setTasks([]);
-      setEmail('');
-      setPhone('');
-    };
-  }, []);
+  const Img = ({ imgURL }) => {
+    const { src } = useImage({
+      srcList: imgURL,
+    });
+
+    return <img src={src} alt="avatar" />;
+  };
 
   const cleanUp = () => {
     setOpen(false);
@@ -51,15 +51,6 @@ const CardModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Valid', validator.current.allValid(), {
-      uuid,
-      itemIndex: index,
-      data: {
-        email,
-        phone,
-        tasks,
-      },
-    });
     if (validator.current.allValid()) {
       handleEditFormSubmit({
         uuid,
@@ -80,26 +71,26 @@ const CardModal = ({
 
   return isOpen ? (
     <div
-      class="modal fade"
+      className="modal fade card-modal-container"
       id={`cardModal${index}${uuid}`}
-      tabindex="-1"
+      tabIndex="-1"
       role="dialog"
       aria-labelledby="myModalLabel"
       key={index}
     >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
+      <div className="modal-dialog" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
             <button
               type="button"
-              class="close"
+              className="close"
               data-dismiss="modal"
               aria-label="Close"
               onClick={cleanUp}
             >
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">
+            <h4 className="modal-title" id="myModalLabel">
               <input
                 className="editable-center"
                 placeholder="Enter Card Name"
@@ -109,25 +100,25 @@ const CardModal = ({
             </h4>
           </div>
           <form onSubmit={handleSubmit}>
-            <div class="modal-body">
-              <div class="form-group">
+            <div className="modal-body">
+              <div className="form-group">
                 <div className="image-upload">
-                  <label for="file-input">
-                    <img src="./favicon.ico" alt="avatar" />
+                  <label htmlFor="file-input">
+                    <Img imgURL={profile.imgURL} />
                   </label>
                   <input id="file-input" type="file" />
                 </div>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label
                   className="form-label align-items-start"
-                  for="exampleInputEmail1"
+                  htmlFor="exampleInputEmail1"
                 >
                   Email address
                 </label>
                 <input
                   type="email"
-                  class="form-control"
+                  className="form-control"
                   id="exampleInputEmail1"
                   placeholder="Email"
                   value={email}
@@ -137,16 +128,16 @@ const CardModal = ({
                   className: 'text-danger',
                 })}
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label
                   className="form-label align-items-start"
-                  for="exampleInputEmail1"
+                  htmlFor="exampleInputEmail1"
                 >
                   Phone Number
                 </label>
                 <input
                   type="phone"
-                  class="form-control"
+                  className="form-control"
                   id="exampleInputEmail1"
                   placeholder="Phone No."
                   value={phone}
@@ -165,7 +156,7 @@ const CardModal = ({
                 </div>
                 <div className="dynamic-form-body">
                   {tasks.length !== 0 ? (
-                    <table class="table">
+                    <table className="table">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -194,16 +185,16 @@ const CardModal = ({
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-default"
+                className="btn btn-default"
                 data-dismiss="modal"
                 onClick={cleanUp}
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" className="btn btn-primary">
                 Save changes
               </button>
             </div>

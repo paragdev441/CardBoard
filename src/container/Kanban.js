@@ -115,7 +115,6 @@ const Kanban = () => {
    * @param {string} id
    */
   const editColumnTitle = (value, id) => {
-    console.log('value', value);
     let tempColumns = { ...columns };
     tempColumns = { ...tempColumns, [id]: { ...tempColumns[id], name: value } };
 
@@ -274,7 +273,7 @@ const Kanban = () => {
   return (
     <div>
       <div className="Kanban-header">
-        <h1>
+        <h1 style={{ marginLeft: '5px' }}>
           <input
             className="editable-left"
             placeholder="Enter Kanban Name"

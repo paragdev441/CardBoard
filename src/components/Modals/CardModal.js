@@ -63,6 +63,7 @@ const CardModal = ({
       });
       document.getElementsByClassName('close')[0].click();
       document.getElementsByClassName('modal-backdrop fade in')[0].remove();
+      document.body.classList.remove('modal-open');
     } else {
       validator.current.showMessages();
       forceUpdate(1);

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 /**
  * Renders layout of body of each Kanban block's card
@@ -19,9 +19,9 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
       <div className="block-body">
         <div className="card kanban-card">
           <div className="card-header">
-            <Suspense fallback={<div className="loader"></div>}>
-              <img src={profile.imgURL} alt="avatar" />
-            </Suspense>
+            {/* <Suspense fallback={<div className="loader"></div>}> */}
+            <img src={profile.imgURL} alt="avatar" />
+            {/* </Suspense> */}
             <h4>
               <input
                 className="editable-left"

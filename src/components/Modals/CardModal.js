@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { GrAddCircle } from 'react-icons/gr';
-import { useImage } from 'react-image';
 import SimpleReactValidator from 'simple-react-validator';
 
 /**
@@ -24,13 +23,13 @@ const CardModal = ({
   const [, forceUpdate] = useState();
   const validator = useRef(new SimpleReactValidator());
 
-  const Img = ({ imgURL }) => {
-    const { src } = useImage({
-      srcList: imgURL,
-    });
+  // const Img = ({ imgURL }) => {
+  //   const { src } = useImage({
+  //     srcList: imgURL,
+  //   });
 
-    return <img src={src} alt="avatar" />;
-  };
+  //   return <img src={src} alt="avatar" />;
+  // };
 
   const cleanUp = () => {
     setOpen(false);
@@ -105,7 +104,7 @@ const CardModal = ({
               <div className="form-group">
                 <div className="image-upload">
                   <label htmlFor="file-input">
-                    <Img imgURL={profile.imgURL} />
+                    <img src={profile.imgURL} alt="avatar" />
                   </label>
                   <input id="file-input" type="file" />
                 </div>

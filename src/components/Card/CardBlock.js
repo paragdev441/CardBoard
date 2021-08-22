@@ -21,7 +21,7 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
         <div className="card kanban-card">
           <div className="card-header">
             <Suspense fallback={<div className="loader"></div>}>
-              <Img imgURL={profile.imgURL} />
+              <img src={profile.imgURL} alt="avatar" />
             </Suspense>
             <h4>
               <input

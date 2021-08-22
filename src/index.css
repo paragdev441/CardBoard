@@ -89,7 +89,7 @@ select {
 .open-options {
   position: relative;
   z-index: 1;
-  left: 34.5rem;
+  left: 40.5rem;
   bottom: 1rem;
   color: black;
   width: 0;
@@ -163,7 +163,7 @@ select {
   background: #f3f4f4;
   padding: 12px;
   height: 77%;
-  margin: 2rem;
+  margin: 2rem 5rem;
   overflow: scroll;
 }
 

@@ -20,7 +20,7 @@ const BlockHeader = ({
   return (
     <>
       <div className="open-options">
-        {callingArr.length < 6 ? (
+        {callingArr.length < 5 ? (
           <div onClick={() => addCardBlock(BlockId, Blockindex)}>
             <MdAddCircle />
           </div>

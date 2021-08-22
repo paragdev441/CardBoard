@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import { useImage } from 'react-image';
 
 /**
  * Renders layout of body of each Kanban block's card
@@ -7,13 +6,13 @@ import { useImage } from 'react-image';
  * @returns ReactElement
  */
 const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
-  const Img = ({ imgURL }) => {
-    const { src } = useImage({
-      srcList: imgURL,
-    });
+  // const Img = ({ imgURL }) => {
+  //   const { src } = useImage({
+  //     srcList: imgURL,
+  //   });
 
-    return <img src={src} alt="avatar" />;
-  };
+  //   return <img src={src} alt="avatar" />;
+  // };
 
   return (
     <div>

@@ -21,14 +21,20 @@ const BlockHeader = ({
     <>
       <div className="open-options">
         {callingArr.length < 6 ? (
-          <div onClick={() => addCardBlock(BlockId, Blockindex)}>
+          <div
+            style={{ paddingBottom: '5px' }}
+            onClick={() => addCardBlock(BlockId, Blockindex)}
+          >
             <MdAddCircle />
           </div>
         ) : (
           <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
         )}
         {callingArr.length > 1 ? (
-          <div onClick={() => deleteCardBlock(BlockId, Blockindex)}>
+          <div
+            style={{ paddingBottom: '5px' }}
+            onClick={() => deleteCardBlock(BlockId, Blockindex)}
+          >
             <AiFillDelete />
           </div>
         ) : (

@@ -38,6 +38,7 @@ const BlockBody = ({
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
+                    {...provided.dragHandleProps}
                     style={{
                       backgroundColor: snapshot.isDragging
                         ? '#10bd10'

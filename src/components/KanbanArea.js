@@ -29,7 +29,7 @@ const KanbanArea = ({
         return (
           <div
             className="kanban-board-area"
-            style={{ marginLeft: '5rem' }}
+            style={{ marginLeft: '30px' }}
             key={id}
           >
             <BlockHeader

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CgMenuGridO } from 'react-icons/cg';
+// import { CgMenuGridO } from 'react-icons/cg';
 import { CgArrowsExpandRight } from 'react-icons/cg';
 import { AiFillDelete } from 'react-icons/ai';
 
@@ -8,7 +8,7 @@ import { AiFillDelete } from 'react-icons/ai';
  * @param {*} param0
  * @returns ReactElement
  */
-const CardHeader = ({ blockId, index, provided, setOpen, deleteCard }) => {
+const CardHeader = ({ blockId, index, setOpen, deleteCard }) => {
   return (
     <div className="open-card-options" onClick={() => setOpen(true)}>
       <span
@@ -20,9 +20,11 @@ const CardHeader = ({ blockId, index, provided, setOpen, deleteCard }) => {
       >
         <CgArrowsExpandRight />
       </span>
-      <span {...provided.dragHandleProps}>
+      {/* <span
+      // {...provided.dragHandleProps}
+      >
         <CgMenuGridO />
-      </span>
+      </span> */}
       <span
         style={{ cursor: 'pointer' }}
         onClick={() => deleteCard(blockId, index)}

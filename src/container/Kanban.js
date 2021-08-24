@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { lazy, useState } from 'react';
+import { Suspense } from 'react';
 import uuid from 'uuid/v4';
 
-import KanbanArea from '../components/KanbanArea';
+// import KanbanArea from '../components/KanbanArea';
 import { getLocalStorage } from '../Helpers';
 import { kanbanData, singleKanabanData } from './dataSource';
+
+const KanbanArea = lazy(() => import('../components/KanbanArea'));
 
 /**
  * Container for showing Kanban
@@ -285,18 +288,20 @@ const Kanban = () => {
       </div>
       <div className="kanban-board App">
         {columns.length !== 0 ? (
-          <KanbanArea
-            columns={columns}
-            setColumns={setColumns}
-            onDragEnd={onDragEnd}
-            addCardBlock={addCardBlock}
-            deleteCardBlock={deleteCardBlock}
-            editColumnTitle={editColumnTitle}
-            addCard={addCard}
-            deleteCard={deleteCard}
-            handleChange={handleChange}
-            handleEditFormSubmit={handleEditFormSubmit}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <KanbanArea
+              columns={columns}
+              setColumns={setColumns}
+              onDragEnd={onDragEnd}
+              addCardBlock={addCardBlock}
+              deleteCardBlock={deleteCardBlock}
+              editColumnTitle={editColumnTitle}
+              addCard={addCard}
+              deleteCard={deleteCard}
+              handleChange={handleChange}
+              handleEditFormSubmit={handleEditFormSubmit}
+            />
+          </Suspense>
         ) : null}
       </div>
     </div>

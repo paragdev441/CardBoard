@@ -6,7 +6,7 @@ import uuid from 'uuid/v4';
 import { getLocalStorage } from '../Helpers';
 import { kanbanData, singleKanabanData } from './dataSource';
 
-const KanbanArea = lazy(() => import('../components/KanbanArea'));
+const KanbanArea = lazy(() => import('../components/Views/KanbanArea'));
 
 /**
  * Container for showing Kanban
@@ -201,7 +201,7 @@ const Kanban = () => {
           e.target.value
         );
         break;
-      case 'shortMessage':
+      case 'description':
         tempColumns[blockId]['items'][index] = getModifiedItem(
           tempColumns,
           blockId,
@@ -273,6 +273,78 @@ const Kanban = () => {
     setColumns(tempColumns);
   };
 
+  const getKeysToSearch = (field) => {
+    let keyObj = {};
+    switch (field) {
+      case 'assignedTo':
+        keyObj = {
+          parentKey: 'profile',
+          childKey: 'name',
+        };
+        break;
+      case 'status':
+        keyObj = {
+          parentKey: 'profile',
+          childKey: 'status',
+        };
+        break;
+      case 'description':
+        keyObj = {
+          parentKey: 'data',
+          childKey: 'description',
+        };
+        break;
+      case 'tags':
+        keyObj = {
+          parentKey: 'profile',
+          childKey: 'tags',
+        };
+        break;
+      default:
+        return;
+    }
+
+    return keyObj;
+  };
+
+  const handleBlockFilter = ({ formData: { field, fieldValue } }) => {
+    if (getLocalStorage('get', 'backupColumns') === null) {
+      getLocalStorage('set', 'backupColumns', columns);
+    }
+
+    let tempColumns = getLocalStorage('get', 'backupColumns');
+    console.log('field', field);
+    const { parentKey, childKey } = getKeysToSearch(field);
+    for (const key in tempColumns) {
+      let modifiedBlockItems = tempColumns[key]['items'].filter(
+        (item, index) => {
+          console.log(parentKey, childKey, item[parentKey][childKey]);
+          return item[parentKey][childKey]
+            .toLowerCase()
+            .includes(fieldValue.toLowerCase());
+        }
+      );
+
+      console.log('tempColumns', modifiedBlockItems);
+
+      tempColumns = {
+        ...tempColumns,
+        [key]: { ...tempColumns[key], items: modifiedBlockItems },
+      };
+    }
+
+    getLocalStorage('set', 'columns', tempColumns);
+    setColumns(tempColumns);
+  };
+
+  const resetFilters = ({ BlockId }) => {
+    getLocalStorage('set', 'columns', getLocalStorage('get', 'backupColumns'));
+    setColumns(getLocalStorage('get', 'backupColumns'));
+    localStorage.removeItem('backupColumns');
+  };
+
+  console.log('columns', columns);
+
   return (
     <div>
       <div className="Kanban-header">
@@ -300,6 +372,8 @@ const Kanban = () => {
               deleteCard={deleteCard}
               handleChange={handleChange}
               handleEditFormSubmit={handleEditFormSubmit}
+              handleBlockFilter={handleBlockFilter}
+              resetFilters={resetFilters}
             />
           </Suspense>
         ) : null}

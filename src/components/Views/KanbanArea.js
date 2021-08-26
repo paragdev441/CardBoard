@@ -1,8 +1,8 @@
 import React from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import BlockHeader from './Block/BlockHeader';
-import BlockBody from './Block/BlockBody';
+import BlockHeader from '../Block/BlockHeader';
+import BlockBody from '../Block/BlockBody';
 
 /**
  * Renders layout of Kanban Area containing multiple Kanban Boards
@@ -20,6 +20,8 @@ const KanbanArea = ({
   deleteCard,
   handleChange,
   handleEditFormSubmit,
+  handleBlockFilter,
+  resetFilters,
 }) => {
   return (
     <DragDropContext
@@ -41,6 +43,8 @@ const KanbanArea = ({
               deleteCardBlock={deleteCardBlock}
               editColumnTitle={editColumnTitle}
               addCard={addCard}
+              handleBlockFilter={handleBlockFilter}
+              resetFilters={resetFilters}
             />
             <Droppable droppableId={id} key={id}>
               {(provided, snapshot) => {

@@ -32,10 +32,10 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
             </h4>
             <div>
               <input
-                className="editable-left"
+                className="editable-left editable-description"
                 placeholder="Enter Summary"
-                value={data.shortMessage}
-                onChange={(e) => handleChange(e, 'shortMessage', uuid, index)}
+                value={data.description}
+                onChange={(e) => handleChange(e, 'description', uuid, index)}
               />
             </div>
             <ul style={{ textAlign: 'left' }}>

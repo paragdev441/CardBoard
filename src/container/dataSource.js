@@ -30,6 +30,7 @@ const kanbanData = [
     },
     data: {
       shortMessage: 'You: #body1',
+      description: 'Working on dashboard design',
       threads: 5,
       pending: 1,
       converstations: [
@@ -83,6 +84,7 @@ const kanbanData = [
     },
     data: {
       shortMessage: 'Sam: #body2',
+      description: 'Working on dashboard APIs',
       threads: 3,
       pending: 5,
       converstations: [
@@ -136,6 +138,7 @@ const kanbanData = [
     },
     data: {
       shortMessage: 'You: #body3',
+      description: 'Perform testing on protected routes of users',
       threads: 1,
       pending: 2,
       converstations: [
@@ -193,6 +196,7 @@ const singleKanabanData = {
   },
   data: {
     shortMessage: '',
+    description: '',
     threads: 0,
     pending: 0,
     converstations: [

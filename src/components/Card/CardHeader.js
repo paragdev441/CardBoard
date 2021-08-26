@@ -2,13 +2,21 @@ import React from 'react';
 import { CgMenuGridO } from 'react-icons/cg';
 import { CgArrowsExpandRight } from 'react-icons/cg';
 import { AiFillDelete } from 'react-icons/ai';
+import { getLocalStorage } from '../../Helpers';
 
 /**
  * Renders layout of header of each Kanban block's card
  * @param {*} param0
  * @returns ReactElement
  */
-const CardHeader = ({ blockId, index, provided, setOpen, deleteCard }) => {
+const CardHeader = ({
+  blockId,
+  index,
+  provided,
+  isOnline,
+  setOpen,
+  deleteCard,
+}) => {
   return (
     <div className="open-card-options" onClick={() => setOpen(true)}>
       <span
@@ -20,11 +28,31 @@ const CardHeader = ({ blockId, index, provided, setOpen, deleteCard }) => {
       >
         <CgArrowsExpandRight />
       </span>
-      <span style={{ padding: '5px' }} {...provided.dragHandleProps}>
+      <span
+        style={{
+          display:
+            isOnline === true
+              ? getLocalStorage('get', 'filters') === null
+                ? 'block'
+                : 'none'
+              : 'none',
+          padding: '5px',
+        }}
+        {...provided.dragHandleProps}
+      >
         <CgMenuGridO />
       </span>
       <span
-        style={{ cursor: 'pointer', padding: '5px' }}
+        style={{
+          display:
+            isOnline === true
+              ? getLocalStorage('get', 'filters') === null
+                ? 'block'
+                : 'none'
+              : 'none',
+          cursor: 'pointer',
+          padding: '5px',
+        }}
         onClick={() => deleteCard(blockId, index)}
       >
         <AiFillDelete />

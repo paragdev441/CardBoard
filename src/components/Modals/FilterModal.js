@@ -1,20 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
+import { getLocalStorage } from '../../Helpers';
 
 const FilterModal = ({ BlockId, Blockindex, handleBlockFilter, setOpen }) => {
-  const [formData, setFormData] = useState({ field: '', fieldValue: '' });
+  const [formData, setFormData] = useState(
+    localStorage.getItem('filters') !== null
+      ? getLocalStorage('get', 'filters')
+      : getLocalStorage('set', 'filters', { field: '', fieldValue: '' })
+  );
   const [, forceUpdate] = useState();
   const validator = useRef(new SimpleReactValidator());
 
   useEffect(() => {
-    setFormData({ field: '', fieldValue: '' });
+    // setFormData({ field: '', fieldValue: '' });
     return () => {};
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOpen(false);
     handleBlockFilter({ formData, Blockindex, BlockId });
+    setOpen(false);
+    document.getElementsByClassName('close')[0].click();
+    document.getElementsByClassName('modal-backdrop fade in')[0].remove();
+    document.body.classList.remove('modal-open');
+  };
+
+  const handleChange = (value, key) => {
+    setFormData({ ...formData, [key]: value });
+    getLocalStorage('set', 'filters', { ...formData, [key]: value });
   };
 
   return (
@@ -49,7 +62,7 @@ const FilterModal = ({ BlockId, Blockindex, handleBlockFilter, setOpen }) => {
                       id="inputState"
                       value={formData.field}
                       onChange={({ target }) =>
-                        setFormData({ ...formData, field: target.value })
+                        handleChange(target.value, 'field')
                       }
                     >
                       <option value="" selected>
@@ -77,7 +90,7 @@ const FilterModal = ({ BlockId, Blockindex, handleBlockFilter, setOpen }) => {
                       id="inputZip"
                       value={formData.fieldValue}
                       onChange={({ target }) =>
-                        setFormData({ ...formData, fieldValue: target.value })
+                        handleChange(target.value, 'fieldValue')
                       }
                     />
                     {validator.current.message(

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import BlockHeader from '../Block/BlockHeader';
@@ -23,6 +23,21 @@ const KanbanArea = ({
   handleBlockFilter,
   resetFilters,
 }) => {
+  const [isOnline, setOnline] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (window.navigator.onLine === false) {
+        setOnline(false);
+      } else {
+        setOnline(true);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isOnline]);
+
+  console.log('isOnline', isOnline);
+
   return (
     <DragDropContext
       onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
@@ -39,6 +54,7 @@ const KanbanArea = ({
               Blockindex={index}
               callingArr={callingArr}
               column={column}
+              isOnline={isOnline}
               addCardBlock={addCardBlock}
               deleteCardBlock={deleteCardBlock}
               editColumnTitle={editColumnTitle}
@@ -54,6 +70,7 @@ const KanbanArea = ({
                     droppableSnapshot={snapshot}
                     blockId={id}
                     column={column}
+                    isOnline={isOnline}
                     deleteCard={deleteCard}
                     handleChange={handleChange}
                     handleEditFormSubmit={handleEditFormSubmit}

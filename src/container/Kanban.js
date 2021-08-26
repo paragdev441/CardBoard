@@ -1,6 +1,7 @@
 import React, { lazy, useState } from 'react';
 import { Suspense } from 'react';
 import uuid from 'uuid/v4';
+import KanbanGroupByName from '../components/Views/KanbanGroupbyname';
 
 // import KanbanArea from '../components/KanbanArea';
 import { getLocalStorage } from '../Helpers';
@@ -340,6 +341,7 @@ const Kanban = () => {
   const resetFilters = ({ BlockId }) => {
     getLocalStorage('set', 'columns', getLocalStorage('get', 'backupColumns'));
     setColumns(getLocalStorage('get', 'backupColumns'));
+    localStorage.removeItem('filters');
     localStorage.removeItem('backupColumns');
   };
 
@@ -358,6 +360,7 @@ const Kanban = () => {
           {/* #Kanban Name 1 */}
         </h1>
       </div>
+      <div></div>
       <div className="kanban-board App">
         {columns.length !== 0 ? (
           <Suspense fallback={<div>Loading...</div>}>
@@ -376,7 +379,8 @@ const Kanban = () => {
               resetFilters={resetFilters}
             />
           </Suspense>
-        ) : null}
+        ) : // <KanbanGroupByName />
+        null}
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ const BlockHeader = ({
   return (
     <>
       {isOnline === true ? (
-        getLocalStorage('get', 'filters') === null ? (
+        getLocalStorage('get', 'backupColumns') === null ? (
           <div className="open-options">
             {callingArr.length < 6 ? (
               <div

@@ -32,7 +32,7 @@ const CardHeader = ({
         style={{
           display:
             isOnline === true
-              ? getLocalStorage('get', 'filters') === null
+              ? getLocalStorage('get', 'backupColumns') === null
                 ? 'block'
                 : 'none'
               : 'none',
@@ -46,7 +46,7 @@ const CardHeader = ({
         style={{
           display:
             isOnline === true
-              ? getLocalStorage('get', 'filters') === null
+              ? getLocalStorage('get', 'backupColumns') === null
                 ? 'block'
                 : 'none'
               : 'none',

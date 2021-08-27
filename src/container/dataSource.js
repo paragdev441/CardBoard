@@ -1,5 +1,8 @@
 import uuid from 'uuid/v4';
 
+const statusList = ['pending', 'active', 'inactive'];
+const tags = ['#tag1', '#tag2', '#tag3'];
+
 /**
  * Data of Kanban's Blocks' cards
  */
@@ -26,7 +29,8 @@ const kanbanData = [
           value: 'done',
         },
       ],
-      status: 'pending',
+      status: statusList[Math.floor(Math.random() * statusList.length)],
+      tags: ['#tag1', '#tag2'],
     },
     data: {
       shortMessage: 'You: #body1',
@@ -80,7 +84,8 @@ const kanbanData = [
           value: 'done',
         },
       ],
-      status: 'pending',
+      status: statusList[Math.floor(Math.random() * statusList.length)],
+      tags: ['#tag2', '#tag3'],
     },
     data: {
       shortMessage: 'Sam: #body2',
@@ -134,7 +139,8 @@ const kanbanData = [
           value: 'done',
         },
       ],
-      status: 'pending',
+      status: statusList[Math.floor(Math.random() * statusList.length)],
+      tags: ['#tag3', '#tag1'],
     },
     data: {
       shortMessage: 'You: #body3',
@@ -192,7 +198,8 @@ const singleKanabanData = {
         value: 'done',
       },
     ],
-    status: '',
+    status: statusList[Math.floor(Math.random() * statusList.length)],
+    tags: ['#tag3'],
   },
   data: {
     shortMessage: '',

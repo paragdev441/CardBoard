@@ -2,32 +2,53 @@ import React, { useEffect, useRef, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import { getLocalStorage } from '../../Helpers';
 
-const FilterModal = ({ BlockId, Blockindex, handleBlockFilter, setOpen }) => {
+const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
   const [formData, setFormData] = useState(
     localStorage.getItem('filters') !== null
       ? getLocalStorage('get', 'filters')
       : getLocalStorage('set', 'filters', { field: '', fieldValue: '' })
   );
   const [, forceUpdate] = useState();
-  const validator = useRef(new SimpleReactValidator());
+  const validator = useRef(
+    new SimpleReactValidator({
+      messages: {
+        required: 'This field is required', // will override all messages
+      },
+    })
+  );
 
   useEffect(() => {
-    // setFormData({ field: '', fieldValue: '' });
+    if (getLocalStorage('get', 'backupColumns') === null) {
+      localStorage.removeItem('filters');
+      setFormData({ field: '', fieldValue: '' });
+    }
+
     return () => {};
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleBlockFilter({ formData, Blockindex, BlockId });
-    setOpen(false);
-    document.getElementsByClassName('close')[0].click();
-    document.getElementsByClassName('modal-backdrop fade in')[0].remove();
-    document.body.classList.remove('modal-open');
+    if (validator.current.allValid()) {
+      handleBlockFilter({ formData });
+      setOpen(false);
+      document.getElementsByClassName('close')[0].click();
+      document.getElementsByClassName('modal-backdrop fade in')[0].remove();
+      document.body.classList.remove('modal-open');
+    } else {
+      validator.current.showMessages();
+      forceUpdate(1);
+    }
   };
 
   const handleChange = (value, key) => {
     setFormData({ ...formData, [key]: value });
     getLocalStorage('set', 'filters', { ...formData, [key]: value });
+  };
+
+  const handleFilters = () => {
+    localStorage.removeItem('filters');
+    setFormData({ field: '', fieldValue: '' });
+    resetFilters();
   };
 
   return (
@@ -74,7 +95,7 @@ const FilterModal = ({ BlockId, Blockindex, handleBlockFilter, setOpen }) => {
                       <option value="tags">Tags</option>
                     </select>
                     {validator.current.message(
-                      'field',
+                      'filterkey',
                       formData.field,
                       'required',
                       {
@@ -104,16 +125,33 @@ const FilterModal = ({ BlockId, Blockindex, handleBlockFilter, setOpen }) => {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-default"
-                    data-dismiss="modal"
+                  <div
+                    style={{ display: 'flex', justifyContent: 'space-between' }}
                   >
-                    Close
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Save changes
-                  </button>
+                    <div>
+                      {localStorage.getItem('backupColumns') !== null ? (
+                        <button
+                          type="button"
+                          class="btn btn-default"
+                          onClick={handleFilters}
+                        >
+                          Remove all
+                        </button>
+                      ) : null}
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        className="btn btn-default"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        Apply
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>

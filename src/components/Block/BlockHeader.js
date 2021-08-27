@@ -73,7 +73,7 @@ const BlockHeader = ({
           />
           <div className="block-items-count">{column.items.length} items</div>
         </h2>
-        <div className="block-options">
+        {/* <div className="block-options">
           <div>
             <HiOutlineFilter
               onClick={() => setOpen(true)}
@@ -97,7 +97,7 @@ const BlockHeader = ({
               />
             ) : null}
           </div>
-        </div>
+        </div> */}
       </div>
       <button
         type="button"
@@ -105,7 +105,7 @@ const BlockHeader = ({
         onClick={() => addCard(BlockId)}
         disabled={
           isOnline === true
-            ? getLocalStorage('get', 'filters') === null
+            ? getLocalStorage('get', 'backupColumns') === null
               ? false
               : true
             : true

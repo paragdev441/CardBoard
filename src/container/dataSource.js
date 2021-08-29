@@ -1,7 +1,7 @@
 import uuid from 'uuid/v4';
 
 const statusList = ['pending', 'active', 'inactive'];
-const tags = ['#tag1', '#tag2', '#tag3'];
+const tagList = ['#tag1', '#tag2', '#tag3'];
 
 /**
  * Data of Kanban's Blocks' cards
@@ -29,7 +29,7 @@ const kanbanData = [
           value: 'done',
         },
       ],
-      status: statusList[Math.floor(Math.random() * statusList.length)],
+      status: [statusList[Math.floor(Math.random() * statusList.length)]],
       tags: ['#tag1', '#tag2'],
     },
     data: {
@@ -84,7 +84,7 @@ const kanbanData = [
           value: 'done',
         },
       ],
-      status: statusList[Math.floor(Math.random() * statusList.length)],
+      status: [statusList[Math.floor(Math.random() * statusList.length)]],
       tags: ['#tag2', '#tag3'],
     },
     data: {
@@ -139,7 +139,7 @@ const kanbanData = [
           value: 'done',
         },
       ],
-      status: statusList[Math.floor(Math.random() * statusList.length)],
+      status: [statusList[Math.floor(Math.random() * statusList.length)]],
       tags: ['#tag3', '#tag1'],
     },
     data: {
@@ -198,7 +198,7 @@ const singleKanabanData = {
         value: 'done',
       },
     ],
-    status: statusList[Math.floor(Math.random() * statusList.length)],
+    status: [statusList[Math.floor(Math.random() * statusList.length)]],
     tags: ['#tag3'],
   },
   data: {
@@ -219,4 +219,4 @@ const singleKanabanData = {
   },
 };
 
-export { kanbanData, singleKanabanData };
+export { statusList, tagList, kanbanData, singleKanabanData };

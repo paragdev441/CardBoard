@@ -323,6 +323,31 @@ select {
   color: #ff0022;
 }
 
+.kanban-options-block {
+  padding: 0px 12px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+  font-size: initial;
+}
+
+.kanban-option-nav-item {
+  padding: 10px 15px;
+}
+
+.kanban-option-nav-item:hover {
+  color: rgb(74, 74, 255);
+  border-bottom: 2px solid rgb(74, 74, 255);
+  cursor: default;
+}
+
+.kanban-option-nav-item-active {
+  padding: 10px 15px;
+  color: rgb(74, 74, 255);
+  border-bottom: 2px solid rgb(74, 74, 255);
+  cursor: default;
+}
+
 /* .block-options {
   padding: 5px;
 } */

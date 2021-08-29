@@ -1,4 +1,5 @@
 import React from 'react';
+import { getLocalStorage } from '../../Helpers';
 
 /**
  * Renders layout of body of each Kanban block's card
@@ -14,6 +15,9 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
   //   return <img src={src} alt="avatar" />;
   // };
 
+  const isDisabled =
+    getLocalStorage('get', 'backupColumns') !== null ? true : false;
+
   return (
     <div>
       <div className="block-body">
@@ -27,6 +31,7 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
                 className="editable-left"
                 placeholder="Enter Card Name"
                 value={profile.name}
+                disabled={isDisabled}
                 onChange={(e) => handleChange(e, 'name', uuid, index)}
               />
             </h4>
@@ -35,6 +40,7 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
                 className="editable-left editable-description"
                 placeholder="Enter Summary"
                 value={data.description}
+                disabled={isDisabled}
                 onChange={(e) => handleChange(e, 'description', uuid, index)}
               />
             </div>
@@ -45,6 +51,7 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
                   min={0}
                   className="editable-number"
                   value={data.threads}
+                  disabled={isDisabled}
                   onChange={(e) => handleChange(e, 'threads', uuid, index)}
                 />{' '}
                 Threads
@@ -55,6 +62,7 @@ const CardBlock = ({ uuid, index, item: { profile, data }, handleChange }) => {
                   min={0}
                   className="editable-number"
                   value={data.pending}
+                  disabled={isDisabled}
                   onChange={(e) => handleChange(e, 'pending', uuid, index)}
                 />{' '}
                 Pending Task

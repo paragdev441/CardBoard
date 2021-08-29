@@ -36,7 +36,7 @@ const KanbanArea = ({
     return () => clearInterval(interval);
   }, [isOnline]);
 
-  console.log('isOnline', isOnline);
+  // console.log('isOnline', isOnline);
 
   return (
     <DragDropContext

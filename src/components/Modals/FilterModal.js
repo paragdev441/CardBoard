@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
+import { statusList, tagList } from '../../container/dataSource';
 import { getLocalStorage } from '../../Helpers';
 
 const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
@@ -51,6 +52,57 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
     resetFilters();
   };
 
+  const renderFieldValue = (field) => {
+    switch (field) {
+      case 'status':
+        return (
+          <select
+            class="form-control"
+            id="inputState"
+            value={formData.fieldValue}
+            onChange={({ target }) => handleChange(target.value, 'fieldValue')}
+          >
+            <option value="" selected>
+              Choose...
+            </option>
+            {statusList.map((status, index) => (
+              <option key={index} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
+        );
+      case 'tags':
+        return (
+          <select
+            class="form-control"
+            id="inputState"
+            value={formData.fieldValue}
+            onChange={({ target }) => handleChange(target.value, 'fieldValue')}
+          >
+            <option value="" selected>
+              Choose...
+            </option>
+            {tagList.map((tag, index) => (
+              <option key={index} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
+        );
+      default:
+        return (
+          <input
+            type="text"
+            className="form-control"
+            id="inputZip"
+            value={formData.fieldValue}
+            onChange={({ target }) => handleChange(target.value, 'fieldValue')}
+          />
+        );
+    }
+  };
+
   return (
     <div
       className="modal fade"
@@ -67,6 +119,7 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
               className="close"
               data-dismiss="modal"
               aria-label="Close"
+              onClick={() => setOpen(false)}
             >
               <span aria-hidden="true">×</span>
             </button>
@@ -105,7 +158,7 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
                   </div>
                   <div className="form-group col-md-2">
                     <label htmlFor="inputZip">Field Value</label>
-                    <input
+                    {/* <input
                       type="text"
                       className="form-control"
                       id="inputZip"
@@ -113,7 +166,8 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
                       onChange={({ target }) =>
                         handleChange(target.value, 'fieldValue')
                       }
-                    />
+                    /> */}
+                    {renderFieldValue(formData.field)}
                     {validator.current.message(
                       'field value',
                       formData.fieldValue,
@@ -129,11 +183,16 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
                     style={{ display: 'flex', justifyContent: 'space-between' }}
                   >
                     <div>
-                      {localStorage.getItem('backupColumns') !== null ? (
+                      {true ? (
                         <button
                           type="button"
                           class="btn btn-default"
                           onClick={handleFilters}
+                          disabled={
+                            localStorage.getItem('backupColumns') !== null
+                              ? false
+                              : true
+                          }
                         >
                           Remove all
                         </button>
@@ -144,6 +203,7 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
                         type="button"
                         className="btn btn-default"
                         data-dismiss="modal"
+                        onClick={() => setOpen(false)}
                       >
                         Close
                       </button>

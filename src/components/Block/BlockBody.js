@@ -63,6 +63,7 @@ const BlockBody = ({
                         cardData={item}
                         uuid={blockId}
                         index={index}
+                        isOnline={isOnline}
                         isOpen={isOpen}
                         setOpen={setOpen}
                         handleChange={handleChange}

@@ -23,14 +23,9 @@ const BlockHeader = ({
   handleBlockFilter,
   resetFilters,
 }) => {
-  const [isOpen, setOpen] = useState(false);
+  const isDisabled =
+    getLocalStorage('get', 'backupColumns') !== null ? true : false;
 
-  console.log(
-    'ggg',
-    isOnline,
-    getLocalStorage('get', 'filters') !== null,
-    isOnline || getLocalStorage('get', 'filters') !== null ? false : true
-  );
   return (
     <>
       {isOnline === true ? (
@@ -70,6 +65,7 @@ const BlockHeader = ({
             placeholder="Enter Card Name"
             value={column.name}
             onChange={({ target }) => editColumnTitle(target.value, BlockId)}
+            disabled={isDisabled}
           />
           <div className="block-items-count">{column.items.length} items</div>
         </h2>

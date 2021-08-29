@@ -315,19 +315,28 @@ const Kanban = () => {
     }
 
     let tempColumns = getLocalStorage('get', 'backupColumns');
-    console.log('field', field);
     const { parentKey, childKey } = getKeysToSearch(field);
+    // console.log('childKey', childKey);
     for (const key in tempColumns) {
       let modifiedBlockItems = tempColumns[key]['items'].filter(
         (item, index) => {
-          console.log(parentKey, childKey, item[parentKey][childKey]);
-          return item[parentKey][childKey]
-            .toLowerCase()
-            .includes(fieldValue.toLowerCase());
+          // console.log(
+          //   'childKey',
+          //   item[parentKey][childKey].toLowerCase(),
+          //   'fieldValue',
+          //   fieldValue
+          // );
+          if (!Array.isArray(item[parentKey][childKey])) {
+            return item[parentKey][childKey]
+              .toLowerCase()
+              .includes(fieldValue.toLowerCase());
+          } else {
+            return item[parentKey][childKey].includes(fieldValue);
+          }
         }
       );
 
-      console.log('tempColumns', modifiedBlockItems);
+      // console.log('tempColumns', modifiedBlockItems);
 
       tempColumns = {
         ...tempColumns,
@@ -347,7 +356,7 @@ const Kanban = () => {
     localStorage.removeItem('backupColumns');
   };
 
-  console.log('columns', columns);
+  // console.log('columns', columns);
 
   return (
     <div>

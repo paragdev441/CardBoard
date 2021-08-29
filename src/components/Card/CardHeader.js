@@ -30,12 +30,11 @@ const CardHeader = ({
       </span>
       <span
         style={{
-          display:
-            isOnline === true
-              ? getLocalStorage('get', 'backupColumns') === null
-                ? 'block'
-                : 'none'
-              : 'none',
+          display: true
+            ? getLocalStorage('get', 'backupColumns') === null
+              ? 'block'
+              : 'none'
+            : 'none',
           padding: '5px',
         }}
         {...provided.dragHandleProps}

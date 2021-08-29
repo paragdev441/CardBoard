@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { GrAddCircle } from 'react-icons/gr';
 import SimpleReactValidator from 'simple-react-validator';
+import { getLocalStorage } from '../../Helpers';
 
 /**
  * Renders layout of Kanaban boards's cards' modal for advanced editing of cards
@@ -11,6 +12,7 @@ const CardModal = ({
   cardData,
   uuid,
   index,
+  isOnline,
   isOpen,
   setOpen,
   handleChange,
@@ -69,6 +71,9 @@ const CardModal = ({
     }
   };
 
+  const isFilterActivate =
+    getLocalStorage('get', 'backupColumns') !== null ? true : false;
+
   return isOpen ? (
     <div
       className="modal fade card-modal-container"
@@ -96,6 +101,7 @@ const CardModal = ({
                 placeholder="Enter Card Name"
                 value={profile.name}
                 onChange={(e) => handleChange(e, 'name', uuid, index)}
+                disabled={isFilterActivate ? true : false}
               />
             </h4>
           </div>
@@ -123,6 +129,7 @@ const CardModal = ({
                   placeholder="Email"
                   value={email}
                   onChange={({ target }) => setEmail(target.value)}
+                  disabled={isFilterActivate ? true : false}
                 />
                 {validator.current.message('email', email, 'email', {
                   className: 'text-danger',
@@ -142,6 +149,7 @@ const CardModal = ({
                   placeholder="Phone No."
                   value={phone}
                   onChange={({ target }) => setPhone(target.value)}
+                  disabled={isFilterActivate ? true : false}
                 />
                 {validator.current.message('phoneNo.', phone, 'phone', {
                   className: 'text-danger',
@@ -150,9 +158,13 @@ const CardModal = ({
               <div className="dynamic-form-block">
                 <div className="dynamic-form-label">
                   <label className="form-label">Tasks</label>
-                  <label onClick={addTasks} className="form-label">
-                    <GrAddCircle />
-                  </label>
+                  {isOnline ? (
+                    !isFilterActivate ? (
+                      <label onClick={addTasks} className="form-label">
+                        <GrAddCircle />
+                      </label>
+                    ) : null
+                  ) : null}
                 </div>
                 <div className="dynamic-form-body">
                   {tasks.length !== 0 ? (
@@ -173,6 +185,7 @@ const CardModal = ({
                                 placeholder="Enter Task"
                                 value={task.name}
                                 onChange={(e) => editTasks(e, index)}
+                                disabled={isFilterActivate ? true : false}
                               />
                             </td>
                           </tr>

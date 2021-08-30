@@ -349,6 +349,10 @@ select {
   cursor: default;
 }
 
+.select-option-field {
+  width: 100% !important;
+}
+
 /* .block-options {
   padding: 5px;
 } */
@@ -369,3 +373,12 @@ Previous Styles
   overflow: scroll;
 }
 */
+
+.card-modal-container {
+}
+
+@media only screen and (max-width: 1024px) {
+  .card-modal-container {
+    width: 25%;
+  }
+}

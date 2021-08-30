@@ -132,7 +132,7 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
                   <div className="form-group col-md-5">
                     <label htmlFor="inputState">Field</label>
                     <select
-                      class="form-control"
+                      class="form-control select-option-field"
                       id="inputState"
                       value={formData.field}
                       onChange={({ target }) =>

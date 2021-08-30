@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MdAddCircle } from 'react-icons/md';
 import { AiFillDelete } from 'react-icons/ai';
-import { HiOutlineFilter } from 'react-icons/hi';
-import { GrPowerReset } from 'react-icons/gr';
-import FilterModal from '../Modals/FilterModal';
 import { getLocalStorage } from '../../Helpers';
 /**
  * Renders layout of header of each Kanban block
@@ -20,8 +17,6 @@ const BlockHeader = ({
   deleteCardBlock,
   editColumnTitle,
   addCard,
-  handleBlockFilter,
-  resetFilters,
 }) => {
   const isDisabled =
     getLocalStorage('get', 'backupColumns') !== null ? true : false;

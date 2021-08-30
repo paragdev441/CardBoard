@@ -1,7 +1,6 @@
 import React, { lazy, useState } from 'react';
 import { Suspense } from 'react';
 import uuid from 'uuid/v4';
-import KanbanGroupByName from '../components/Views/KanbanGroupbyname';
 import KanbanOptions from '../components/Views/KanbanOptions';
 
 // import KanbanArea from '../components/KanbanArea';

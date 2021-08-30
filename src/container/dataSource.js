@@ -15,20 +15,6 @@ const kanbanData = [
       companyName: '',
       phone: '+919264199523',
       email: 'abc@gmail.com',
-      tags: [
-        {
-          name: 'Pending',
-          value: 'pending',
-        },
-        {
-          name: 'Progress',
-          value: 'progress',
-        },
-        {
-          name: 'Done',
-          value: 'done',
-        },
-      ],
       status: [statusList[Math.floor(Math.random() * statusList.length)]],
       tags: ['#tag1', '#tag2'],
     },
@@ -70,20 +56,6 @@ const kanbanData = [
       companyName: '',
       phone: '+919084132277',
       email: 'def@gmail.com',
-      tags: [
-        {
-          name: 'Pending',
-          value: 'pending',
-        },
-        {
-          name: 'Progress',
-          value: 'progress',
-        },
-        {
-          name: 'Done',
-          value: 'done',
-        },
-      ],
       status: [statusList[Math.floor(Math.random() * statusList.length)]],
       tags: ['#tag2', '#tag3'],
     },
@@ -125,20 +97,6 @@ const kanbanData = [
       companyName: '',
       phone: '+919345127459',
       email: 'ghi@gmail.com',
-      tags: [
-        {
-          name: 'Pending',
-          value: 'pending',
-        },
-        {
-          name: 'Progress',
-          value: 'progress',
-        },
-        {
-          name: 'Done',
-          value: 'done',
-        },
-      ],
       status: [statusList[Math.floor(Math.random() * statusList.length)]],
       tags: ['#tag3', '#tag1'],
     },
@@ -184,20 +142,6 @@ const singleKanabanData = {
     companyName: '',
     phone: '',
     email: '',
-    tags: [
-      {
-        name: 'Pending',
-        value: 'pending',
-      },
-      {
-        name: 'Progress',
-        value: 'progress',
-      },
-      {
-        name: 'Done',
-        value: 'done',
-      },
-    ],
     status: [statusList[Math.floor(Math.random() * statusList.length)]],
     tags: ['#tag3'],
   },

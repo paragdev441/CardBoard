@@ -324,6 +324,7 @@ select {
 }
 
 .kanban-options-block {
+  width: 238rem;
   padding: 0px 12px;
   border-top: 1px solid black;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);

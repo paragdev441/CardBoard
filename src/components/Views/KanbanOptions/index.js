@@ -25,7 +25,7 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
         >
           Kanban
         </span>
-        <span
+        {/* <span
           className={`${
             activateOption === 'group'
               ? 'kanban-option-nav-item-active'
@@ -34,7 +34,7 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
           onClick={() => handleOptionClick('group')}
         >
           Group
-        </span>
+        </span> */}
         <span
           className={`${
             activateOption === 'filter'
@@ -48,7 +48,7 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
         >
           Filter
         </span>
-        <span
+        {/* <span
           className={`${
             activateOption === 'sort'
               ? 'kanban-option-nav-item-active'
@@ -57,8 +57,8 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
           onClick={() => handleOptionClick('sort')}
         >
           Sort
-        </span>
-        <span
+        </span> */}
+        {/* <span
           className={`${
             activateOption === 'hide fields'
               ? 'kanban-option-nav-item-active'
@@ -67,7 +67,7 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
           onClick={() => handleOptionClick('hide fields')}
         >
           Hide Fields
-        </span>
+        </span> */}
         {isOpen ? (
           <FilterModal
             handleBlockFilter={handleBlockFilter}

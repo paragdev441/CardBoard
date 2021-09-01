@@ -57,7 +57,7 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
       case 'status':
         return (
           <select
-            class="form-control"
+            class="form-control select-option-field"
             id="inputState"
             value={formData.fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}
@@ -75,7 +75,7 @@ const FilterModal = ({ setOpen, handleBlockFilter, resetFilters }) => {
       case 'tags':
         return (
           <select
-            class="form-control"
+            class="form-control select-option-field"
             id="inputState"
             value={formData.fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}

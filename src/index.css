@@ -339,7 +339,7 @@ select {
 .kanban-option-nav-item:hover {
   color: rgb(74, 74, 255);
   border-bottom: 2px solid rgb(74, 74, 255);
-  cursor: default;
+  cursor: default !important;
 }
 
 .kanban-option-nav-item-active {

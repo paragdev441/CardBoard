@@ -3,12 +3,12 @@ import { Suspense } from 'react';
 import './App.css';
 // import Kanban from './container/Kanban';
 
-const Kanban = lazy(() => import('./container/Kanban'));
+const KanbanNew = lazy(() => import('./container/KanbanNew'));
 
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Kanban />
+      <KanbanNew />
     </Suspense>
   );
 }

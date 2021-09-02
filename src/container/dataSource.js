@@ -132,6 +132,51 @@ const kanbanData = [
   },
 ];
 
+const newKanbanData = [
+  {
+    id: uuid(),
+    imgURL: `https://source.unsplash.com/random/200x200?sig=${Math.floor(
+      Math.random() * 1000
+    )}`,
+    title: 'Card Name 1',
+    description: 'Working on dashboard design',
+    phone: '+919264199523',
+    email: 'abc@gmail.com',
+    status: [statusList[Math.floor(Math.random() * statusList.length)]],
+    tags: ['#tag1', '#tag2'],
+    threads: 5,
+    pending: 1,
+  },
+  {
+    id: uuid(),
+    imgURL: `https://source.unsplash.com/random/200x200?sig=${Math.floor(
+      Math.random() * 1000
+    )}`,
+    title: 'Card Name 2',
+    description: 'Working on dashboard APIs',
+    phone: '+919084132277',
+    email: 'def@gmail.com',
+    status: [statusList[Math.floor(Math.random() * statusList.length)]],
+    tags: ['#tag2', '#tag3'],
+    threads: 3,
+    pending: 5,
+  },
+  {
+    id: uuid(),
+    imgURL: `https://source.unsplash.com/random/200x200?sig=${Math.floor(
+      Math.random() * 1000
+    )}`,
+    title: 'Card Name 3',
+    description: 'Perform testing on protected routes of users',
+    phone: '+919345127459',
+    email: 'ghi@gmail.com',
+    status: [statusList[Math.floor(Math.random() * statusList.length)]],
+    tags: ['#tag3', '#tag1'],
+    threads: 1,
+    pending: 2,
+  },
+];
+
 /**
  * Data of a Kanban's Block's newly created card
  */
@@ -163,4 +208,4 @@ const singleKanabanData = {
   },
 };
 
-export { statusList, tagList, kanbanData, singleKanabanData };
+export { statusList, tagList, kanbanData, newKanbanData, singleKanabanData };

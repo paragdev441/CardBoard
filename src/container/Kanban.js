@@ -348,7 +348,7 @@ const Kanban = () => {
   };
 
   const resetFilters = () => {
-    console.log('hit');
+    // console.log('hit');
     getLocalStorage('set', 'columns', getLocalStorage('get', 'backupColumns'));
     setColumns(getLocalStorage('get', 'backupColumns'));
     localStorage.removeItem('filters');

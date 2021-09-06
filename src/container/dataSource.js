@@ -208,4 +208,25 @@ const singleKanabanData = {
   },
 };
 
-export { statusList, tagList, kanbanData, newKanbanData, singleKanabanData };
+const newSingleKanabanData = {
+  imgURL: `https://source.unsplash.com/random/200x200?sig=${Math.floor(
+    Math.random() * 1000
+  )}`,
+  title: '',
+  description: '',
+  phone: '',
+  email: '',
+  status: [],
+  tags: [],
+  threads: 0,
+  pending: 0,
+};
+
+export {
+  statusList,
+  tagList,
+  kanbanData,
+  newKanbanData,
+  singleKanabanData,
+  newSingleKanabanData,
+};

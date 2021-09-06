@@ -3,11 +3,17 @@ import SimpleReactValidator from 'simple-react-validator';
 import { statusList, tagList } from '../../container/dataSource';
 import { getLocalStorage } from '../../Helpers';
 
-const FilterModal = ({ handleBlockFilter, resetFilters, setOpen }) => {
+const FilterModal = ({
+  filterOptions,
+  handleBlockFilter,
+  resetFilters,
+  setOpen,
+}) => {
+  const { type: field, value: fieldValue } = filterOptions;
   const [formData, setFormData] = useState(
     localStorage.getItem('filters') !== null
       ? getLocalStorage('get', 'filters')
-      : getLocalStorage('set', 'filters', { field: '', fieldValue: '' })
+      : getLocalStorage('set', 'filters', { field, fieldValue })
   );
   const [, forceUpdate] = useState();
   const validator = useRef(
@@ -19,10 +25,10 @@ const FilterModal = ({ handleBlockFilter, resetFilters, setOpen }) => {
   );
 
   useEffect(() => {
-    if (getLocalStorage('get', 'backupColumns') === null) {
-      localStorage.removeItem('filters');
-      setFormData({ field: '', fieldValue: '' });
-    }
+    // if (getLocalStorage('get', 'backupColumns') === null) {
+    //   localStorage.removeItem('filters');
+    //   setFormData({ field: '', fieldValue: '' });
+    // }
 
     return () => {};
   }, []);
@@ -30,7 +36,7 @@ const FilterModal = ({ handleBlockFilter, resetFilters, setOpen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validator.current.allValid()) {
-      console.log('formData.field', formData.field);
+      // console.log('formData.field', formData.field);
       handleBlockFilter(formData.field, formData.fieldValue);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
@@ -48,8 +54,8 @@ const FilterModal = ({ handleBlockFilter, resetFilters, setOpen }) => {
   };
 
   const handleFilters = () => {
-    localStorage.removeItem('filters');
     setFormData({ field: '', fieldValue: '' });
+    getLocalStorage('set', 'filters', { field: '', fieldValue: '' });
     resetFilters();
   };
 
@@ -189,9 +195,12 @@ const FilterModal = ({ handleBlockFilter, resetFilters, setOpen }) => {
                         class="btn btn-default"
                         onClick={handleFilters}
                         disabled={
-                          localStorage.getItem('backupColumns') !== null
-                            ? false
-                            : true
+                          JSON.parse(localStorage.getItem('filters')).field ===
+                            '' ||
+                          JSON.parse(localStorage.getItem('filters'))
+                            .fieldValue === ''
+                            ? true
+                            : false
                         }
                       >
                         Remove all

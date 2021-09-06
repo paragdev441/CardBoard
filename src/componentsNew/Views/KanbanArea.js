@@ -3,6 +3,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import BlockHeader from '../Block/BlockHeader';
 import BlockBody from '../Block/BlockBody';
+import filterKanban from '../../helpers/filterKanban';
 
 /**
  * Renders layout of Kanban Area containing multiple Kanban Boards
@@ -25,36 +26,54 @@ const KanbanArea = ({
   const [modifiedColumns, setModifiedColumns] = useState(columns);
   let { type, value } = filterOptions;
 
-  const filterArray = (items) => {
-    switch (type) {
-      case 'assignedTo':
-        return items.filter((item) => item.title === value);
-      case 'status':
-        return items.filter((item) => item.status.includes(value));
-      case 'description':
-        return items.filter((item) => item.description === value);
-      case 'tags':
-        return items.filter((item) => item.status.includes(value));
-      default:
-        return items;
-    }
-  };
+  // const filterArray = (items) => {
+  //   switch (type) {
+  //     case 'assignedTo':
+  //       return items.filter((item) => {
+  //         // console.log(
+  //         //   'filterArray',
+  //         //   item.title,
+  //         //   value,
+  //         //   item.title.toLowerCase().includes(value.toLowerCase())
+  //         // );
+  //         return item.title.toLowerCase().includes(value.toLowerCase());
+  //       });
+  //     case 'status':
+  //       return items.filter((item) => item.status.includes(value));
+  //     case 'description':
+  //       return items.filter((item) => {
+  //         return item.description.toLowerCase().includes(value.toLowerCase());
+  //       });
+  //     case 'tags':
+  //       return items.filter((item) => {
+  //         console.log('tags', item.tags, value, item.tags.includes(value));
+  //         return item.tags.includes(value);
+  //       });
+  //     default:
+  //       return items;
+  //   }
+  // };
 
   useEffect(() => {
-    if (type !== '') {
-      console.log('enter');
-      let tempModifiedColumns = modifiedColumns;
-      tempModifiedColumns = Object.entries(tempModifiedColumns).map(
-        ([id, column]) => {
-          let tempColumn = { ...column }; // {name, items}
-          tempColumn.items = filterArray(tempColumn.items);
-          return [id, tempColumn];
-        }
-      );
+    // console.log('enter', type);
+    // if (type !== '') {
+    //   let tempModifiedColumns = columns;
+    //   tempModifiedColumns = Object.entries(tempModifiedColumns).map(
+    //     ([id, column]) => {
+    //       let tempColumn = { ...column }; // {name, items}
+    //       tempColumn.items = filterArray(tempColumn.items);
+    //       return [id, tempColumn];
+    //     }
+    //   );
 
-      setModifiedColumns(tempModifiedColumns);
-    }
-  }, [filterOptions]);
+    //   setModifiedColumns(Object.fromEntries(tempModifiedColumns));
+    // } else {
+    //   setModifiedColumns(columns);
+    // }
+
+    let tempColumns = filterKanban(columns, filterOptions);
+    setModifiedColumns(tempColumns);
+  }, [filterOptions, columns]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -67,7 +86,7 @@ const KanbanArea = ({
   //   return () => clearInterval(interval);
   // }, [isOnline]);
 
-  console.log('hit', modifiedColumns);
+  console.log('modifiedColumns', columns);
 
   return (
     <DragDropContext

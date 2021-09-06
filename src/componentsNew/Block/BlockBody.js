@@ -53,6 +53,7 @@ const BlockBody = ({
                   >
                     <CardHeader
                       blockId={blockId}
+                      item={item}
                       index={index}
                       provided={provided}
                       isOnline={isOnline}

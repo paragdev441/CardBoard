@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import FilterModal from '../../Modals/FilterModal';
 
-const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
+const KanbanOptions = ({ filterOptions, handleBlockFilter, resetFilters }) => {
   const [isOpen, setOpen] = useState(false);
   const [activateOption, setActivateOption] = useState('');
+
   const handleOptionClick = (optionName) => {
     setActivateOption(optionName);
     if (optionName === 'filter') {
@@ -70,6 +71,7 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
         </span> */}
         {isOpen ? (
           <FilterModal
+            filterOptions={filterOptions}
             handleBlockFilter={handleBlockFilter}
             resetFilters={resetFilters}
             setOpen={setOpen}

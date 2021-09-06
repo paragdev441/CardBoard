@@ -9,7 +9,7 @@ import { getLocalStorage } from '../../Helpers';
 const CardBlock = ({
   uuid: BlockId,
   index,
-  item: { imgURL, title, description, threads, pending },
+  item: { id, imgURL, title, description, threads, pending },
   handleChange,
   genericHandleChange,
 }) => {
@@ -18,7 +18,7 @@ const CardBlock = ({
     getLocalStorage('get', 'backupColumns') !== null ? true : false;
 
   return (
-    <div>
+    <div key={id}>
       <div className="block-body">
         <div className="card kanban-card">
           <div className="card-header">
@@ -27,7 +27,7 @@ const CardBlock = ({
               <input
                 className="editable-left"
                 placeholder="Enter Card Name"
-                value={title}
+                defaultValue={title}
                 disabled={isDisabled}
                 onChange={({ target }) =>
                   genericHandleChange(
@@ -35,7 +35,8 @@ const CardBlock = ({
                     BlockId,
                     'title',
                     'cardBody',
-                    index
+                    index,
+                    id
                   )
                 }
               />
@@ -44,7 +45,7 @@ const CardBlock = ({
               <input
                 className="editable-left editable-description"
                 placeholder="Enter Summary"
-                value={description}
+                defaultValue={description}
                 disabled={isDisabled}
                 onChange={({ target }) =>
                   genericHandleChange(
@@ -52,7 +53,8 @@ const CardBlock = ({
                     BlockId,
                     'description',
                     'cardBody',
-                    index
+                    index,
+                    id
                   )
                 }
               />

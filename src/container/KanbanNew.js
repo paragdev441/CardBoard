@@ -5,7 +5,7 @@ import KanbanOptions from '../componentsNew/Views/KanbanOptions';
 
 // import KanbanArea from '../components/KanbanArea';
 import { getLocalStorage } from '../Helpers';
-import { newKanbanData, singleKanabanData } from './dataSource';
+import { newKanbanData, newSingleKanabanData } from './dataSource';
 
 const KanbanArea = lazy(() => import('../componentsNew/Views/KanbanArea'));
 
@@ -28,29 +28,66 @@ const KanbanNew = () => {
     },
   };
 
-  const [columns, setColumns] = useState(
-    localStorage.getItem('columns') !== null
-      ? getLocalStorage('get', 'columns')
-      : getLocalStorage('set', 'columns', columnsFromBackend)
-  );
-  const [kanbanTitle, setKanbanTitle] = useState(
-    localStorage.getItem('kanbanTitle') !== null
-      ? getLocalStorage('get', 'kanbanTitle')
-      : getLocalStorage('set', 'kanbanTitle', '#Kanban Name 1')
-  );
+  const [columns, setColumns] = useState(columnsFromBackend);
+  const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
 
   const [filterOptions, setFilterOptions] = useState({ type: '', value: '' });
 
+  // const onDragEnd = (result, columns, setColumns) => {
+  //   if (!result.destination) return;
+  //   const { source, destination } = result;
+  //   let modifiedColumns;
+  //   if (source.droppableId !== destination.droppableId) {
+  //     const sourceColumn = columns[source.droppableId];
+  //     const destColumn = columns[destination.droppableId];
+  //     const sourceItems = [...sourceColumn.items];
+  //     const destItems = [...destColumn.items];
+  //     const [removed] = sourceItems.splice(source.index, 1);
+  //     destItems.splice(destination.index, 0, removed);
+  //     modifiedColumns = {
+  //       ...columns,
+  //       [source.droppableId]: {
+  //         ...sourceColumn,
+  //         items: sourceItems,
+  //       },
+  //       [destination.droppableId]: {
+  //         ...destColumn,
+  //         items: destItems,
+  //       },
+  //     };
+  //   } else {
+  //     const column = columns[source.droppableId];
+  //     const copiedItems = [...column.items];
+  //     const [removed] = copiedItems.splice(source.index, 1);
+  //     copiedItems.splice(destination.index, 0, removed);
+  //     modifiedColumns = {
+  //       ...columns,
+  //       [source.droppableId]: {
+  //         ...column,
+  //         items: copiedItems,
+  //       },
+  //     };
+  //   }
+
+  //   getLocalStorage('set', 'columns', modifiedColumns);
+  //   setColumns(modifiedColumns);
+  // };
+
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
     let modifiedColumns;
     if (source.droppableId !== destination.droppableId) {
       const sourceColumn = columns[source.droppableId];
       const destColumn = columns[destination.droppableId];
-      const sourceItems = [...sourceColumn.items];
+      let sourceItems = [...sourceColumn.items];
       const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
+      const removed = sourceItems.find(
+        (sourceItem) => sourceItem.id === draggableId
+      );
+      sourceItems = sourceItems.filter(
+        (sourceItem) => sourceItem.id !== draggableId
+      );
       destItems.splice(destination.index, 0, removed);
       modifiedColumns = {
         ...columns,
@@ -77,6 +114,7 @@ const KanbanNew = () => {
       };
     }
 
+    // console.log('afterDrag', modifiedColumns);
     getLocalStorage('set', 'columns', modifiedColumns);
     setColumns(modifiedColumns);
   };
@@ -117,7 +155,7 @@ const KanbanNew = () => {
     tempColumns[id] = {
       ...tempColumns[id],
       items: [
-        { ...singleKanabanData, id: uuid() },
+        { ...newSingleKanabanData, id: uuid() },
         ...tempColumns[id]['items'],
       ],
     };
@@ -126,17 +164,26 @@ const KanbanNew = () => {
     setColumns(tempColumns);
   };
 
-  const deleteCard = (id, cardIndex) => {
+  const deleteCard = (id, cardId) => {
+    console.log('deleteCard', cardId);
     let tempColumns = { ...columns };
     tempColumns[id]['items'] = tempColumns[id]['items'].filter(
-      (column, index) => cardIndex !== index
+      (card) => card.id !== cardId
     );
 
     getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
-  const genericHandleChange = (value, blockId, key, type, itemIndex = null) => {
+  const genericHandleChange = (
+    value,
+    blockId,
+    key,
+    type,
+    itemIndex = null,
+    cardId
+  ) => {
+    // console.log('edit', { value, blockId, key, type, itemIndex });
     switch (type) {
       case 'blockTitle':
         setColumns({
@@ -150,7 +197,7 @@ const KanbanNew = () => {
           [blockId]: {
             ...columns[blockId],
             items: columns[blockId].items.map((item, index) => {
-              if (itemIndex === index) {
+              if (cardId === item.id) {
                 return {
                   ...item,
                   [key]: value,
@@ -161,25 +208,24 @@ const KanbanNew = () => {
             }),
           },
         });
+        break;
       default:
         return;
     }
   };
 
   const handleBlockFilter = (type, value) => {
-    console.log('type', type);
+    // console.log('type', type);
     setFilterOptions({ type, value });
   };
 
   const resetFilters = () => {
-    console.log('hit');
-    getLocalStorage('set', 'columns', getLocalStorage('get', 'backupColumns'));
-    setColumns(getLocalStorage('get', 'backupColumns'));
-    localStorage.removeItem('filters');
-    localStorage.removeItem('backupColumns');
+    // console.log('hit');
+    setFilterOptions({ type: '', value: '' });
+    // localStorage.removeItem('filters');
   };
 
-  console.log('newKanbanData', filterOptions);
+  // console.log('newKanbanData', filterOptions);
 
   return (
     <div>
@@ -195,6 +241,7 @@ const KanbanNew = () => {
         </h1>
       </div>
       <KanbanOptions
+        filterOptions={filterOptions}
         handleBlockFilter={handleBlockFilter}
         resetFilters={resetFilters}
       />

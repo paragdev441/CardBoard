@@ -11,6 +11,7 @@ import { getLocalStorage } from '../../Helpers';
  */
 const CardHeader = ({
   blockId,
+  item,
   index,
   provided,
   isOnline,
@@ -52,7 +53,7 @@ const CardHeader = ({
           cursor: 'pointer',
           padding: '5px',
         }}
-        onClick={() => deleteCard(blockId, index)}
+        onClick={() => deleteCard(blockId, item.id)}
       >
         <AiFillDelete />
       </span>

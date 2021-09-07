@@ -4,6 +4,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import BlockHeader from '../Block/BlockHeader';
 import BlockBody from '../Block/BlockBody';
 import filterKanban from '../../helpers/filterKanban';
+import sortKanbann from '../../helpers/sortKanban';
 
 /**
  * Renders layout of Kanban Area containing multiple Kanban Boards
@@ -13,6 +14,7 @@ import filterKanban from '../../helpers/filterKanban';
 const KanbanArea = ({
   columns,
   filterOptions,
+  sortOptions,
   setColumns,
   onDragEnd,
   addCardBlock,
@@ -72,8 +74,9 @@ const KanbanArea = ({
     // }
 
     let tempColumns = filterKanban(columns, filterOptions);
+    tempColumns = sortKanbann(tempColumns, sortOptions);
     setModifiedColumns(tempColumns);
-  }, [filterOptions, columns]);
+  }, [filterOptions, sortOptions, columns]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {

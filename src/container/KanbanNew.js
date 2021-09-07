@@ -32,6 +32,7 @@ const KanbanNew = () => {
   const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
 
   const [filterOptions, setFilterOptions] = useState({ type: '', value: '' });
+  const [sortOptions, setSortOptions] = useState({ type: '', value: '' });
 
   // const onDragEnd = (result, columns, setColumns) => {
   //   if (!result.destination) return;
@@ -219,9 +220,25 @@ const KanbanNew = () => {
     setFilterOptions({ type, value });
   };
 
-  const resetFilters = () => {
+  const handleSort = (type, value) => {
+    // console.log('type', type);
+    setSortOptions({ type, value });
+  };
+
+  const resetOptions = (optionType) => {
+    switch (optionType) {
+      case 'filter':
+        setFilterOptions({ type: '', value: '' });
+        break;
+      case 'sort':
+        setSortOptions({ type: '', value: '' });
+        break;
+      default:
+        return;
+    }
     // console.log('hit');
-    setFilterOptions({ type: '', value: '' });
+    // setFilterOptions({ type: '', value: '' });
+    // setSortOptions({ type: '', value: '' });
     // localStorage.removeItem('filters');
   };
 
@@ -242,8 +259,10 @@ const KanbanNew = () => {
       </div>
       <KanbanOptions
         filterOptions={filterOptions}
+        sortOptions={sortOptions}
         handleBlockFilter={handleBlockFilter}
-        resetFilters={resetFilters}
+        handleSort={handleSort}
+        resetOptions={resetOptions}
       />
       <div className="kanban-board App">
         {columns.length !== 0 ? (
@@ -251,6 +270,7 @@ const KanbanNew = () => {
             <KanbanArea
               columns={columns}
               filterOptions={filterOptions}
+              sortOptions={sortOptions}
               setColumns={setColumns}
               onDragEnd={onDragEnd}
               addCardBlock={addCardBlock}

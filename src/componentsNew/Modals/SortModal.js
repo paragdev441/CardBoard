@@ -3,17 +3,12 @@ import SimpleReactValidator from 'simple-react-validator';
 import { statusList, tagList } from '../../container/dataSource';
 import { getLocalStorage } from '../../Helpers';
 
-const FilterModal = ({
-  filterOptions,
-  handleBlockFilter,
-  resetOptions,
-  setOpen,
-}) => {
-  const { type: field, value: fieldValue } = filterOptions;
+const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
+  const { type: field, value: operator } = sortOptions;
   const [formData, setFormData] = useState(
-    localStorage.getItem('filters') !== null
-      ? getLocalStorage('get', 'filters')
-      : getLocalStorage('set', 'filters', { field, fieldValue })
+    localStorage.getItem('sort') !== null
+      ? getLocalStorage('get', 'sort')
+      : getLocalStorage('set', 'sort', { field, operator })
   );
   const [, forceUpdate] = useState();
   const validator = useRef(
@@ -37,7 +32,7 @@ const FilterModal = ({
     e.preventDefault();
     if (validator.current.allValid()) {
       // console.log('formData.field', formData.field);
-      handleBlockFilter(formData.field, formData.fieldValue);
+      handleSort(formData.field, formData.operator);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
       document.getElementsByClassName('modal-backdrop fade in')[0].remove();
@@ -50,71 +45,20 @@ const FilterModal = ({
 
   const handleChange = (value, key) => {
     setFormData({ ...formData, [key]: value });
-    getLocalStorage('set', 'filters', { ...formData, [key]: value });
+    getLocalStorage('set', 'sort', { ...formData, [key]: value });
   };
 
-  const handleFilters = () => {
-    setFormData({ field: '', fieldValue: '' });
-    getLocalStorage('set', 'filters', { field: '', fieldValue: '' });
-    resetOptions('filter');
-  };
-
-  const renderFieldValue = (field) => {
-    switch (field) {
-      case 'status':
-        return (
-          <select
-            class="form-control select-option-field"
-            id="inputState"
-            value={formData.fieldValue}
-            onChange={({ target }) => handleChange(target.value, 'fieldValue')}
-          >
-            <option value="" selected>
-              Choose...
-            </option>
-            {statusList.map((status, index) => (
-              <option key={index} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        );
-      case 'tags':
-        return (
-          <select
-            class="form-control select-option-field"
-            id="inputState"
-            value={formData.fieldValue}
-            onChange={({ target }) => handleChange(target.value, 'fieldValue')}
-          >
-            <option value="" selected>
-              Choose...
-            </option>
-            {tagList.map((tag, index) => (
-              <option key={index} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>
-        );
-      default:
-        return (
-          <input
-            type="text"
-            className="form-control"
-            id="inputZip"
-            value={formData.fieldValue}
-            onChange={({ target }) => handleChange(target.value, 'fieldValue')}
-          />
-        );
-    }
+  const handleReset = () => {
+    setFormData({ field: '', operator: '' });
+    getLocalStorage('set', 'sort', { field: '', operator: '' });
+    resetOptions('sort');
   };
 
   return (
     <div
       className="modal fade"
       style={{ textAlign: 'left' }}
-      id="exampleModal"
+      id="sortModal"
       tabIndex={-1}
       role="dialog"
     >
@@ -130,7 +74,7 @@ const FilterModal = ({
             >
               <span aria-hidden="true">×</span>
             </button>
-            <h4 className="modal-title">Apply Filters</h4>
+            <h4 className="modal-title">Apply Sorting</h4>
           </div>
           <div className="modal-body">
             <div>
@@ -155,7 +99,7 @@ const FilterModal = ({
                       <option value="tags">Tags</option>
                     </select>
                     {validator.current.message(
-                      'filterkey',
+                      'sortField',
                       formData.field,
                       'required',
                       {
@@ -164,20 +108,24 @@ const FilterModal = ({
                     )}
                   </div>
                   <div className="form-group col-md-2">
-                    <label htmlFor="inputZip">Field Value</label>
-                    {/* <input
-                      type="text"
-                      className="form-control"
-                      id="inputZip"
-                      value={formData.fieldValue}
+                    <label htmlFor="inputState">Operator</label>
+                    <select
+                      class="form-control select-option-field"
+                      id="inputState"
+                      value={formData.operator}
                       onChange={({ target }) =>
-                        handleChange(target.value, 'fieldValue')
+                        handleChange(target.value, 'operator')
                       }
-                    /> */}
-                    {renderFieldValue(formData.field)}
+                    >
+                      <option value="" selected>
+                        Choose...
+                      </option>
+                      <option value="asc">A to Z</option>
+                      <option value="desc">Z to A</option>
+                    </select>
                     {validator.current.message(
-                      'field value',
-                      formData.fieldValue,
+                      'operator',
+                      formData.operator,
                       'required',
                       {
                         className: 'text-danger',
@@ -193,12 +141,12 @@ const FilterModal = ({
                       <button
                         type="button"
                         class="btn btn-default"
-                        onClick={handleFilters}
+                        onClick={handleReset}
                         disabled={
-                          JSON.parse(localStorage.getItem('filters')).field ===
+                          JSON.parse(localStorage.getItem('sort')).field ===
                             '' ||
-                          JSON.parse(localStorage.getItem('filters'))
-                            .fieldValue === ''
+                          JSON.parse(localStorage.getItem('sort')).operator ===
+                            ''
                             ? true
                             : false
                         }
@@ -230,4 +178,4 @@ const FilterModal = ({
   );
 };
 
-export default FilterModal;
+export default SortModal;

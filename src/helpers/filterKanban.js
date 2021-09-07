@@ -7,7 +7,15 @@ const filterKanban = (columns, filterOptions) => {
           return item.title.toLowerCase().includes(value.toLowerCase());
         });
       case 'status':
-        return items.filter((item) => item.status.includes(value));
+        return items.filter((item) => {
+          console.log(
+            'item.status',
+            item.status,
+            value,
+            item.status.includes(value)
+          );
+          return item.status.includes(value);
+        });
       case 'description':
         return items.filter((item) => {
           return item.description.toLowerCase().includes(value.toLowerCase());

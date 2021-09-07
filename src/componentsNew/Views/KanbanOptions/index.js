@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import FilterModal from '../../Modals/FilterModal';
+import SortModal from '../../Modals/SortModal';
 
-const KanbanOptions = ({ filterOptions, handleBlockFilter, resetFilters }) => {
+const KanbanOptions = ({
+  filterOptions,
+  sortOptions,
+  handleBlockFilter,
+  handleSort,
+  resetOptions,
+}) => {
   const [isOpen, setOpen] = useState(false);
   const [activateOption, setActivateOption] = useState('');
 
   const handleOptionClick = (optionName) => {
     setActivateOption(optionName);
-    if (optionName === 'filter') {
+    if (optionName === 'filter' || optionName === 'sort') {
       setOpen(true);
     }
   };
 
-  // console.log(activateOption, 'dddddddd');
+  console.log(sortOptions, 'dddddddd');
   return (
     <div className="kanban-options-block">
       <div style={{ display: 'flex' }}>
@@ -49,16 +56,19 @@ const KanbanOptions = ({ filterOptions, handleBlockFilter, resetFilters }) => {
         >
           Filter
         </span>
-        {/* <span
+        <span
           className={`${
             activateOption === 'sort'
               ? 'kanban-option-nav-item-active'
               : 'kanban-option-nav-item'
           }`}
           onClick={() => handleOptionClick('sort')}
+          data-toggle="modal"
+          data-target="#sortModal"
+          data-backdrop="static"
         >
           Sort
-        </span> */}
+        </span>
         {/* <span
           className={`${
             activateOption === 'hide fields'
@@ -73,7 +83,15 @@ const KanbanOptions = ({ filterOptions, handleBlockFilter, resetFilters }) => {
           <FilterModal
             filterOptions={filterOptions}
             handleBlockFilter={handleBlockFilter}
-            resetFilters={resetFilters}
+            resetOptions={resetOptions}
+            setOpen={setOpen}
+          />
+        ) : null}
+        {isOpen ? (
+          <SortModal
+            sortOptions={sortOptions}
+            handleSort={handleSort}
+            resetOptions={resetOptions}
             setOpen={setOpen}
           />
         ) : null}

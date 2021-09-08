@@ -5,6 +5,7 @@ import BlockHeader from '../Block/BlockHeader';
 import BlockBody from '../Block/BlockBody';
 import filterKanban from '../../helpers/filterKanban';
 import sortKanbann from '../../helpers/sortKanban';
+import hideKanbanBlocks from '../../helpers/hideKanbanBlocks';
 
 /**
  * Renders layout of Kanban Area containing multiple Kanban Boards
@@ -15,6 +16,7 @@ const KanbanArea = ({
   columns,
   filterOptions,
   sortOptions,
+  blockNames,
   setColumns,
   onDragEnd,
   addCardBlock,
@@ -73,10 +75,13 @@ const KanbanArea = ({
     //   setModifiedColumns(columns);
     // }
 
+    // console.log('vvvvv', blockNames);
+
     let tempColumns = filterKanban(columns, filterOptions);
     tempColumns = sortKanbann(tempColumns, sortOptions);
+    tempColumns = hideKanbanBlocks(tempColumns, blockNames);
     setModifiedColumns(tempColumns);
-  }, [filterOptions, sortOptions, columns]);
+  }, [filterOptions, sortOptions, blockNames, columns]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -89,7 +94,7 @@ const KanbanArea = ({
   //   return () => clearInterval(interval);
   // }, [isOnline]);
 
-  console.log('modifiedColumns', columns);
+  // console.log('modifiedColumns', columns);
 
   return (
     <DragDropContext

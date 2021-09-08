@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const sortKanbann = (columns, sortOptions) => {
-  console.log('assignedTo-hit');
+  // console.log('assignedTo-hit');
   const { type, value } = sortOptions;
   const sortArray = (items) => {
     switch (type) {

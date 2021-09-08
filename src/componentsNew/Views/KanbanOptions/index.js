@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import FilterModal from '../../Modals/FilterModal';
+import HideFieldsModal from '../../Modals/HideFieldsModal';
 import SortModal from '../../Modals/SortModal';
 
 const KanbanOptions = ({
   filterOptions,
   sortOptions,
+  blockNames,
   handleBlockFilter,
   handleSort,
+  handleBlockHiding,
   resetOptions,
 }) => {
   const [isOpen, setOpen] = useState(false);
@@ -14,12 +17,16 @@ const KanbanOptions = ({
 
   const handleOptionClick = (optionName) => {
     setActivateOption(optionName);
-    if (optionName === 'filter' || optionName === 'sort') {
+    if (
+      optionName === 'filter' ||
+      optionName === 'sort' ||
+      optionName === 'hide-fields'
+    ) {
       setOpen(true);
     }
   };
 
-  console.log(sortOptions, 'dddddddd');
+  // console.log(sortOptions, 'dddddddd');
   return (
     <div className="kanban-options-block">
       <div style={{ display: 'flex' }}>
@@ -69,16 +76,19 @@ const KanbanOptions = ({
         >
           Sort
         </span>
-        {/* <span
+        <span
           className={`${
-            activateOption === 'hide fields'
+            activateOption === 'hide-fields'
               ? 'kanban-option-nav-item-active'
               : 'kanban-option-nav-item'
           }`}
-          onClick={() => handleOptionClick('hide fields')}
+          onClick={() => handleOptionClick('hide-fields')}
+          data-toggle="modal"
+          data-target="#hideFields"
+          data-backdrop="static"
         >
           Hide Fields
-        </span> */}
+        </span>
         {isOpen ? (
           <FilterModal
             filterOptions={filterOptions}
@@ -91,6 +101,14 @@ const KanbanOptions = ({
           <SortModal
             sortOptions={sortOptions}
             handleSort={handleSort}
+            resetOptions={resetOptions}
+            setOpen={setOpen}
+          />
+        ) : null}
+        {isOpen ? (
+          <HideFieldsModal
+            blockNames={blockNames}
+            handleBlockHiding={handleBlockHiding}
             resetOptions={resetOptions}
             setOpen={setOpen}
           />

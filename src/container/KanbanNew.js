@@ -33,6 +33,11 @@ const KanbanNew = () => {
 
   const [filterOptions, setFilterOptions] = useState({ type: '', value: '' });
   const [sortOptions, setSortOptions] = useState({ type: '', value: '' });
+  const [blockNames, setBlockNames] = useState(
+    Object.entries(columns).map(([id, column]) => {
+      return { id, name: column.name, checked: true };
+    })
+  );
 
   // const onDragEnd = (result, columns, setColumns) => {
   //   if (!result.destination) return;
@@ -126,19 +131,30 @@ const KanbanNew = () => {
   };
 
   const addCardBlock = (id, index) => {
+    console.log('hhhhhhhhhh');
     let tempColumns = { ...columns };
     let modifiedCol = Object.entries(tempColumns);
-    modifiedCol.splice(index + 1, 0, [uuid(), { name: '', items: [] }]);
+    let idOfNewCol = uuid();
+    modifiedCol.splice(index + 1, 0, [idOfNewCol, { name: '', items: [] }]);
     modifiedCol = modifiedCol.reduce((accum, [k, v]) => {
       accum[k] = v;
       return accum;
     }, {});
 
+    let tempBlockNames = [...blockNames];
+    tempBlockNames.splice(index + 1, 0, {
+      id: idOfNewCol,
+      name: '',
+      checked: true,
+    });
+    console.log(tempBlockNames, 'tempBlockNames');
+    setBlockNames(tempBlockNames);
+
     getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
-  const deleteCardBlock = (id, index) => {
+  const deleteCardBlock = (blockId, index) => {
     let tempColumns = { ...columns };
     let modifiedCol = Object.entries(tempColumns);
     modifiedCol.splice(index, 1);
@@ -146,6 +162,8 @@ const KanbanNew = () => {
       accum[k] = v;
       return accum;
     }, {});
+
+    setBlockNames(blockNames.filter((blockName) => blockName.id !== blockId));
 
     getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
@@ -191,6 +209,15 @@ const KanbanNew = () => {
           ...columns,
           [blockId]: { ...columns[blockId], [key]: value },
         });
+        setBlockNames(
+          blockNames.map((blockName) => {
+            if (blockName.id === blockId) {
+              blockName.name = value;
+            }
+
+            return blockName;
+          })
+        );
         break;
       case 'cardBody':
         setColumns({
@@ -242,6 +269,11 @@ const KanbanNew = () => {
     // localStorage.removeItem('filters');
   };
 
+  const handleBlockHiding = (modifiedBlockNames) => {
+    // console.log('modifiedBlockNames', modifiedBlockNames);
+    setBlockNames(modifiedBlockNames);
+  };
+
   // console.log('newKanbanData', filterOptions);
 
   return (
@@ -260,8 +292,10 @@ const KanbanNew = () => {
       <KanbanOptions
         filterOptions={filterOptions}
         sortOptions={sortOptions}
+        blockNames={blockNames}
         handleBlockFilter={handleBlockFilter}
         handleSort={handleSort}
+        handleBlockHiding={handleBlockHiding}
         resetOptions={resetOptions}
       />
       <div className="kanban-board App">
@@ -271,6 +305,7 @@ const KanbanNew = () => {
               columns={columns}
               filterOptions={filterOptions}
               sortOptions={sortOptions}
+              blockNames={blockNames}
               setColumns={setColumns}
               onDragEnd={onDragEnd}
               addCardBlock={addCardBlock}

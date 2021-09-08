@@ -9,11 +9,11 @@ const FilterModal = ({
   resetOptions,
   setOpen,
 }) => {
-  const { type: field, value: fieldValue } = filterOptions;
+  const { type: field, operator, value: fieldValue } = filterOptions;
   const [formData, setFormData] = useState(
     localStorage.getItem('filters') !== null
       ? getLocalStorage('get', 'filters')
-      : getLocalStorage('set', 'filters', { field, fieldValue })
+      : getLocalStorage('set', 'filters', { field, operator, fieldValue })
   );
   const [, forceUpdate] = useState();
   const validator = useRef(
@@ -23,6 +23,16 @@ const FilterModal = ({
       },
     })
   );
+  const operators = [
+    'contains',
+    'does not contain',
+    'Is',
+    'Is Not',
+    'Starts with',
+    'Ends with',
+    'Is Empty',
+    'Is Not Empty',
+  ];
 
   useEffect(() => {
     // if (getLocalStorage('get', 'backupColumns') === null) {
@@ -31,13 +41,17 @@ const FilterModal = ({
     // }
 
     return () => {};
-  }, []);
+  }, [formData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validator.current.allValid()) {
-      // console.log('formData.field', formData.field);
-      handleBlockFilter(formData.field, formData.fieldValue);
+    if (
+      validator.current.allValid() ||
+      formData.operator === 'is empty' ||
+      formData.operator === 'is not empty'
+    ) {
+      console.log('formData.field', formData.field);
+      handleBlockFilter(formData.field, formData.fieldValue, formData.operator);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
       document.getElementsByClassName('modal-backdrop fade in')[0].remove();
@@ -49,7 +63,11 @@ const FilterModal = ({
   };
 
   const handleChange = (value, key) => {
-    setFormData({ ...formData, [key]: value });
+    if (key === 'field') {
+      setFormData({ ...formData, [key]: value, operator: '', fieldValue: '' });
+    } else {
+      setFormData({ ...formData, [key]: value });
+    }
     getLocalStorage('set', 'filters', { ...formData, [key]: value });
   };
 
@@ -103,12 +121,18 @@ const FilterModal = ({
             type="text"
             className="form-control"
             id="inputZip"
+            placeholder="Enter the field value"
             value={formData.fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}
           />
         );
     }
   };
+
+  console.log(
+    'formData',
+    formData.operator !== 'is empty' && formData.operator !== 'is not empty'
+  );
 
   return (
     <div
@@ -164,26 +188,57 @@ const FilterModal = ({
                     )}
                   </div>
                   <div className="form-group col-md-2">
-                    <label htmlFor="inputZip">Field Value</label>
-                    {/* <input
-                      type="text"
-                      className="form-control"
-                      id="inputZip"
-                      value={formData.fieldValue}
+                    <label htmlFor="inputState">Operator</label>
+                    <select
+                      class="form-control select-option-field"
+                      id="inputState"
+                      value={formData.operator}
                       onChange={({ target }) =>
-                        handleChange(target.value, 'fieldValue')
+                        handleChange(target.value, 'operator')
                       }
-                    /> */}
-                    {renderFieldValue(formData.field)}
+                    >
+                      <option value="" selected>
+                        Choose...
+                      </option>
+                      {operators
+                        .filter((value) =>
+                          (value === 'contains' ||
+                            value === 'does not contain' ||
+                            value === 'Starts with' ||
+                            value === 'Ends with') &&
+                          (formData.field === 'status' ||
+                            formData.field === 'tags')
+                            ? false
+                            : true
+                        )
+                        .map((value) => (
+                          <option value={value.toLowerCase()}>{value}</option>
+                        ))}
+                    </select>
                     {validator.current.message(
-                      'field value',
-                      formData.fieldValue,
+                      'operator',
+                      formData.operator,
                       'required',
                       {
                         className: 'text-danger',
                       }
                     )}
                   </div>
+                  {formData.operator !== 'is empty' &&
+                  formData.operator !== 'is not empty' ? (
+                    <div className="form-group col-md-2">
+                      <label htmlFor="inputZip">Field Value</label>
+                      {renderFieldValue(formData.field)}
+                      {validator.current.message(
+                        'field value',
+                        formData.fieldValue,
+                        'required',
+                        {
+                          className: 'text-danger',
+                        }
+                      )}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="modal-footer">
                   <div

@@ -31,7 +31,11 @@ const KanbanNew = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
 
-  const [filterOptions, setFilterOptions] = useState({ type: '', value: '' });
+  const [filterOptions, setFilterOptions] = useState({
+    type: '',
+    value: '',
+    operator: '',
+  });
   const [sortOptions, setSortOptions] = useState({ type: '', value: '' });
   const [blockNames, setBlockNames] = useState(
     Object.entries(columns).map(([id, column]) => {
@@ -242,9 +246,9 @@ const KanbanNew = () => {
     }
   };
 
-  const handleBlockFilter = (type, value) => {
+  const handleBlockFilter = (type, value, operator) => {
     // console.log('type', type);
-    setFilterOptions({ type, value });
+    setFilterOptions({ type, value, operator });
   };
 
   const handleSort = (type, value) => {
@@ -274,7 +278,7 @@ const KanbanNew = () => {
     setBlockNames(modifiedBlockNames);
   };
 
-  // console.log('newKanbanData', filterOptions);
+  console.log('filterOptions', filterOptions);
 
   return (
     <div>

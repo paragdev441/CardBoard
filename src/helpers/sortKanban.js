@@ -2,35 +2,37 @@ import _ from 'lodash';
 
 const sortKanbann = (columns, sortOptions) => {
   // console.log('assignedTo-hit');
-  const { type, value } = sortOptions;
+  const { field, operator } = sortOptions;
   const sortArray = (items) => {
-    switch (type) {
+    switch (field) {
       case 'assignedTo':
         // console.log('assignedTo-hit');
-        return _.orderBy(items, (obj) => obj.title, value);
+        return _.orderBy(items, (obj) => obj.title, operator);
       // return items.filter((item) => {
-      //   return item.title.toLowerCase().includes(value.toLowerCase());
+      //   return item.title.toLowerCase().includes(operator.toLowerCase());
       // });
       case 'status':
-        return _.orderBy(items, (obj) => obj.status, value);
-      // return items.filter((item) => item.status.includes(value));
+        return _.orderBy(items, (obj) => obj.status, operator);
+      // return items.filter((item) => item.status.includes(operator));
       case 'description':
-        return _.orderBy(items, (obj) => obj.description, value);
+        return _.orderBy(items, (obj) => obj.description, operator);
       // return items.filter((item) => {
-      //   return item.description.toLowerCase().includes(value.toLowerCase());
+      //   return item.description.toLowerCase().includes(operator.toLowerCase());
       // });
       case 'tags':
-        return _.orderBy(items, (obj) => obj.tags, value);
+        return _.orderBy(items, (obj) => obj.tags, operator);
       // return items.filter((item) => {
-      //   console.log('tags', item.tags, value, item.tags.includes(value));
-      //   return item.tags.includes(value);
+      //   console.log('tags', item.tags, operator, item.tags.includes(operator));
+      //   return item.tags.includes(operator);
       // });
       default:
         return items;
     }
   };
 
-  if (type !== '') {
+  // console.log('sortKanbann', columns, field);
+
+  if (field !== '') {
     let tempModifiedColumns = columns;
     tempModifiedColumns = Object.entries(tempModifiedColumns).map(
       ([id, column]) => {

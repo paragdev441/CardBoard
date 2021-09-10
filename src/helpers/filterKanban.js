@@ -1,33 +1,40 @@
 const filterKanban = (columns, filterOptions) => {
-  const { type, value, operator } = filterOptions;
-  console.log('is not empty');
+  const { field, operator, fieldValue } = filterOptions;
   const filterArray = (items) => {
-    switch (type) {
+    switch (field) {
       case 'assignedTo':
         switch (operator) {
           case 'contains':
             return items.filter((item) => {
-              return item.title.toLowerCase().includes(value.toLowerCase());
+              return item.title
+                .toLowerCase()
+                .includes(fieldValue.toLowerCase());
             });
           case 'does not contain':
             return items.filter((item) => {
-              return !item.title.toLowerCase().includes(value.toLowerCase());
+              return !item.title
+                .toLowerCase()
+                .includes(fieldValue.toLowerCase());
             });
           case 'is':
             return items.filter((item) => {
-              return item.title.toLowerCase() === value.toLowerCase();
+              return item.title.toLowerCase() === fieldValue.toLowerCase();
             });
           case 'is not':
             return items.filter((item) => {
-              return item.title.toLowerCase() !== value.toLowerCase();
+              return item.title.toLowerCase() !== fieldValue.toLowerCase();
             });
           case 'starts with':
             return items.filter((item) => {
-              return item.title.toLowerCase().startsWith(value.toLowerCase());
+              return item.title
+                .toLowerCase()
+                .startsWith(fieldValue.toLowerCase());
             });
           case 'ends with':
             return items.filter((item) => {
-              return item.title.toLowerCase().endsWith(value.toLowerCase());
+              return item.title
+                .toLowerCase()
+                .endsWith(fieldValue.toLowerCase());
             });
           case 'is empty':
             return items.filter((item) => {
@@ -44,18 +51,17 @@ const filterKanban = (columns, filterOptions) => {
         switch (operator) {
           case 'is':
             return items.filter((item) => {
-              return item.status.includes(value);
+              return item.status.includes(fieldValue);
             });
           case 'is not':
             return items.filter((item) => {
-              return !item.status.includes(value);
+              return !item.status.includes(fieldValue);
             });
           case 'is empty':
             return items.filter((item) => {
               return item.status === undefined;
             });
           case 'is not empty':
-            console.log('is not empty');
             return items.filter((item) => {
               return item.status !== undefined;
             });
@@ -68,33 +74,37 @@ const filterKanban = (columns, filterOptions) => {
             return items.filter((item) => {
               return item.description
                 .toLowerCase()
-                .includes(value.toLowerCase());
+                .includes(fieldValue.toLowerCase());
             });
           case 'does not contain':
             return items.filter((item) => {
               return !item.description
                 .toLowerCase()
-                .includes(value.toLowerCase());
+                .includes(fieldValue.toLowerCase());
             });
           case 'is':
             return items.filter((item) => {
-              return item.description.toLowerCase() === value.toLowerCase();
+              return (
+                item.description.toLowerCase() === fieldValue.toLowerCase()
+              );
             });
           case 'is not':
             return items.filter((item) => {
-              return item.description.toLowerCase() !== value.toLowerCase();
+              return (
+                item.description.toLowerCase() !== fieldValue.toLowerCase()
+              );
             });
           case 'starts with':
             return items.filter((item) => {
               return item.description
                 .toLowerCase()
-                .startsWith(value.toLowerCase());
+                .startsWith(fieldValue.toLowerCase());
             });
           case 'ends with':
             return items.filter((item) => {
               return item.description
                 .toLowerCase()
-                .endsWith(value.toLowerCase());
+                .endsWith(fieldValue.toLowerCase());
             });
           case 'is empty':
             return items.filter((item) => {
@@ -111,11 +121,11 @@ const filterKanban = (columns, filterOptions) => {
         switch (operator) {
           case 'is':
             return items.filter((item) => {
-              return item.tags.includes(value);
+              return item.tags.includes(fieldValue);
             });
           case 'is not':
             return items.filter((item) => {
-              return !item.tags.includes(value);
+              return !item.tags.includes(fieldValue);
             });
           case 'is empty':
             return items.filter((item) => {
@@ -133,7 +143,7 @@ const filterKanban = (columns, filterOptions) => {
     }
   };
 
-  if (type !== '') {
+  if (field !== '') {
     let tempModifiedColumns = columns;
     tempModifiedColumns = Object.entries(tempModifiedColumns).map(
       ([id, column]) => {

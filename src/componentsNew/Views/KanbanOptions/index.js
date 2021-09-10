@@ -6,7 +6,7 @@ import SortModal from '../../Modals/SortModal';
 const KanbanOptions = ({
   filterOptions,
   sortOptions,
-  blockNames,
+  blockOptions,
   handleBlockFilter,
   handleSort,
   handleBlockHiding,
@@ -107,7 +107,7 @@ const KanbanOptions = ({
         ) : null}
         {isOpen ? (
           <HideFieldsModal
-            blockNames={blockNames}
+            blockOptions={blockOptions}
             handleBlockHiding={handleBlockHiding}
             resetOptions={resetOptions}
             setOpen={setOpen}

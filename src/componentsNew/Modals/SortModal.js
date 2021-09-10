@@ -3,7 +3,7 @@ import SimpleReactValidator from 'simple-react-validator';
 // import { getLocalStorage } from '../../Helpers';
 
 const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
-  const { type: field, value: operator } = sortOptions;
+  const { field, operator } = sortOptions;
   const [formData, setFormData] = useState({ field, operator });
   // const [formData, setFormData] = useState(
   //   localStorage.getItem('sort') !== null

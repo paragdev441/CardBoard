@@ -9,7 +9,7 @@ const FilterModal = ({
   resetOptions,
   setOpen,
 }) => {
-  const { type: field, operator, value: fieldValue } = filterOptions;
+  const { field, operator, fieldValue } = filterOptions;
   const [formData, setFormData] = useState({ field, operator, fieldValue });
   // const [formData, setFormData] = useState(
   //   localStorage.getItem('filters') !== null
@@ -46,7 +46,7 @@ const FilterModal = ({
       formData.operator === 'is empty' ||
       formData.operator === 'is not empty'
     ) {
-      handleBlockFilter(formData.field, formData.fieldValue, formData.operator);
+      handleBlockFilter(formData.field, formData.operator, formData.fieldValue);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
       document.getElementsByClassName('modal-backdrop fade in')[0].remove();

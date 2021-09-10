@@ -1,19 +1,21 @@
-const hideKanbanBlocks = (columns, blockNames) => {
+const hideKanbanBlocks = (columns, blockOptions) => {
   //   console.log('assignedTo-hit');
   //   const { checked: isChecked } = blockNames.find(
   //     (blockName) => blockName.checked === true
   //   );
 
-  const result = blockNames.find((blockName) => blockName.checked === false);
+  const result = blockOptions.find(
+    (blockOption) => blockOption.checked === false
+  );
 
-  console.log('resultbb', result);
+  // console.log('resultbb', result, blockOptions, columns);
 
   if (result) {
     let tempModifiedColumns = columns;
     tempModifiedColumns = Object.entries(tempModifiedColumns).filter(
       ([id, column], index) => {
-        // console.log('blockNames', blockNames[index]);
-        return blockNames[index].checked === true;
+        // console.log('blockOptions', blockOptions[index]);
+        return blockOptions[index].checked === true;
       }
     );
 

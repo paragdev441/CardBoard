@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import handleColumnsHiding from '../../helpers/handleColumnsHiding';
 
-const HideFieldsModal = ({ blockNames, handleBlockHiding, setOpen }) => {
+const HideFieldsModal = ({ blockOptions, handleBlockHiding, setOpen }) => {
   /**
    * Contains all the block names.
    * This read-only & can never be changed.
@@ -13,7 +13,7 @@ const HideFieldsModal = ({ blockNames, handleBlockHiding, setOpen }) => {
 
   // console.log('blockNames', blockNames);
 
-  const [blockTitles, setBlockTitles] = useState(blockNames);
+  const [blockTitles, setBlockTitles] = useState(blockOptions);
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleChange = (checked, id) => {

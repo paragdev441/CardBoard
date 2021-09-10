@@ -17,7 +17,7 @@ const KanbanArea = ({
   columns,
   filterOptions,
   sortOptions,
-  blockNames,
+  blockOptions,
   setColumns,
   onDragEnd,
   addCardBlock,
@@ -33,9 +33,11 @@ const KanbanArea = ({
   useEffect(() => {
     let tempColumns = filterKanban(columns, filterOptions);
     tempColumns = sortKanbann(tempColumns, sortOptions);
-    tempColumns = hideKanbanBlocks(tempColumns, blockNames);
+    tempColumns = hideKanbanBlocks(tempColumns, blockOptions);
     setModifiedColumns(tempColumns);
-  }, [filterOptions, sortOptions, blockNames, columns]);
+  }, [filterOptions, sortOptions, blockOptions, columns]);
+
+  // console.log('modifiedColumns', modifiedColumns);
 
   return (
     <DragDropContext

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdAddCircle, MdKeyboardArrowRight } from 'react-icons/md';
 import { AiFillDelete } from 'react-icons/ai';
-import { getLocalStorage } from '../../Helpers';
+// import { getLocalStorage } from '../../Helpers';
 /**
  * Renders layout of header of each Kanban block
  * @param {*} param0
@@ -74,5 +74,3 @@ const BlockHeader = ({
 };
 
 export default BlockHeader;
-
-// !online;

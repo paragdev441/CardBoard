@@ -543,3 +543,22 @@ Previous Styles
   border: 1px solid rgb(49 142 239);
   border-radius: 5px;
 }
+
+.mini-kanban-title {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.full-name {
+  color: #1a730b;
+}
+
+.no-name {
+  color: grey;
+}
+
+.mini-kanban-items-label {
+  font-weight: initial;
+  font-size: initial;
+  color: grey;
+}

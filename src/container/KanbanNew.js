@@ -220,7 +220,7 @@ const KanbanNew = () => {
   const resetOptions = (optionType) => {
     switch (optionType) {
       case 'filter':
-        setFilterOptions({ type: '', value: '' });
+        setFilterOptions({ type: '', value: '', operator: '' });
         break;
       case 'sort':
         setSortOptions({ type: '', value: '' });

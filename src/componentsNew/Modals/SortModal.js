@@ -21,7 +21,7 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
 
   useEffect(() => {
     return () => {};
-  }, []);
+  }, [formData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,14 +77,14 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                   <div className="form-group col-md-5">
                     <label htmlFor="inputState">Field</label>
                     <select
-                      class="form-control select-option-field"
+                      className="form-control select-option-field"
                       id="inputState"
                       value={formData.field}
                       onChange={({ target }) =>
                         handleChange(target.value, 'field')
                       }
                     >
-                      <option value="" selected>
+                      <option value="" disabled>
                         Choose...
                       </option>
                       <option value="assignedTo">Assigned to</option>
@@ -104,14 +104,14 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                   <div className="form-group col-md-2">
                     <label htmlFor="inputState">Operator</label>
                     <select
-                      class="form-control select-option-field"
+                      className="form-control select-option-field"
                       id="inputState"
                       value={formData.operator}
                       onChange={({ target }) =>
                         handleChange(target.value, 'operator')
                       }
                     >
-                      <option value="" selected>
+                      <option value="" disabled>
                         Choose...
                       </option>
                       <option value="asc">A to Z</option>
@@ -134,7 +134,7 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                     <div>
                       <button
                         type="button"
-                        class="btn btn-default"
+                        className="btn btn-default"
                         onClick={handleReset}
                         disabled={
                           formData.field === '' || formData.operator === ''

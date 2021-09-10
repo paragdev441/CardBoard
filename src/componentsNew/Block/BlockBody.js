@@ -15,7 +15,6 @@ const BlockBody = ({
   droppableSnapshot,
   blockId,
   column,
-  isOnline,
   deleteCard,
   handleChange,
   genericHandleChange,
@@ -56,7 +55,6 @@ const BlockBody = ({
                       item={item}
                       index={index}
                       provided={provided}
-                      isOnline={isOnline}
                       setOpen={setOpen}
                       deleteCard={deleteCard}
                     />
@@ -66,7 +64,6 @@ const BlockBody = ({
                         cardData={item}
                         uuid={blockId}
                         index={index}
-                        isOnline={isOnline}
                         isOpen={isOpen}
                         setOpen={setOpen}
                         handleChange={handleChange}

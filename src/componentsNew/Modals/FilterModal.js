@@ -67,7 +67,7 @@ const FilterModal = ({
   };
 
   const handleFilters = () => {
-    setFormData({ field: '', fieldValue: '' });
+    setFormData({ field: '', fieldValue: '', operator: '' });
     // getLocalStorage('set', 'filters', { field: '', fieldValue: '' });
     resetOptions('filter');
   };
@@ -77,12 +77,12 @@ const FilterModal = ({
       case 'status':
         return (
           <select
-            class="form-control select-option-field"
+            className="form-control select-option-field"
             id="inputState"
             value={formData.fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}
           >
-            <option value="" selected>
+            <option value="" disabled>
               Choose...
             </option>
             {statusList.map((status, index) => (
@@ -95,12 +95,12 @@ const FilterModal = ({
       case 'tags':
         return (
           <select
-            class="form-control select-option-field"
+            className="form-control select-option-field"
             id="inputState"
             value={formData.fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}
           >
-            <option value="" selected>
+            <option value="" disabled>
               Choose...
             </option>
             {tagList.map((tag, index) => (
@@ -153,14 +153,14 @@ const FilterModal = ({
                   <div className="form-group col-md-5">
                     <label htmlFor="inputState">Field</label>
                     <select
-                      class="form-control select-option-field"
+                      className="form-control select-option-field"
                       id="inputState"
                       value={formData.field}
                       onChange={({ target }) =>
                         handleChange(target.value, 'field')
                       }
                     >
-                      <option value="" selected>
+                      <option value="" disabled>
                         Choose...
                       </option>
                       <option value="assignedTo">Assigned to</option>
@@ -180,14 +180,14 @@ const FilterModal = ({
                   <div className="form-group col-md-2">
                     <label htmlFor="inputState">Operator</label>
                     <select
-                      class="form-control select-option-field"
+                      className="form-control select-option-field"
                       id="inputState"
                       value={formData.operator}
                       onChange={({ target }) =>
                         handleChange(target.value, 'operator')
                       }
                     >
-                      <option value="" selected>
+                      <option value="" disabled>
                         Choose...
                       </option>
                       {operators
@@ -202,7 +202,9 @@ const FilterModal = ({
                             : true
                         )
                         .map((value) => (
-                          <option value={value.toLowerCase()}>{value}</option>
+                          <option key={value} value={value.toLowerCase()}>
+                            {value}
+                          </option>
                         ))}
                     </select>
                     {validator.current.message(
@@ -237,12 +239,10 @@ const FilterModal = ({
                     <div>
                       <button
                         type="button"
-                        class="btn btn-default"
+                        className="btn btn-default"
                         onClick={handleFilters}
                         disabled={
-                          formData.field === '' ||
-                          formData.fieldValue === '' ||
-                          formData.operator === ''
+                          formData.field === '' || formData.operator === ''
                             ? true
                             : false
                         }

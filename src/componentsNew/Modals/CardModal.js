@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { GrAddCircle } from 'react-icons/gr';
 import SimpleReactValidator from 'simple-react-validator';
 // import { getLocalStorage } from '../../Helpers';
 
@@ -12,7 +11,6 @@ const CardModal = ({
   cardData,
   uuid,
   index,
-  isOnline,
   isOpen,
   setOpen,
   handleChange,

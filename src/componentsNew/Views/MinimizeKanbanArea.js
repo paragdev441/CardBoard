@@ -13,41 +13,16 @@ const MinimizeKanbanArea = ({ blockId, column, handleToogle }) => {
         </span>
       </span>
       {column.name !== '' ? (
-        <span
-          style={{
-            fontSize: '2em',
-            color: '#1b720c',
-            fontWeight: '500',
-          }}
-        >
+        <span className="mini-kanban-title full-name">
           {column.name}{' '}
-          <span
-            style={{
-              fontWeight: 'initial',
-              fontSize: 'initial',
-              color: 'grey',
-            }}
-          >
+          <span className="mini-kanban-items-label">
             ({column.items.length} items)
           </span>
         </span>
       ) : (
-        <span
-          style={{
-            fontSize: '2em',
-            color: '#1a730b',
-            fontWeight: '500',
-            color: 'grey',
-          }}
-        >
+        <span className="mini-kanban-title no-name">
           New Swimlane{' '}
-          <span
-            style={{
-              fontWeight: 'initial',
-              fontSize: 'initial',
-              color: 'grey',
-            }}
-          >
+          <span className="mini-kanban-items-label">
             ({column.items.length} items)
           </span>
         </span>

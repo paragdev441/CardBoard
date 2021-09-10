@@ -67,7 +67,7 @@ const HideFieldsModal = ({ blockNames, handleBlockHiding, setOpen }) => {
             <div>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Search for a Field"
                 onChange={({ target }) => setSearchQuery(target.value)}
               />
@@ -86,7 +86,10 @@ const HideFieldsModal = ({ blockNames, handleBlockHiding, setOpen }) => {
                   )
                   .map(({ id, name, checked }, index) => {
                     return (
-                      <div key={id} class="checkbox checkbox-slider--b-flat">
+                      <div
+                        key={id}
+                        className="checkbox checkbox-slider--b-flat"
+                      >
                         <label>
                           <input
                             type="checkbox"
@@ -104,14 +107,14 @@ const HideFieldsModal = ({ blockNames, handleBlockHiding, setOpen }) => {
               <div className="hide-block-buttons">
                 <button
                   type="button"
-                  class="btn btn-default"
+                  className="btn btn-default"
                   onClick={() => handleOptions('hide')}
                 >
                   Hide All
                 </button>
                 <button
                   type="button"
-                  class="btn btn-default"
+                  className="btn btn-default"
                   onClick={() => handleOptions('show')}
                 >
                   Show All

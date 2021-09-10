@@ -85,12 +85,14 @@ select {
   /*Newly Added*/
   height: 85rem;
   width: 330px;
+  border: 2px solid rgb(10, 10, 158);
+  border-radius: 5px;
 }
 
 .open-options {
   position: relative;
   z-index: 1;
-  left: 100%;
+  left: 101%;
   bottom: 1rem;
   color: black;
   width: 0;
@@ -167,6 +169,17 @@ select {
   height: 77%;
   margin: 0px 20px;
   overflow: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.kanban-block::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.kanban-block {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .card-header {
@@ -496,4 +509,37 @@ Previous Styles
 }
 .checkbox-slider--b-flat input + span:before {
   box-shadow: none;
+}
+
+.toogle-open-arrow-area {
+  position: relative;
+  bottom: 39px;
+  left: 8px;
+  padding: 0.25em;
+}
+
+.short-kanban-board-area {
+  margin-left: 30px;
+  writing-mode: tb-rl;
+  transform: rotate(180deg);
+  background: rgba(11, 147, 230, 0.64);
+  padding: 30px;
+  height: 850px;
+  border: 2px solid rgb(10, 10, 158);
+  border-radius: 5px;
+  display: flex;
+  place-items: center;
+  justify-content: space-evenly;
+  width: 60px;
+}
+
+.toogle-open-arrow-button {
+  font-size: 2em;
+  color: #1b720c;
+}
+
+.toogle-open-arrow-button:hover {
+  background: rgb(86 173 239);
+  border: 1px solid rgb(49 142 239);
+  border-radius: 5px;
 }

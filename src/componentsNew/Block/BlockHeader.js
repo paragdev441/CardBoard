@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdAddCircle } from 'react-icons/md';
+import { MdAddCircle, MdKeyboardArrowRight } from 'react-icons/md';
 import { AiFillDelete } from 'react-icons/ai';
 import { getLocalStorage } from '../../Helpers';
 /**
@@ -17,6 +17,7 @@ const BlockHeader = ({
   deleteCardBlock,
   genericHandleChange,
   addCard,
+  handleToogle,
 }) => {
   const isDisabled =
     getLocalStorage('get', 'backupColumns') !== null ? true : false;
@@ -54,6 +55,12 @@ const BlockHeader = ({
         <div style={{ marginTop: '50px' }} className="open-options"></div>
       )}
       <div style={{ display: 'flex' }}>
+        <span
+          className="toogle-open-arrow-area"
+          onClick={() => handleToogle(true, BlockId)}
+        >
+          <MdKeyboardArrowRight className="toogle-open-arrow-button" />
+        </span>
         <h2 className="board-title">
           <input
             className="editable-left"

@@ -6,6 +6,7 @@ import BlockBody from '../Block/BlockBody';
 import filterKanban from '../../helpers/filterKanban';
 import sortKanbann from '../../helpers/sortKanban';
 import hideKanbanBlocks from '../../helpers/hideKanbanBlocks';
+import { MdKeyboardArrowUp } from 'react-icons/md';
 
 /**
  * Renders layout of Kanban Area containing multiple Kanban Boards
@@ -25,6 +26,7 @@ const KanbanArea = ({
   addCard,
   deleteCard,
   genericHandleChange,
+  handleToogle,
 }) => {
   const [isOnline, setOnline] = useState(true);
   const [modifiedColumns, setModifiedColumns] = useState(columns);
@@ -102,7 +104,7 @@ const KanbanArea = ({
     >
       {Object.entries(modifiedColumns).map(
         ([id, column], index, callingArr) => {
-          return (
+          return !column.toggle ? (
             <div
               className="kanban-board-area"
               style={{ marginLeft: '30px' }}
@@ -119,6 +121,7 @@ const KanbanArea = ({
                 editColumnTitle={editColumnTitle}
                 genericHandleChange={genericHandleChange}
                 addCard={addCard}
+                handleToogle={handleToogle}
               />
               <Droppable droppableId={id} key={id}>
                 {(provided, snapshot) => {
@@ -135,6 +138,57 @@ const KanbanArea = ({
                   );
                 }}
               </Droppable>
+            </div>
+          ) : (
+            <div className="short-kanban-board-area">
+              <span
+                style={{ position: 'fixed', bottom: '14px' }}
+                onClick={() => handleToogle(false, id)}
+              >
+                <span>
+                  <MdKeyboardArrowUp className="toogle-open-arrow-button" />
+                </span>
+              </span>
+              {column.name !== '' ? (
+                <span
+                  style={{
+                    fontSize: '2em',
+                    color: '#1b720c',
+                    fontWeight: '500',
+                  }}
+                >
+                  {column.name}{' '}
+                  <span
+                    style={{
+                      fontWeight: 'initial',
+                      fontSize: 'initial',
+                      color: 'grey',
+                    }}
+                  >
+                    ({column.items.length} items)
+                  </span>
+                </span>
+              ) : (
+                <span
+                  style={{
+                    fontSize: '2em',
+                    color: '#1a730b',
+                    fontWeight: '500',
+                    color: 'grey',
+                  }}
+                >
+                  New Swimlane{' '}
+                  <span
+                    style={{
+                      fontWeight: 'initial',
+                      fontSize: 'initial',
+                      color: 'grey',
+                    }}
+                  >
+                    ({column.items.length} items)
+                  </span>
+                </span>
+              )}
             </div>
           );
         }

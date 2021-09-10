@@ -21,10 +21,12 @@ const KanbanNew = () => {
     [uuid()]: {
       name: 'Todo',
       items: newKanbanData,
+      toggle: false,
     },
     [uuid()]: {
       name: 'Progress',
       items: [],
+      toggle: false,
     },
   };
 
@@ -278,6 +280,12 @@ const KanbanNew = () => {
     setBlockNames(modifiedBlockNames);
   };
 
+  const handleToogle = (isToggle, id) => {
+    let tempColumns = { ...columns };
+    tempColumns[id].toggle = isToggle;
+    setColumns(tempColumns);
+  };
+
   console.log('filterOptions', filterOptions);
 
   return (
@@ -317,6 +325,7 @@ const KanbanNew = () => {
               addCard={addCard}
               deleteCard={deleteCard}
               genericHandleChange={genericHandleChange}
+              handleToogle={handleToogle}
             />
           </Suspense>
         ) : // <KanbanGroupByName />

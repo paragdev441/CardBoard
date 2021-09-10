@@ -2,7 +2,7 @@ import React from 'react';
 import { CgMenuGridO } from 'react-icons/cg';
 import { CgArrowsExpandRight } from 'react-icons/cg';
 import { AiFillDelete } from 'react-icons/ai';
-import { getLocalStorage } from '../../Helpers';
+// import { getLocalStorage } from '../../Helpers';
 
 /**
  * Renders layout of header of each Kanban block's card
@@ -14,7 +14,6 @@ const CardHeader = ({
   item,
   index,
   provided,
-  isOnline,
   setOpen,
   deleteCard,
 }) => {
@@ -31,11 +30,7 @@ const CardHeader = ({
       </span>
       <span
         style={{
-          display: true
-            ? getLocalStorage('get', 'backupColumns') === null
-              ? 'block'
-              : 'none'
-            : 'none',
+          display: 'block',
           padding: '5px',
         }}
         {...provided.dragHandleProps}
@@ -44,12 +39,7 @@ const CardHeader = ({
       </span>
       <span
         style={{
-          display:
-            isOnline === true
-              ? getLocalStorage('get', 'backupColumns') === null
-                ? 'block'
-                : 'none'
-              : 'none',
+          display: 'block',
           cursor: 'pointer',
           padding: '5px',
         }}

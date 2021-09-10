@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
 import { statusList, tagList } from '../../container/dataSource';
-import { getLocalStorage } from '../../Helpers';
+// import { getLocalStorage } from '../../Helpers';
 
 const FilterModal = ({
   filterOptions,
@@ -10,11 +10,12 @@ const FilterModal = ({
   setOpen,
 }) => {
   const { type: field, operator, value: fieldValue } = filterOptions;
-  const [formData, setFormData] = useState(
-    localStorage.getItem('filters') !== null
-      ? getLocalStorage('get', 'filters')
-      : getLocalStorage('set', 'filters', { field, operator, fieldValue })
-  );
+  const [formData, setFormData] = useState({ field, operator, fieldValue });
+  // const [formData, setFormData] = useState(
+  //   localStorage.getItem('filters') !== null
+  //     ? getLocalStorage('get', 'filters')
+  //     : getLocalStorage('set', 'filters', { field, operator, fieldValue })
+  // );
   const [, forceUpdate] = useState();
   const validator = useRef(
     new SimpleReactValidator({
@@ -35,11 +36,6 @@ const FilterModal = ({
   ];
 
   useEffect(() => {
-    // if (getLocalStorage('get', 'backupColumns') === null) {
-    //   localStorage.removeItem('filters');
-    //   setFormData({ field: '', fieldValue: '' });
-    // }
-
     return () => {};
   }, [formData]);
 
@@ -50,7 +46,6 @@ const FilterModal = ({
       formData.operator === 'is empty' ||
       formData.operator === 'is not empty'
     ) {
-      console.log('formData.field', formData.field);
       handleBlockFilter(formData.field, formData.fieldValue, formData.operator);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
@@ -68,12 +63,12 @@ const FilterModal = ({
     } else {
       setFormData({ ...formData, [key]: value });
     }
-    getLocalStorage('set', 'filters', { ...formData, [key]: value });
+    // getLocalStorage('set', 'filters', { ...formData, [key]: value });
   };
 
   const handleFilters = () => {
     setFormData({ field: '', fieldValue: '' });
-    getLocalStorage('set', 'filters', { field: '', fieldValue: '' });
+    // getLocalStorage('set', 'filters', { field: '', fieldValue: '' });
     resetOptions('filter');
   };
 
@@ -128,11 +123,6 @@ const FilterModal = ({
         );
     }
   };
-
-  console.log(
-    'formData',
-    formData.operator !== 'is empty' && formData.operator !== 'is not empty'
-  );
 
   return (
     <div
@@ -250,13 +240,20 @@ const FilterModal = ({
                         class="btn btn-default"
                         onClick={handleFilters}
                         disabled={
-                          JSON.parse(localStorage.getItem('filters')).field ===
-                            '' ||
-                          JSON.parse(localStorage.getItem('filters'))
-                            .fieldValue === ''
+                          formData.field === '' ||
+                          formData.fieldValue === '' ||
+                          formData.operator === ''
                             ? true
                             : false
                         }
+                        // disabled={
+                        //   JSON.parse(localStorage.getItem('filters')).field ===
+                        //     '' ||
+                        //   JSON.parse(localStorage.getItem('filters'))
+                        //     .fieldValue === ''
+                        //     ? true
+                        //     : false
+                        // }
                       >
                         Remove all
                       </button>

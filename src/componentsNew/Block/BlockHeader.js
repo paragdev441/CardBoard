@@ -12,48 +12,37 @@ const BlockHeader = ({
   Blockindex,
   callingArr,
   column,
-  isOnline,
   addCardBlock,
   deleteCardBlock,
   genericHandleChange,
   addCard,
   handleToogle,
 }) => {
-  const isDisabled =
-    getLocalStorage('get', 'backupColumns') !== null ? true : false;
-
   return (
     <>
-      {isOnline === true ? (
-        getLocalStorage('get', 'backupColumns') === null ? (
-          <div className="open-options">
-            {callingArr.length < 6 ? (
-              <div
-                style={{ paddingBottom: '5px' }}
-                onClick={() => addCardBlock(BlockId, Blockindex)}
-              >
-                <MdAddCircle />
-              </div>
-            ) : (
-              <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
-            )}
-            {callingArr.length > 1 ? (
-              <div
-                style={{ paddingBottom: '5px' }}
-                onClick={() => deleteCardBlock(BlockId, Blockindex)}
-              >
-                <AiFillDelete />
-              </div>
-            ) : (
-              <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
-            )}
+      <div className="open-options">
+        {callingArr.length < 6 ? (
+          <div
+            style={{ paddingBottom: '5px' }}
+            onClick={() => addCardBlock(BlockId, Blockindex)}
+          >
+            <MdAddCircle />
           </div>
         ) : (
-          <div style={{ marginTop: '50px' }} className="open-options"></div>
-        )
-      ) : (
-        <div style={{ marginTop: '50px' }} className="open-options"></div>
-      )}
+          <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
+        )}
+        {callingArr.length > 1 ? (
+          <div
+            style={{ paddingBottom: '5px' }}
+            onClick={() => deleteCardBlock(BlockId, Blockindex)}
+          >
+            <AiFillDelete />
+          </div>
+        ) : (
+          <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
+        )}
+      </div>
+
       <div style={{ display: 'flex' }}>
         <span
           className="toogle-open-arrow-area"
@@ -69,7 +58,6 @@ const BlockHeader = ({
             onChange={({ target }) =>
               genericHandleChange(target.value, BlockId, 'name', 'blockTitle')
             }
-            disabled={isDisabled}
           />
           <div className="block-items-count">{column.items.length} items</div>
         </h2>
@@ -78,13 +66,6 @@ const BlockHeader = ({
         type="button"
         className="btn btn-success add-card-button"
         onClick={() => addCard(BlockId)}
-        disabled={
-          isOnline === true
-            ? getLocalStorage('get', 'backupColumns') === null
-              ? false
-              : true
-            : true
-        }
       >
         Add Card
       </button>

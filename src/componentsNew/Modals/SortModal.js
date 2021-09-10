@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SimpleReactValidator from 'simple-react-validator';
-import { statusList, tagList } from '../../container/dataSource';
-import { getLocalStorage } from '../../Helpers';
+// import { getLocalStorage } from '../../Helpers';
 
 const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
   const { type: field, value: operator } = sortOptions;
-  const [formData, setFormData] = useState(
-    localStorage.getItem('sort') !== null
-      ? getLocalStorage('get', 'sort')
-      : getLocalStorage('set', 'sort', { field, operator })
-  );
+  const [formData, setFormData] = useState({ field, operator });
+  // const [formData, setFormData] = useState(
+  //   localStorage.getItem('sort') !== null
+  //     ? getLocalStorage('get', 'sort')
+  //     : getLocalStorage('set', 'sort', { field, operator })
+  // );
   const [, forceUpdate] = useState();
   const validator = useRef(
     new SimpleReactValidator({
@@ -20,18 +20,12 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
   );
 
   useEffect(() => {
-    // if (getLocalStorage('get', 'backupColumns') === null) {
-    //   localStorage.removeItem('filters');
-    //   setFormData({ field: '', fieldValue: '' });
-    // }
-
     return () => {};
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validator.current.allValid()) {
-      // console.log('formData.field', formData.field);
       handleSort(formData.field, formData.operator);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
@@ -45,12 +39,12 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
 
   const handleChange = (value, key) => {
     setFormData({ ...formData, [key]: value });
-    getLocalStorage('set', 'sort', { ...formData, [key]: value });
+    // getLocalStorage('set', 'sort', { ...formData, [key]: value });
   };
 
   const handleReset = () => {
     setFormData({ field: '', operator: '' });
-    getLocalStorage('set', 'sort', { field: '', operator: '' });
+    // getLocalStorage('set', 'sort', { field: '', operator: '' });
     resetOptions('sort');
   };
 
@@ -143,13 +137,18 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                         class="btn btn-default"
                         onClick={handleReset}
                         disabled={
-                          JSON.parse(localStorage.getItem('sort')).field ===
-                            '' ||
-                          JSON.parse(localStorage.getItem('sort')).operator ===
-                            ''
+                          formData.field === '' || formData.operator === ''
                             ? true
                             : false
                         }
+                        // disabled={
+                        //   JSON.parse(localStorage.getItem('sort')).field ===
+                        //     '' ||
+                        //   JSON.parse(localStorage.getItem('sort')).operator ===
+                        //     ''
+                        //     ? true
+                        //     : false
+                        // }
                       >
                         Remove all
                       </button>

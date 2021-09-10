@@ -7,6 +7,7 @@ import filterKanban from '../../helpers/filterKanban';
 import sortKanbann from '../../helpers/sortKanban';
 import hideKanbanBlocks from '../../helpers/hideKanbanBlocks';
 import { MdKeyboardArrowUp } from 'react-icons/md';
+import MinimizeKanbanArea from './MinimizeKanbanArea';
 
 /**
  * Renders layout of Kanban Area containing multiple Kanban Boards
@@ -140,56 +141,11 @@ const KanbanArea = ({
               </Droppable>
             </div>
           ) : (
-            <div className="short-kanban-board-area">
-              <span
-                style={{ position: 'fixed', bottom: '14px' }}
-                onClick={() => handleToogle(false, id)}
-              >
-                <span>
-                  <MdKeyboardArrowUp className="toogle-open-arrow-button" />
-                </span>
-              </span>
-              {column.name !== '' ? (
-                <span
-                  style={{
-                    fontSize: '2em',
-                    color: '#1b720c',
-                    fontWeight: '500',
-                  }}
-                >
-                  {column.name}{' '}
-                  <span
-                    style={{
-                      fontWeight: 'initial',
-                      fontSize: 'initial',
-                      color: 'grey',
-                    }}
-                  >
-                    ({column.items.length} items)
-                  </span>
-                </span>
-              ) : (
-                <span
-                  style={{
-                    fontSize: '2em',
-                    color: '#1a730b',
-                    fontWeight: '500',
-                    color: 'grey',
-                  }}
-                >
-                  New Swimlane{' '}
-                  <span
-                    style={{
-                      fontWeight: 'initial',
-                      fontSize: 'initial',
-                      color: 'grey',
-                    }}
-                  >
-                    ({column.items.length} items)
-                  </span>
-                </span>
-              )}
-            </div>
+            <MinimizeKanbanArea
+              blockId={id}
+              column={column}
+              handleToogle={handleToogle}
+            />
           );
         }
       )}

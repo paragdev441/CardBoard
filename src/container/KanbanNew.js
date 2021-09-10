@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import KanbanOptions from '../componentsNew/Views/KanbanOptions';
 
 // import KanbanArea from '../components/KanbanArea';
-import { getLocalStorage } from '../Helpers';
+// import { getLocalStorage } from '../Helpers';
 import { newKanbanData, newSingleKanabanData } from './dataSource';
 
 const KanbanArea = lazy(() => import('../componentsNew/Views/KanbanArea'));
@@ -44,46 +44,6 @@ const KanbanNew = () => {
       return { id, name: column.name, checked: true };
     })
   );
-
-  // const onDragEnd = (result, columns, setColumns) => {
-  //   if (!result.destination) return;
-  //   const { source, destination } = result;
-  //   let modifiedColumns;
-  //   if (source.droppableId !== destination.droppableId) {
-  //     const sourceColumn = columns[source.droppableId];
-  //     const destColumn = columns[destination.droppableId];
-  //     const sourceItems = [...sourceColumn.items];
-  //     const destItems = [...destColumn.items];
-  //     const [removed] = sourceItems.splice(source.index, 1);
-  //     destItems.splice(destination.index, 0, removed);
-  //     modifiedColumns = {
-  //       ...columns,
-  //       [source.droppableId]: {
-  //         ...sourceColumn,
-  //         items: sourceItems,
-  //       },
-  //       [destination.droppableId]: {
-  //         ...destColumn,
-  //         items: destItems,
-  //       },
-  //     };
-  //   } else {
-  //     const column = columns[source.droppableId];
-  //     const copiedItems = [...column.items];
-  //     const [removed] = copiedItems.splice(source.index, 1);
-  //     copiedItems.splice(destination.index, 0, removed);
-  //     modifiedColumns = {
-  //       ...columns,
-  //       [source.droppableId]: {
-  //         ...column,
-  //         items: copiedItems,
-  //       },
-  //     };
-  //   }
-
-  //   getLocalStorage('set', 'columns', modifiedColumns);
-  //   setColumns(modifiedColumns);
-  // };
 
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
@@ -126,13 +86,12 @@ const KanbanNew = () => {
       };
     }
 
-    // console.log('afterDrag', modifiedColumns);
-    getLocalStorage('set', 'columns', modifiedColumns);
+    // getLocalStorage('set', 'columns', modifiedColumns);
     setColumns(modifiedColumns);
   };
 
   const editKanabanTitle = ({ value }) => {
-    getLocalStorage('set', 'kanbanTitle', value);
+    // getLocalStorage('set', 'kanbanTitle', value);
     setKanbanTitle(value);
   };
 
@@ -156,7 +115,7 @@ const KanbanNew = () => {
     console.log(tempBlockNames, 'tempBlockNames');
     setBlockNames(tempBlockNames);
 
-    getLocalStorage('set', 'columns', modifiedCol);
+    // getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
@@ -171,7 +130,7 @@ const KanbanNew = () => {
 
     setBlockNames(blockNames.filter((blockName) => blockName.id !== blockId));
 
-    getLocalStorage('set', 'columns', modifiedCol);
+    // getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
@@ -185,7 +144,7 @@ const KanbanNew = () => {
       ],
     };
 
-    getLocalStorage('set', 'columns', tempColumns);
+    // getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
@@ -196,7 +155,7 @@ const KanbanNew = () => {
       (card) => card.id !== cardId
     );
 
-    getLocalStorage('set', 'columns', tempColumns);
+    // getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 

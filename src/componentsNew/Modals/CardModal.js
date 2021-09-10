@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { GrAddCircle } from 'react-icons/gr';
 import SimpleReactValidator from 'simple-react-validator';
-import { getLocalStorage } from '../../Helpers';
+// import { getLocalStorage } from '../../Helpers';
 
 /**
  * Renders layout of Kanaban boards's cards' modal for advanced editing of cards
@@ -18,37 +18,16 @@ const CardModal = ({
   handleChange,
   handleEditFormSubmit,
 }) => {
-  const { profile, data } = cardData;
-  // const [tasks, setTasks] = useState();
   const [email, setEmail] = useState(cardData.email);
   const [phone, setPhone] = useState(cardData.phone);
   const [, forceUpdate] = useState();
   const validator = useRef(new SimpleReactValidator());
 
-  // const Img = ({ imgURL }) => {
-  //   const { src } = useImage({
-  //     srcList: imgURL,
-  //   });
-
-  //   return <img src={src} alt="avatar" />;
-  // };
-
   const cleanUp = () => {
     setOpen(false);
-    // setTasks([]);
     setEmail('');
     setPhone('');
   };
-
-  // const addTasks = () => {
-  //   setTasks([{ name: '' }, ...tasks]);
-  // };
-
-  // const editTasks = ({ target }, index) => {
-  //   let tempTasks = [...tasks];
-  //   tempTasks.splice(index, 1, { name: target.value });
-  //   setTasks(tempTasks);
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,9 +48,6 @@ const CardModal = ({
       forceUpdate(1);
     }
   };
-
-  const isFilterActivate =
-    getLocalStorage('get', 'backupColumns') !== null ? true : false;
 
   return isOpen ? (
     <div
@@ -100,7 +76,6 @@ const CardModal = ({
                 placeholder="Enter Card Name"
                 value={cardData.title}
                 onChange={(e) => handleChange(e, 'name', uuid, index)}
-                disabled={isFilterActivate ? true : false}
               />
             </h4>
           </div>
@@ -128,7 +103,6 @@ const CardModal = ({
                   placeholder="Email"
                   value={email}
                   onChange={({ target }) => setEmail(target.value)}
-                  disabled={isFilterActivate ? true : false}
                 />
                 {validator.current.message('email', email, 'email', {
                   className: 'text-danger',
@@ -148,54 +122,14 @@ const CardModal = ({
                   placeholder="Phone No."
                   value={phone}
                   onChange={({ target }) => setPhone(target.value)}
-                  disabled={isFilterActivate ? true : false}
                 />
                 {validator.current.message('phoneNo.', phone, 'phone', {
                   className: 'text-danger',
                 })}
               </div>
-              <div className="dynamic-form-block">
-                {/* <div className="dynamic-form-label">
-                  <label className="form-label">Tasks</label>
-                  {isOnline ? (
-                    !isFilterActivate ? (
-                      <label onClick={addTasks} className="form-label">
-                        <GrAddCircle />
-                      </label>
-                    ) : null
-                  ) : null}
-                </div> */}
-                <div className="dynamic-form-body">
-                  {/* {tasks.length !== 0 ? (
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Name</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {tasks.map((task, index) => (
-                          <tr key={`${data}${index}`}>
-                            <th scope="row">{index + 1}</th>
-                            <td>
-                              <input
-                                className="editable-left"
-                                placeholder="Enter Task"
-                                value={task.name}
-                                onChange={(e) => editTasks(e, index)}
-                                disabled={isFilterActivate ? true : false}
-                              />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  ) : (
-                    <div className="empty-block">Empty Tasks</div>
-                  )} */}
-                </div>
-              </div>
+              {/* <div className="dynamic-form-block">
+                <div className="dynamic-form-body"></div>
+              </div> */}
             </div>
             <div className="modal-footer">
               <button

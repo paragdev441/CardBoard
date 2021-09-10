@@ -1,5 +1,5 @@
 import React from 'react';
-import { getLocalStorage } from '../../Helpers';
+// import { getLocalStorage } from '../../Helpers';
 
 /**
  * Renders layout of body of each Kanban block's card
@@ -10,13 +10,8 @@ const CardBlock = ({
   uuid: BlockId,
   index,
   item: { id, imgURL, title, description, threads, pending },
-  handleChange,
   genericHandleChange,
 }) => {
-  // console.log('GGG', { imgURL, title, description, threads, pending });
-  const isDisabled =
-    getLocalStorage('get', 'backupColumns') !== null ? true : false;
-
   return (
     <div key={id}>
       <div className="block-body">
@@ -28,7 +23,6 @@ const CardBlock = ({
                 className="editable-left"
                 placeholder="Enter Card Name"
                 defaultValue={title}
-                disabled={isDisabled}
                 onChange={({ target }) =>
                   genericHandleChange(
                     target.value,
@@ -46,7 +40,6 @@ const CardBlock = ({
                 className="editable-left editable-description"
                 placeholder="Enter Summary"
                 defaultValue={description}
-                disabled={isDisabled}
                 onChange={({ target }) =>
                   genericHandleChange(
                     target.value,

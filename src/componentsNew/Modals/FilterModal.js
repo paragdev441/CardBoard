@@ -9,8 +9,8 @@ const FilterModal = ({
   resetOptions,
   setOpen,
 }) => {
-  const { field, operator, fieldValue } = filterOptions;
-  const [formData, setFormData] = useState({ field, operator, fieldValue });
+  const [formData, setFormData] = useState(filterOptions);
+  const { field, operator, fieldValue } = formData;
   // const [formData, setFormData] = useState(
   //   localStorage.getItem('filters') !== null
   //     ? getLocalStorage('get', 'filters')
@@ -43,10 +43,10 @@ const FilterModal = ({
     e.preventDefault();
     if (
       validator.current.allValid() ||
-      formData.operator === 'is empty' ||
-      formData.operator === 'is not empty'
+      operator === 'is empty' ||
+      operator === 'is not empty'
     ) {
-      handleBlockFilter(formData.field, formData.operator, formData.fieldValue);
+      handleBlockFilter(field, operator, fieldValue);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
       document.getElementsByClassName('modal-backdrop fade in')[0].remove();
@@ -79,7 +79,7 @@ const FilterModal = ({
           <select
             className="form-control select-option-field"
             id="inputState"
-            value={formData.fieldValue}
+            value={fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}
           >
             <option value="" disabled>
@@ -97,7 +97,7 @@ const FilterModal = ({
           <select
             className="form-control select-option-field"
             id="inputState"
-            value={formData.fieldValue}
+            value={fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}
           >
             <option value="" disabled>
@@ -117,7 +117,7 @@ const FilterModal = ({
             className="form-control"
             id="inputZip"
             placeholder="Enter the field value"
-            value={formData.fieldValue}
+            value={fieldValue}
             onChange={({ target }) => handleChange(target.value, 'fieldValue')}
           />
         );
@@ -155,7 +155,7 @@ const FilterModal = ({
                     <select
                       className="form-control select-option-field"
                       id="inputState"
-                      value={formData.field}
+                      value={field}
                       onChange={({ target }) =>
                         handleChange(target.value, 'field')
                       }
@@ -168,21 +168,16 @@ const FilterModal = ({
                       <option value="description">Description</option>
                       <option value="tags">Tags</option>
                     </select>
-                    {validator.current.message(
-                      'filterkey',
-                      formData.field,
-                      'required',
-                      {
-                        className: 'text-danger',
-                      }
-                    )}
+                    {validator.current.message('filterkey', field, 'required', {
+                      className: 'text-danger',
+                    })}
                   </div>
                   <div className="form-group col-md-2">
                     <label htmlFor="inputState">Operator</label>
                     <select
                       className="form-control select-option-field"
                       id="inputState"
-                      value={formData.operator}
+                      value={operator}
                       onChange={({ target }) =>
                         handleChange(target.value, 'operator')
                       }
@@ -196,8 +191,7 @@ const FilterModal = ({
                             value === 'does not contain' ||
                             value === 'Starts with' ||
                             value === 'Ends with') &&
-                          (formData.field === 'status' ||
-                            formData.field === 'tags')
+                          (field === 'status' || field === 'tags')
                             ? false
                             : true
                         )
@@ -209,21 +203,20 @@ const FilterModal = ({
                     </select>
                     {validator.current.message(
                       'operator',
-                      formData.operator,
+                      operator,
                       'required',
                       {
                         className: 'text-danger',
                       }
                     )}
                   </div>
-                  {formData.operator !== 'is empty' &&
-                  formData.operator !== 'is not empty' ? (
+                  {operator !== 'is empty' && operator !== 'is not empty' ? (
                     <div className="form-group col-md-2">
                       <label htmlFor="inputZip">Field Value</label>
-                      {renderFieldValue(formData.field)}
+                      {renderFieldValue(field)}
                       {validator.current.message(
                         'field value',
-                        formData.fieldValue,
+                        fieldValue,
                         'required',
                         {
                           className: 'text-danger',
@@ -242,9 +235,7 @@ const FilterModal = ({
                         className="btn btn-default"
                         onClick={handleFilters}
                         disabled={
-                          formData.field === '' || formData.operator === ''
-                            ? true
-                            : false
+                          field === '' || operator === '' ? true : false
                         }
                         // disabled={
                         //   JSON.parse(localStorage.getItem('filters')).field ===

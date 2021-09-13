@@ -69,12 +69,13 @@ const CardModal = ({
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 className="modal-title" id="myModalLabel">
-              <input
+              {/* <input
                 className="editable-center"
                 placeholder="Enter Card Name"
                 value={cardData.title}
                 onChange={(e) => handleChange(e, 'name', uuid, index)}
-              />
+              /> */}
+              {cardData.title}
             </h4>
           </div>
           <form onSubmit={handleSubmit}>
@@ -88,13 +89,14 @@ const CardModal = ({
                 </div>
               </div>
               <div className="form-group">
-                <label
+                <h4
                   className="form-label align-items-start"
-                  htmlFor="exampleInputEmail1"
+                  style={{ placeSelf: 'center' }}
+                  // htmlFor="exampleInputEmail1"
                 >
-                  Email address
-                </label>
-                <input
+                  <b>Email address</b>
+                </h4>
+                {/* <input
                   type="email"
                   className="form-control"
                   id="exampleInputEmail1"
@@ -104,16 +106,19 @@ const CardModal = ({
                 />
                 {validator.current.message('email', email, 'email', {
                   className: 'text-danger',
-                })}
+                })} */}
+                {email}
               </div>
               <div className="form-group">
-                <label
+                <h4
                   className="form-label align-items-start"
-                  htmlFor="exampleInputEmail1"
+                  style={{ placeSelf: 'center' }}
+                  // htmlFor="exampleInputEmail1"
                 >
-                  Phone Number
-                </label>
-                <input
+                  <b>Phone Number</b>
+                </h4>
+
+                {/* <input
                   type="phone"
                   className="form-control"
                   id="exampleInputEmail1"
@@ -123,13 +128,14 @@ const CardModal = ({
                 />
                 {validator.current.message('phoneNo.', phone, 'phone', {
                   className: 'text-danger',
-                })}
+                })} */}
+                {phone}
               </div>
               {/* <div className="dynamic-form-block">
                 <div className="dynamic-form-body"></div>
               </div> */}
             </div>
-            <div className="modal-footer">
+            {/* <div className="modal-footer">
               <button
                 type="button"
                 className="btn btn-default"
@@ -141,7 +147,7 @@ const CardModal = ({
               <button type="submit" className="btn btn-primary">
                 Save changes
               </button>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

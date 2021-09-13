@@ -3,8 +3,8 @@ import SimpleReactValidator from 'simple-react-validator';
 // import { getLocalStorage } from '../../Helpers';
 
 const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
-  const { field, operator } = sortOptions;
-  const [formData, setFormData] = useState({ field, operator });
+  const [formData, setFormData] = useState(sortOptions);
+  const { field, operator } = formData;
   // const [formData, setFormData] = useState(
   //   localStorage.getItem('sort') !== null
   //     ? getLocalStorage('get', 'sort')
@@ -26,7 +26,7 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validator.current.allValid()) {
-      handleSort(formData.field, formData.operator);
+      handleSort(field, operator);
       setOpen(false);
       document.getElementsByClassName('close')[0].click();
       document.getElementsByClassName('modal-backdrop fade in')[0].remove();
@@ -79,7 +79,7 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                     <select
                       className="form-control select-option-field"
                       id="inputState"
-                      value={formData.field}
+                      value={field}
                       onChange={({ target }) =>
                         handleChange(target.value, 'field')
                       }
@@ -92,21 +92,16 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                       <option value="description">Description</option>
                       <option value="tags">Tags</option>
                     </select>
-                    {validator.current.message(
-                      'sortField',
-                      formData.field,
-                      'required',
-                      {
-                        className: 'text-danger',
-                      }
-                    )}
+                    {validator.current.message('sortField', field, 'required', {
+                      className: 'text-danger',
+                    })}
                   </div>
                   <div className="form-group col-md-2">
                     <label htmlFor="inputState">Operator</label>
                     <select
                       className="form-control select-option-field"
                       id="inputState"
-                      value={formData.operator}
+                      value={operator}
                       onChange={({ target }) =>
                         handleChange(target.value, 'operator')
                       }
@@ -119,7 +114,7 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                     </select>
                     {validator.current.message(
                       'operator',
-                      formData.operator,
+                      operator,
                       'required',
                       {
                         className: 'text-danger',
@@ -137,9 +132,7 @@ const SortModal = ({ sortOptions, handleSort, resetOptions, setOpen }) => {
                         className="btn btn-default"
                         onClick={handleReset}
                         disabled={
-                          formData.field === '' || formData.operator === ''
-                            ? true
-                            : false
+                          field === '' || operator === '' ? true : false
                         }
                         // disabled={
                         //   JSON.parse(localStorage.getItem('sort')).field ===

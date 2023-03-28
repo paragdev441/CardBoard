@@ -21,33 +21,16 @@ const BlockHeader = ({
   return (
     <>
       <div className="open-options">
-        {callingArr.length < 6 ? (
-          <div
-            style={{ paddingBottom: '5px' }}
-            onClick={() => addCardBlock(BlockId, Blockindex)}
-          >
-            <MdAddCircle />
-          </div>
-        ) : (
-          <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
-        )}
-        {callingArr.length > 1 ? (
-          <div
-            style={{ paddingBottom: '5px' }}
-            onClick={() => deleteCardBlock(BlockId, Blockindex)}
-          >
-            <AiFillDelete />
-          </div>
-        ) : (
-          <div style={{ marginTop: '1.4em' }}>{/* <GrAddCircle /> */}</div>
-        )}
+        <div style={{ paddingBottom: '5px' }} onClick={() => addCardBlock(BlockId, Blockindex)}>
+          <MdAddCircle />
+        </div>
+        <div style={{ paddingBottom: '5px' }} onClick={() => deleteCardBlock(BlockId, Blockindex)}>
+          <AiFillDelete />
+        </div>
       </div>
 
       <div style={{ display: 'flex' }}>
-        <span
-          className="toogle-open-arrow-area"
-          onClick={() => handleToogle(true, BlockId)}
-        >
+        <span className="toogle-open-arrow-area" onClick={() => handleToogle(true, BlockId)}>
           <MdKeyboardArrowRight className="toogle-open-arrow-button" />
         </span>
         <h2 className="board-title">

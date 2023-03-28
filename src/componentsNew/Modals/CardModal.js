@@ -27,7 +27,7 @@ const CardModal = ({
     setPhone('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (validator.current.allValid()) {
       handleEditFormSubmit({
@@ -69,12 +69,6 @@ const CardModal = ({
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 className="modal-title" id="myModalLabel">
-              {/* <input
-                className="editable-center"
-                placeholder="Enter Card Name"
-                value={cardData.title}
-                onChange={(e) => handleChange(e, 'name', uuid, index)}
-              /> */}
               {cardData.title}
             </h4>
           </div>
@@ -88,25 +82,10 @@ const CardModal = ({
                   <input id="file-input" type="file" />
                 </div>
               </div>
-              <div className="form-group">
-                <h4
-                  className="form-label align-items-start"
-                  style={{ placeSelf: 'center' }}
-                  // htmlFor="exampleInputEmail1"
-                >
+              {/* <div className="form-group">
+                <h4 className="form-label align-items-start" style={{ placeSelf: 'center' }}>
                   <b>Email address</b>
                 </h4>
-                {/* <input
-                  type="email"
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  placeholder="Email"
-                  value={email}
-                  onChange={({ target }) => setEmail(target.value)}
-                />
-                {validator.current.message('email', email, 'email', {
-                  className: 'text-danger',
-                })} */}
                 {email}
               </div>
               <div className="form-group">
@@ -117,37 +96,9 @@ const CardModal = ({
                 >
                   <b>Phone Number</b>
                 </h4>
-
-                {/* <input
-                  type="phone"
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  placeholder="Phone No."
-                  value={phone}
-                  onChange={({ target }) => setPhone(target.value)}
-                />
-                {validator.current.message('phoneNo.', phone, 'phone', {
-                  className: 'text-danger',
-                })} */}
                 {phone}
-              </div>
-              {/* <div className="dynamic-form-block">
-                <div className="dynamic-form-body"></div>
               </div> */}
             </div>
-            {/* <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-default"
-                data-dismiss="modal"
-                onClick={cleanUp}
-              >
-                Close
-              </button>
-              <button type="submit" className="btn btn-primary">
-                Save changes
-              </button>
-            </div> */}
           </form>
         </div>
       </div>

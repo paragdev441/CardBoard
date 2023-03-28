@@ -27,7 +27,7 @@ const BlockBody = ({
       {...droppableprovided.droppableProps}
       ref={droppableprovided.innerRef}
       style={{
-        background: droppableSnapshot.isDraggingOver ? '#0c7fa5' : 'lightblue',
+        background: droppableSnapshot.isDraggingOver ? '#0c7fa5' : 'none',
       }}
     >
       <>

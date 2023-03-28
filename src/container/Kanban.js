@@ -1,13 +1,13 @@
 import React, { lazy, useState } from 'react';
 import { Suspense } from 'react';
 import uuid from 'uuid/v4';
-import KanbanOptions from '../components/Views/KanbanOptions';
+import KanbanOptions from '../componentsNew/Views/KanbanOptions';
 
 // import KanbanArea from '../components/KanbanArea';
-import { getLocalStorage } from '../Helpers';
-import { kanbanData, singleKanabanData } from './dataSource';
+// import { getLocalStorage } from '../Helpers';
+import { newKanbanData, newSingleKanabanData } from './dataSource';
 
-const KanbanArea = lazy(() => import('../components/Views/KanbanArea'));
+const KanbanArea = lazy(() => import('../componentsNew/Views/KanbanArea'));
 
 /**
  * Container for showing Kanban
@@ -20,42 +20,42 @@ const Kanban = () => {
   const columnsFromBackend = {
     [uuid()]: {
       name: 'Todo',
-      items: kanbanData,
+      items: newKanbanData,
+      toggle: false,
     },
     [uuid()]: {
       name: 'Progress',
       items: [],
+      toggle: false,
     },
   };
 
-  const [columns, setColumns] = useState(
-    localStorage.getItem('columns') !== null
-      ? getLocalStorage('get', 'columns')
-      : getLocalStorage('set', 'columns', columnsFromBackend)
-  );
-  const [kanbanTitle, setKanbanTitle] = useState(
-    localStorage.getItem('kanbanTitle') !== null
-      ? getLocalStorage('get', 'kanbanTitle')
-      : getLocalStorage('set', 'kanbanTitle', '#Kanban Name 1')
+  const [columns, setColumns] = useState(columnsFromBackend);
+  const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
+
+  const [filterOptions, setFilterOptions] = useState({
+    field: '',
+    operator: '',
+    fieldValue: '',
+  });
+  const [sortOptions, setSortOptions] = useState({ field: '', operator: '' });
+  const [blockOptions, setBlockOptions] = useState(
+    Object.entries(columns).map(([id, column]) => {
+      return { id, name: column.name, checked: true };
+    })
   );
 
-  /**
-   * Called after dragging has been complete
-   * @param {object} result
-   * @param {object} columns
-   * @param {Method} setColumns
-   * @returns
-   */
   const onDragEnd = (result, columns, setColumns) => {
     if (!result.destination) return;
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
     let modifiedColumns;
     if (source.droppableId !== destination.droppableId) {
       const sourceColumn = columns[source.droppableId];
       const destColumn = columns[destination.droppableId];
-      const sourceItems = [...sourceColumn.items];
+      let sourceItems = [...sourceColumn.items];
       const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
+      const removed = sourceItems.find(sourceItem => sourceItem.id === draggableId);
+      sourceItems = sourceItems.filter(sourceItem => sourceItem.id !== draggableId);
       destItems.splice(destination.index, 0, removed);
       modifiedColumns = {
         ...columns,
@@ -82,58 +82,40 @@ const Kanban = () => {
       };
     }
 
-    getLocalStorage('set', 'columns', modifiedColumns);
+    // getLocalStorage('set', 'columns', modifiedColumns);
     setColumns(modifiedColumns);
   };
 
-  /**
-   * Handling changed value of kanbanTitle at React State as well as localstorage
-   * @param {object} target
-   */
   const editKanabanTitle = ({ value }) => {
-    getLocalStorage('set', 'kanbanTitle', value);
+    // getLocalStorage('set', 'kanbanTitle', value);
     setKanbanTitle(value);
   };
 
-  /**
-   * Handles adding new card block in kanaban area
-   * @param {string} id
-   * @param {number} index
-   */
   const addCardBlock = (id, index) => {
+    // console.log('hhhhhhhhhh');
     let tempColumns = { ...columns };
     let modifiedCol = Object.entries(tempColumns);
-    modifiedCol.splice(index + 1, 0, [uuid(), { name: '', items: [] }]);
+    let idOfNewCol = uuid();
+    modifiedCol.splice(index + 1, 0, [idOfNewCol, { name: '', items: [] }]);
     modifiedCol = modifiedCol.reduce((accum, [k, v]) => {
       accum[k] = v;
       return accum;
     }, {});
 
-    getLocalStorage('set', 'columns', modifiedCol);
+    let tempBlockOptions = [...blockOptions];
+    tempBlockOptions.splice(index + 1, 0, {
+      id: idOfNewCol,
+      name: '',
+      checked: true,
+    });
+    // console.log(tempBlockOptions, 'tempBlockOptions');
+    setBlockOptions(tempBlockOptions);
+
+    // getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
-  /**
-   * Handles editing title of each kanban block w.r.t block index
-   * @param {string} value
-   * @param {string} id
-   */
-  const editColumnTitle = (value, id) => {
-    let tempColumns = { ...columns };
-    tempColumns = { ...tempColumns, [id]: { ...tempColumns[id], name: value } };
-
-    getLocalStorage('set', 'columns', tempColumns);
-    setColumns(tempColumns);
-  };
-
-  /**
-   * Handles deleteing each kanban block based w.r.t block index
-   * (Object is converted to array for rendering.
-   * See the return function of Kanban Area)
-   * @param {string} id
-   * @param {number} index
-   */
-  const deleteCardBlock = (id, index) => {
+  const deleteCardBlock = (blockId, index) => {
     let tempColumns = { ...columns };
     let modifiedCol = Object.entries(tempColumns);
     modifiedCol.splice(index, 1);
@@ -142,223 +124,113 @@ const Kanban = () => {
       return accum;
     }, {});
 
-    getLocalStorage('set', 'columns', modifiedCol);
+    setBlockOptions(blockOptions.filter(blockOption => blockOption.id !== blockId));
+
+    // getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
-  /**
-   * Adding Card w.r.t to Block id.
-   * @param {index} id
-   */
-  const addCard = (id) => {
+  const addCard = id => {
     let tempColumns = { ...columns };
     tempColumns[id] = {
       ...tempColumns[id],
-      items: [
-        { ...singleKanabanData, id: uuid() },
-        ...tempColumns[id]['items'],
-      ],
+      items: [{ ...newSingleKanabanData, id: uuid() }, ...tempColumns[id]['items']],
     };
 
-    getLocalStorage('set', 'columns', tempColumns);
+    // getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
-  const getModifiedItem = (
-    tempColumns,
-    blockId,
-    index,
-    parentKey,
-    type,
-    value
-  ) => {
-    return {
-      ...tempColumns[blockId]['items'][index],
-      [parentKey]: {
-        ...tempColumns[blockId]['items'][index][parentKey],
-        [type]: value,
-      },
-    };
+  const deleteCard = (id, cardId) => {
+    // console.log('deleteCard', cardId);
+    let tempColumns = { ...columns };
+    tempColumns[id]['items'] = tempColumns[id]['items'].filter(card => card.id !== cardId);
+
+    // getLocalStorage('set', 'columns', tempColumns);
+    setColumns(tempColumns);
   };
 
-  /**
-   * Editing card w.r.t to column id & column's item's item's
-   * @param {object} e
-   * @param {string} type: Name of property of columns's itemss' items'(first item is array & second item is its element)
-   * @param {string} blockId: Id of kanaban block
-   * @param {index} index: index of columns's items'
-   * @returns
-   */
-  const handleChange = (e, type, blockId, index) => {
-    let tempColumns = { ...columns };
+  const genericHandleChange = (value, blockId, key, type, itemIndex = null, cardId) => {
+    // console.log('edit', { value, blockId, key, type, itemIndex });
     switch (type) {
-      case 'name':
-        tempColumns[blockId]['items'][index] = getModifiedItem(
-          tempColumns,
-          blockId,
-          index,
-          'profile',
-          type,
-          e.target.value
+      case 'blockTitle':
+        setColumns({
+          ...columns,
+          [blockId]: { ...columns[blockId], [key]: value },
+        });
+        setBlockOptions(
+          blockOptions.map(blockOption => {
+            if (blockOption.id === blockId) {
+              blockOption.name = value;
+            }
+
+            return blockOption;
+          })
         );
         break;
-      case 'description':
-        tempColumns[blockId]['items'][index] = getModifiedItem(
-          tempColumns,
-          blockId,
-          index,
-          'data',
-          type,
-          e.target.value
-        );
-        break;
-      case 'threads':
-        tempColumns[blockId]['items'][index] = getModifiedItem(
-          tempColumns,
-          blockId,
-          index,
-          'data',
-          type,
-          e.target.value
-        );
-        break;
-      case 'pending':
-        tempColumns[blockId]['items'][index] = getModifiedItem(
-          tempColumns,
-          blockId,
-          index,
-          'data',
-          type,
-          e.target.value
-        );
+      case 'cardBody':
+        setColumns({
+          ...columns,
+          [blockId]: {
+            ...columns[blockId],
+            items: columns[blockId].items.map((item, index) => {
+              if (cardId === item.id) {
+                return {
+                  ...item,
+                  [key]: value,
+                };
+              } else {
+                return item;
+              }
+            }),
+          },
+        });
         break;
       default:
         return;
     }
-
-    getLocalStorage('set', 'columns', tempColumns);
-    setColumns(tempColumns);
   };
 
-  /**
-   * Deleting card w.r.t cardIndex
-   * @param {string} id
-   * @param {number} cardIndex
-   */
-  const deleteCard = (id, cardIndex) => {
-    let tempColumns = { ...columns };
-    tempColumns[id]['items'] = tempColumns[id]['items'].filter(
-      (column, index) => cardIndex !== index
-    );
-
-    getLocalStorage('set', 'columns', tempColumns);
-    setColumns(tempColumns);
+  const handleBlockFilter = (field, operator, fieldValue) => {
+    // console.log('type', type);
+    setFilterOptions({ field, operator, fieldValue });
   };
 
-  /**
-   * Editing card using Modal w.r.t to data available in formData
-   * @param {object} formData
-   */
-  const handleEditFormSubmit = (formData) => {
-    const {
-      uuid,
-      itemIndex,
-      data: { email, phone, tasks },
-    } = formData;
-    let tempColumns = { ...columns };
-    tempColumns[uuid]['items'][itemIndex]['profile']['email'] = email;
-    tempColumns[uuid]['items'][itemIndex]['profile']['phone'] = phone;
-    tempColumns[uuid]['items'][itemIndex]['data']['tasks'] = [...tasks];
-
-    getLocalStorage('set', 'columns', tempColumns);
-    setColumns(tempColumns);
+  const handleSort = (field, operator) => {
+    // console.log('type', type);
+    setSortOptions({ field, operator });
   };
 
-  const getKeysToSearch = (field) => {
-    let keyObj = {};
-    switch (field) {
-      case 'assignedTo':
-        keyObj = {
-          parentKey: 'profile',
-          childKey: 'name',
-        };
+  const resetOptions = optionType => {
+    switch (optionType) {
+      case 'filter':
+        setFilterOptions({ field: '', operator: '', fieldValue: '' });
         break;
-      case 'status':
-        keyObj = {
-          parentKey: 'profile',
-          childKey: 'status',
-        };
-        break;
-      case 'description':
-        keyObj = {
-          parentKey: 'data',
-          childKey: 'description',
-        };
-        break;
-      case 'tags':
-        keyObj = {
-          parentKey: 'profile',
-          childKey: 'tags',
-        };
+      case 'sort':
+        setSortOptions({ field: '', operator: '' });
         break;
       default:
         return;
     }
-
-    return keyObj;
-  };
-
-  const handleBlockFilter = ({ formData: { field, fieldValue } }) => {
-    if (getLocalStorage('get', 'backupColumns') === null) {
-      getLocalStorage('set', 'backupColumns', columns);
-    }
-
-    let tempColumns = getLocalStorage('get', 'backupColumns');
-    const { parentKey, childKey } = getKeysToSearch(field);
-    // console.log('childKey', childKey);
-    for (const key in tempColumns) {
-      let modifiedBlockItems = tempColumns[key]['items'].filter(
-        (item, index) => {
-          // console.log(
-          //   'childKey',
-          //   item[parentKey][childKey].toLowerCase(),
-          //   'fieldValue',
-          //   fieldValue
-          // );
-          if (!Array.isArray(item[parentKey][childKey])) {
-            return item[parentKey][childKey]
-              .toLowerCase()
-              .includes(fieldValue.toLowerCase());
-          } else {
-            return item[parentKey][childKey].includes(fieldValue);
-          }
-        }
-      );
-
-      // console.log('tempColumns', modifiedBlockItems);
-
-      tempColumns = {
-        ...tempColumns,
-        [key]: { ...tempColumns[key], items: modifiedBlockItems },
-      };
-    }
-
-    getLocalStorage('set', 'columns', tempColumns);
-    setColumns(tempColumns);
-  };
-
-  const resetFilters = () => {
     // console.log('hit');
-    getLocalStorage('set', 'columns', getLocalStorage('get', 'backupColumns'));
-    setColumns(getLocalStorage('get', 'backupColumns'));
-    localStorage.removeItem('filters');
-    localStorage.removeItem('backupColumns');
+    // setFilterOptions({ type: '', value: '' });
+    // setSortOptions({ type: '', value: '' });
+    // localStorage.removeItem('filters');
   };
 
-  // console.log('columns', columns);
+  const handleBlockHiding = modifiedBlockOptions => {
+    // console.log('modifiedBlockNames', modifiedBlockNames);
+    setBlockOptions(modifiedBlockOptions);
+  };
+
+  const handleToogle = (isToggle, id) => {
+    let tempColumns = { ...columns };
+    tempColumns[id].toggle = isToggle;
+    setColumns(tempColumns);
+  };
 
   return (
-    <div>
+    <div className="kanban">
       <div className="Kanban-header">
         <h1 style={{ marginLeft: '5px' }}>
           <input
@@ -371,29 +243,36 @@ const Kanban = () => {
         </h1>
       </div>
       <KanbanOptions
+        filterOptions={filterOptions}
+        sortOptions={sortOptions}
+        blockOptions={blockOptions}
         handleBlockFilter={handleBlockFilter}
-        resetFilters={resetFilters}
+        handleSort={handleSort}
+        handleBlockHiding={handleBlockHiding}
+        resetOptions={resetOptions}
       />
-      <div className="kanban-board App">
-        {columns.length !== 0 ? (
-          <Suspense fallback={<div>Loading...</div>}>
-            <KanbanArea
-              columns={columns}
-              setColumns={setColumns}
-              onDragEnd={onDragEnd}
-              addCardBlock={addCardBlock}
-              deleteCardBlock={deleteCardBlock}
-              editColumnTitle={editColumnTitle}
-              addCard={addCard}
-              deleteCard={deleteCard}
-              handleChange={handleChange}
-              handleEditFormSubmit={handleEditFormSubmit}
-              handleBlockFilter={handleBlockFilter}
-              resetFilters={resetFilters}
-            />
-          </Suspense>
-        ) : // <KanbanGroupByName />
-        null}
+      <div className="kanban-area">
+        <div className="kanban-board App">
+          {columns.length !== 0 ? (
+            <Suspense fallback={<div>Loading...</div>}>
+              <KanbanArea
+                columns={columns}
+                filterOptions={filterOptions}
+                sortOptions={sortOptions}
+                blockOptions={blockOptions}
+                setColumns={setColumns}
+                onDragEnd={onDragEnd}
+                addCardBlock={addCardBlock}
+                deleteCardBlock={deleteCardBlock}
+                addCard={addCard}
+                deleteCard={deleteCard}
+                genericHandleChange={genericHandleChange}
+                handleToogle={handleToogle}
+              />
+            </Suspense>
+          ) : // <KanbanGroupByName />
+          null}
+        </div>
       </div>
     </div>
   );

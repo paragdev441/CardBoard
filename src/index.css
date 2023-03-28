@@ -41,35 +41,9 @@ img {
   align-self: flex-start;
 }
 
-input {
-  /* border: 0px !important;
-  background: transparent !important; */
-  /* width: 9.1rem !important; */
-}
-
-input {
-  /* border: 0px !important;
-  background: transparent !important; */
-  /* width: 100% !important; */
-}
-
 select {
   width: 11rem !important;
 }
-
-/* .card-columns {
-  @include media-breakpoint-only(lg) {
-    column-count: 4;
-  }
-  @include media-breakpoint-only(xl) {
-    column-count: 5;
-  }
-} */
-
-/* .form-group {
-  margin-bottom: 15px;
-  display: flex;
-} */
 
 .form-group {
   margin-bottom: 15px;
@@ -178,19 +152,9 @@ select {
 }
 
 .kanban-block {
-  /**Do not delete this**/
-  /* width: 30rem;
-  background: #f3f4f4;
-  padding: 12px;
-  height: 100%; */
-
   width: 280px;
-  /* background: #f3f4f4; */
-  /* padding: 12px; */
-  /* height: 56vh; */
   margin: 0px 20px;
   min-height: 20vh;
-  /* overflow: scroll; */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -211,11 +175,6 @@ select {
   justify-content: space-around;
   padding-left: 5px;
 }
-
-/* display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-} */
 
 .form-row {
   display: flex;
@@ -334,11 +293,6 @@ select {
   outline: none !important;
 }
 
-/* .smart-buttons:hover {
-  color: blue;
-  zoom: 140%;
-} */
-
 .open-card-options span:nth-child(1):hover {
   color: #0070ff;
 }
@@ -386,30 +340,6 @@ select {
 
 .select-option-field {
   width: 100% !important;
-}
-
-/* .block-options {
-  padding: 5px;
-} */
-
-/*
-Previous Styles
-.kanban-block {
-  width: 20rem;
-  background: #f3f4f4;
-  padding: 12px;
-}
-
-.kanban-board {
-  display: flex;
-  justify-content: space-around;
-  margin: 2rem 1.5rem;
-  width: 100rem;
-  overflow: scroll;
-}
-*/
-
-.card-modal-container {
 }
 
 .hide-block-buttons {

@@ -1,15 +1,13 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 img {
@@ -66,15 +64,20 @@ select {
   background: black;
   color: white;
   padding: 2px 0px;
-  width: 238rem;
+  /* width: 238rem; */
+}
+
+.kanban-area {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: 85vh;
 }
 
 .kanban-board {
   display: flex;
   justify-content: flex-start;
-  /* margin-left: 20px; */
-  /* width: 140rem; */
-  /* overflow: scroll; */
+  width: fit-content;
 }
 
 .kanban-board-area {
@@ -83,7 +86,7 @@ select {
   background: #0b93e6a3;
   /* padding: 12px 0px; */
   /*Newly Added*/
-  height: 85rem;
+  height: 78vh;
   width: 330px;
   border: 2px solid rgb(10, 10, 158);
   border-radius: 5px;
@@ -166,7 +169,7 @@ select {
   width: 280px;
   /* background: #f3f4f4; */
   padding: 12px;
-  height: 77%;
+  height: 56vh;
   margin: 0px 20px;
   overflow: scroll;
 }
@@ -337,7 +340,7 @@ select {
 }
 
 .kanban-options-block {
-  width: 238rem;
+  /* width: 238rem; */
   padding: 0px 12px;
   border-top: 1px solid black;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);

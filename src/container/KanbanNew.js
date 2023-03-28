@@ -54,12 +54,8 @@ const KanbanNew = () => {
       const destColumn = columns[destination.droppableId];
       let sourceItems = [...sourceColumn.items];
       const destItems = [...destColumn.items];
-      const removed = sourceItems.find(
-        (sourceItem) => sourceItem.id === draggableId
-      );
-      sourceItems = sourceItems.filter(
-        (sourceItem) => sourceItem.id !== draggableId
-      );
+      const removed = sourceItems.find(sourceItem => sourceItem.id === draggableId);
+      sourceItems = sourceItems.filter(sourceItem => sourceItem.id !== draggableId);
       destItems.splice(destination.index, 0, removed);
       modifiedColumns = {
         ...columns,
@@ -128,22 +124,17 @@ const KanbanNew = () => {
       return accum;
     }, {});
 
-    setBlockOptions(
-      blockOptions.filter((blockOption) => blockOption.id !== blockId)
-    );
+    setBlockOptions(blockOptions.filter(blockOption => blockOption.id !== blockId));
 
     // getLocalStorage('set', 'columns', modifiedCol);
     setColumns(modifiedCol);
   };
 
-  const addCard = (id) => {
+  const addCard = id => {
     let tempColumns = { ...columns };
     tempColumns[id] = {
       ...tempColumns[id],
-      items: [
-        { ...newSingleKanabanData, id: uuid() },
-        ...tempColumns[id]['items'],
-      ],
+      items: [{ ...newSingleKanabanData, id: uuid() }, ...tempColumns[id]['items']],
     };
 
     // getLocalStorage('set', 'columns', tempColumns);
@@ -153,22 +144,13 @@ const KanbanNew = () => {
   const deleteCard = (id, cardId) => {
     // console.log('deleteCard', cardId);
     let tempColumns = { ...columns };
-    tempColumns[id]['items'] = tempColumns[id]['items'].filter(
-      (card) => card.id !== cardId
-    );
+    tempColumns[id]['items'] = tempColumns[id]['items'].filter(card => card.id !== cardId);
 
     // getLocalStorage('set', 'columns', tempColumns);
     setColumns(tempColumns);
   };
 
-  const genericHandleChange = (
-    value,
-    blockId,
-    key,
-    type,
-    itemIndex = null,
-    cardId
-  ) => {
+  const genericHandleChange = (value, blockId, key, type, itemIndex = null, cardId) => {
     // console.log('edit', { value, blockId, key, type, itemIndex });
     switch (type) {
       case 'blockTitle':
@@ -177,7 +159,7 @@ const KanbanNew = () => {
           [blockId]: { ...columns[blockId], [key]: value },
         });
         setBlockOptions(
-          blockOptions.map((blockOption) => {
+          blockOptions.map(blockOption => {
             if (blockOption.id === blockId) {
               blockOption.name = value;
             }
@@ -219,7 +201,7 @@ const KanbanNew = () => {
     setSortOptions({ field, operator });
   };
 
-  const resetOptions = (optionType) => {
+  const resetOptions = optionType => {
     switch (optionType) {
       case 'filter':
         setFilterOptions({ field: '', operator: '', fieldValue: '' });
@@ -236,7 +218,7 @@ const KanbanNew = () => {
     // localStorage.removeItem('filters');
   };
 
-  const handleBlockHiding = (modifiedBlockOptions) => {
+  const handleBlockHiding = modifiedBlockOptions => {
     // console.log('modifiedBlockNames', modifiedBlockNames);
     setBlockOptions(modifiedBlockOptions);
   };
@@ -248,7 +230,7 @@ const KanbanNew = () => {
   };
 
   return (
-    <div>
+    <div className="kanban">
       <div className="Kanban-header">
         <h1 style={{ marginLeft: '5px' }}>
           <input
@@ -269,26 +251,28 @@ const KanbanNew = () => {
         handleBlockHiding={handleBlockHiding}
         resetOptions={resetOptions}
       />
-      <div className="kanban-board App">
-        {columns.length !== 0 ? (
-          <Suspense fallback={<div>Loading...</div>}>
-            <KanbanArea
-              columns={columns}
-              filterOptions={filterOptions}
-              sortOptions={sortOptions}
-              blockOptions={blockOptions}
-              setColumns={setColumns}
-              onDragEnd={onDragEnd}
-              addCardBlock={addCardBlock}
-              deleteCardBlock={deleteCardBlock}
-              addCard={addCard}
-              deleteCard={deleteCard}
-              genericHandleChange={genericHandleChange}
-              handleToogle={handleToogle}
-            />
-          </Suspense>
-        ) : // <KanbanGroupByName />
-        null}
+      <div className="kanban-area">
+        <div className="kanban-board App">
+          {columns.length !== 0 ? (
+            <Suspense fallback={<div>Loading...</div>}>
+              <KanbanArea
+                columns={columns}
+                filterOptions={filterOptions}
+                sortOptions={sortOptions}
+                blockOptions={blockOptions}
+                setColumns={setColumns}
+                onDragEnd={onDragEnd}
+                addCardBlock={addCardBlock}
+                deleteCardBlock={deleteCardBlock}
+                addCard={addCard}
+                deleteCard={deleteCard}
+                genericHandleChange={genericHandleChange}
+                handleToogle={handleToogle}
+              />
+            </Suspense>
+          ) : // <KanbanGroupByName />
+          null}
+        </div>
       </div>
     </div>
   );

@@ -338,6 +338,11 @@ select {
   cursor: default;
 }
 
+.kanban-options-nav {
+  display: flex;
+  height: 45px;
+}
+
 .select-option-field {
   width: 100% !important;
 }
@@ -352,6 +357,12 @@ select {
     width: 25%;
   }
 } */
+
+@media only screen and (max-width: 355px) {
+  .kanban-options-nav {
+    height: auto ;
+  }
+}
 
 /************************** checkbox-css *****************************/
 .checkbox-slider--b-flat {

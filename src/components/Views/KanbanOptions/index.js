@@ -14,7 +14,7 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
   // console.log(activateOption, 'dddddddd');
   return (
     <div className="kanban-options-block">
-      <div style={{ display: 'flex' }}>
+      <div className="kanban-options-nav">
         <span
           className={`${
             activateOption === 'kanban'
@@ -23,7 +23,7 @@ const KanbanOptions = ({ handleBlockFilter, resetFilters }) => {
           }`}
           onClick={() => handleOptionClick('kanban')}
         >
-          Kanban
+          CardBoard
         </span>
         {/* <span
           className={`${

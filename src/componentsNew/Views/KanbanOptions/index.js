@@ -29,7 +29,7 @@ const KanbanOptions = ({
   // console.log(sortOptions, 'dddddddd');
   return (
     <div className="kanban-options-block">
-      <div style={{ display: 'flex' }}>
+      <div className="kanban-options-nav">
         <span
           className={`${
             activateOption === 'kanban'

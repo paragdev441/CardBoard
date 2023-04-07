@@ -31,7 +31,7 @@ const Kanban = () => {
   };
 
   const [columns, setColumns] = useState(columnsFromBackend);
-  const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
+  // const [kanbanTitle, setKanbanTitle] = useState('#Kanban Name 1');
 
   const [filterOptions, setFilterOptions] = useState({
     field: '',
@@ -86,10 +86,10 @@ const Kanban = () => {
     setColumns(modifiedColumns);
   };
 
-  const editKanabanTitle = ({ value }) => {
-    // getLocalStorage('set', 'kanbanTitle', value);
-    setKanbanTitle(value);
-  };
+  // const editKanabanTitle = ({ value }) => {
+  //   // getLocalStorage('set', 'kanbanTitle', value);
+  //   setKanbanTitle(value);
+  // };
 
   const addCardBlock = (id, index) => {
     // console.log('hhhhhhhhhh');
@@ -232,14 +232,14 @@ const Kanban = () => {
   return (
     <div className="kanban">
       <div className="Kanban-header">
-        <h1 style={{ marginLeft: '5px' }}>
-          <input
+        <h1 style={{ marginLeft: '25px' }}>
+          {/* <input
             className="editable-left"
             placeholder="Enter Kanban Name"
             value={kanbanTitle}
             onChange={({ target }) => editKanabanTitle(target)}
-          />
-          {/* #Kanban Name 1 */}
+          /> */}
+          CardBoard
         </h1>
       </div>
       <KanbanOptions
